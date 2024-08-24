@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import FormInput from '../../components/FormInput.jsx'; // Path ke FormInput.js
 import Button from '../../components/Button.jsx'; // Path ke Button.js
 
-const LoginForm = () => {
+function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -31,6 +31,6 @@ const LoginForm = () => {
       <Button type="submit" text="Login" />
     </form>
   );
-};
+}
 
 export default LoginForm;
