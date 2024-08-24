@@ -1,5 +1,6 @@
 import './App.css'
-
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './auth/Login/login.jsx';
 
 function App() {
 
@@ -10,6 +11,12 @@ function App() {
         <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>+</button>
         <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>-</button>
       </div>
+      <Router>
+      <Routes>
+        {/* Route untuk halaman Login */}
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
     </>
   )
 }
