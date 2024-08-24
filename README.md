@@ -13,7 +13,7 @@ FilmFinder adalah platform berbasis web yang menyediakan informasi terperinci te
 8. Validasi Ulasan dan Data Drama Baru: Admin dapat menerima atau menolak ulasan/komentar serta data drama yang dibuat oleh writer.
 
 ## Teknologi
-- **Frontend**: HTML, CSS, JavaScript, Tailwind
+- **Frontend**: HTML, CSS, JavaScript, Tailwind CSS, ReactJS
 - **Backend**: Node.js atau PHP (belum diterapkan, masih native)
 - **Database**: (Tentukan jenis database jika ada)
 
