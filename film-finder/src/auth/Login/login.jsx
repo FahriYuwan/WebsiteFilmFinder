@@ -1,7 +1,6 @@
-import React from 'react';
-import LoginForm from '../Login/LoginForm.jsx'; // Path ke LoginForm.js
+import LoginForm from './LoginForm.jsx'; // Path ke LoginForm.js
 
-const Login = () => {
+function Login () {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
