@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'custom-blue-dark': '#3D5A80',
+            'custom-blue-light': '#98C1D9',
+            'custom-orange': '#EE6C4D',
+            'custom-white': '#FFFFFF',
+            'custom-blue': '#293241',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="styles.css">
+  <title>Film Finder🎬</title>
+</head>
+<body class="bg-gray-900 text-white">
+  <!-- Navbar -->
+  <nav class="flex items-center justify-between p-4 bg-gray-800">
+    <img src="..\src\img\just-text.png" id="sidebar-logo" class="w-60 overflow-hidden transition-all" alt="Logo" />
+    <!-- Search bar with button -->
+    <div class="flex items-center space-x-2">
+      <input 
+        type="text" 
+        placeholder="Search movies, logos..." 
+        class="w-96 px-4 py-2 text-gray-700 bg-white rounded-l focus:outline-none"
+      />
+      <button class="px-4 py-2 bg-red-600 text-white font-semibold rounded-r">
+        Search
+      </button>
+    </div>
+    <div>
+      <button class="px-4 py-2 bg-red-600 rounded">Sign In</button>
+    </div>
+  </nav>
+  <!-- Grid Container -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-10">
+    <!-- Card 1 -->
+    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+      <img class="w-full" src="../src/img/wednesday.jpg" alt="Random Image">
+      <div class="px-6 py-4">
+        <div class="text-black text-xl mb-2">Wednesday</div>
+        <p class="text-gray-700 text-base">
+          Netflix Movie
+        </p>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+      <img class="w-full" src="..\src\img\blackmirror.avif" alt="Random Image">
+      <div class="px-6 py-4">
+        <div class="text-black text-xl mb-2">Black Mirror</div>
+        <p class="text-gray-700 text-base">
+          Netflix
+        </p>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+      <img class="w-full" src="..\src\img\queengambit.jpg" alt="Random Image">
+      <div class="px-6 py-4">
+        <div class="text-black text-xl mb-2">The Queen Gambit</div>
+        <p class="text-gray-700 text-base">
+          Netflix
+        </p>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+      <img class="w-full" src="..\src\img\dark.jpg" alt="Random Image">
+      <div class="px-6 py-4">
+        <div class="text-black text-xl mb-2">Dark</div>
+        <p class="text-gray-700 text-base">
+          Netflix
+        </p>
+      </div>
+    </div>
+    
+    <!-- Add more cards as needed -->
+
+     <!-- Card 1 -->
+     <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+        <img class="w-full" src="../src/img/wednesday.jpg" alt="Random Image">
+        <div class="px-6 py-4">
+          <div class="text-black text-xl mb-2">Wednesday</div>
+          <p class="text-gray-700 text-base">
+            Netflix Movie
+          </p>
+        </div>
+      </div>
+  
+      <!-- Card 2 -->
+      <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+        <img class="w-full" src="..\src\img\blackmirror.avif" alt="Random Image">
+        <div class="px-6 py-4">
+          <div class="text-black text-xl mb-2">Black Mirror</div>
+          <p class="text-gray-700 text-base">
+            Netflix
+          </p>
+        </div>
+      </div>
+  
+      <!-- Card 3 -->
+      <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+        <img class="w-full" src="..\src\img\queengambit.jpg" alt="Random Image">
+        <div class="px-6 py-4">
+          <div class="text-black text-xl mb-2">The Queen Gambit</div>
+          <p class="text-gray-700 text-base">
+            Netflix
+          </p>
+        </div>
+      </div>
+  
+      <!-- Card 4 -->
+      <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+        <img class="w-full" src="..\src\img\dark.jpg" alt="Random Image">
+        <div class="px-6 py-4">
+          <div class="text-black text-xl mb-2">Dark</div>
+          <p class="text-gray-700 text-base">
+            Netflix
+          </p>
+        </div>
+      </div>
+  </div>
+</body>
+</html>
