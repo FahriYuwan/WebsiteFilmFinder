@@ -16,6 +16,19 @@ table {
     font-size: 0.875rem; /* Ukuran font tombol */
   }
 
+  .status-button.pending {
+    background-color: gray;
+    color: white;
+  }
+  .status-button.approved {
+    background-color: green;
+    color: white;
+  }
+  .status-button.unapproved {
+    background-color: red;
+    color: white;
+  }
+
 .custom-blue-dark {
     background-color: #3D5A80;
     color: #FFFFFF;

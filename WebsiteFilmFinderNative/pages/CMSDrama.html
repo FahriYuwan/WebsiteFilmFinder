@@ -175,11 +175,12 @@
         <h2 class="text-3xl font-extrabold text-center mb-6 text-custom-blue-light">Film Management</h2>
         <div class="flex space-x-4 mb-6">
           <div>
-            <label for="filter-rating" class="block text-sm font-medium text-dark-text">Filter by Status</label>
-            <select id="filter-rating" name="filter-rating" class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm text-black">
+            <label for="filter-status" class="block text-sm font-medium text-dark-text">Filter by Status</label>
+            <select id="filter-status" name="filter-status" class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm text-black">
               <option value="">All Status</option>
-              <option value="edit">Edit </option>
-              <option value="pending">Pending</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="Unapproved">Unapproved</option>
             </select>
           </div>
           <div>
@@ -192,7 +193,7 @@
             </select>
           </div>
           <div>
-            <label for="search-film" class="block text-sm font-medium text-dark-text">Search film</label>
+            <label for="search-film" class="block text-sm font-medium text-dark-text">Search Film</label>
             <input
               type="text"
               id="search-film"
@@ -203,7 +204,7 @@
           </div>
         </div>
 
-        <!-- films Table -->
+        <!-- Films Table -->
         <div class="overflow-x-auto">
           <table class="min-w-full bg-dark-card-bg text-dark-text">
             <thead>
@@ -217,42 +218,12 @@
               </tr>
             </thead>
             <tbody id="films-table-body" class="text-sm">
-              <tr data-film-id="1">
-                <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium">Film 1</td>
-                <td class="py-2 px-4 border-b border-gray-300 text-sm">Actor 1, Actor 2</td>
-                <td class="py-2 px-4 border-b border-gray-300 text-sm">Genre 1, Genre 2</td>
-                <td class="py-2 px-4 border-b border-gray-300 text-sm">This is a synopsis of Film 1.</td>
-                <td class="py-2 px-4 border-b border-gray-300 text-center">
-                  <button class="bg-gray-700 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" onclick="showPopup('Film 1',1)">Pending</button>
-                </td>
-                <td class="py-2 px-4 border-b border-gray-300 text-center">
-                  <div class="flex justify-center space-x-2">
-                    <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="editFilm()">Edit</button>
-                    <button class="bg-red-400 text-white py-1 px-3 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteFilm(this)">Delete</button>
-                  </div>
-                </td>
-              </tr>
-              <tr data-film-id="2">
-                <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium">Film 2</td>
-                <td class="py-2 px-4 border-b border-gray-300 text-sm">Actor 3, Actor 4</td>
-                <td class="py-2 px-4 border-b border-gray-300 text-sm">Genre 3, Genre 4</td>
-                <td class="py-2 px-4 border-b border-gray-300 text-sm">This is a synopsis of Film 2.</td>
-                <td class="py-2 px-4 border-b border-gray-300 text-center">
-                  <button class="bg-gray-700 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" onclick="showPopup('Film 2',2)">Pending</button>
-                </td>
-                <td class="py-2 px-4 border-b border-gray-300 text-center">
-                  <div class="flex justify-center space-x-2">
-                    <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="editFilm()">Edit</button>
-                    <button class="bg-red-400 text-white py-1 px-3 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteFilm(this)">Delete</button>
-                  </div>
-                </td>
-              </tr>
+              <!-- Rows will be added here -->
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  </div>
 
   <!-- Popup -->
   <div id="popup" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
@@ -289,10 +260,10 @@
         </div>
         <div class="flex justify-end space-x-4">
           <button class="bg-green-500 text-dark-text py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onclick="approveFilm()">Approved</button>
-          <button class="bg-red-500 text-dark-text py-2 px-4 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="nonApproveFilm()">Non-Approved</button>
+          <button class="bg-red-500 text-dark-text py-2 px-4 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="unApproveFilm()">Unapproved</button>
         </div>
-        </div>
-        </div>
+    </div>
+  </div>
 
   <script>
     const sidebar = document.getElementById('sidebar');
@@ -301,37 +272,93 @@
     const logoutText = document.getElementById('logout-text');
     const submenu = document.querySelectorAll('.submenu');
     let currentFilmId = null;
-    
-    //Logic to edit film
-    function editFilm() {
-      //Edit film logic here
-      const editButton = document.getElementById('edit-button');
-      const filmName = document.getElementById('film-name');
-      const filmDescription = document.getElementById('film-description');
-      const actors = document.getElementById('actors');
-
-      if (editButton.innerText === 'Edit') {
-        // Enable editing
-        filmName.contentEditable = true;
-        filmDescription.contentEditable = true;
-        actors.contentEditable = true;
-        editButton.innerText = 'Save';
-        editButton.classList.remove('bg-custom-blue-light');
-        editButton.classList.add('bg-green-500');
-      } else {
-        // Save changes
-        filmName.contentEditable = false;
-        filmDescription.contentEditable = false;
-        actors.contentEditable = false;
-        editButton.innerText = 'Edit';
-        editButton.classList.remove('bg-green-500');
-        editButton.classList.add('bg-custom-blue-light');
-
-        // Logic to save changes to the server or local storage
-        alert('Changes saved!');
-      }
-    
+    const films = [
+      { id: 1, film: 'Film 1', actors: 'Actor 1, Actor 2', genres: 'Genre 1, Genre 2', synopsis: 'This is a synopsis of Film 1.', status: 'Pending' },
+      { id: 2, film: 'Film 2', actors: 'Actor 3, Actor 4', genres: 'Genre 3, Genre 4', synopsis: 'This is a synopsis of Film 2.', status: 'Pending' },
+      { id : 3, film: 'Film 3', actors: 'Actor 5, Actor 6', genres: 'Genre 5, Genre 6', synopsis: 'This is a synopsis of Film 3.', status: 'Pending' },
+      { id : 4, film: 'Film 4', actors: 'Actor 7, Actor 8', genres: 'Genre 7, Genre 8', synopsis: 'This is a synopsis of Film 4.', status: 'Pending' },
+      { id : 5, film: 'Film 5', actors: 'Actor 9, Actor 10', genres: 'Genre 9, Genre 10', synopsis: 'This is a synopsis of Film 5.', status: 'Pending' },
+      { id : 6, film: 'Film 6', actors: 'Actor 11, Actor 12', genres: 'Genre 11, Genre 12', synopsis: 'This is a synopsis of Film 6.', status: 'Pending' },
+      { id : 7, film: 'Film 7', actors: 'Actor 13, Actor 14', genres: 'Genre 13, Genre 14', synopsis: 'This is a synopsis of Film 7.', status: 'Pending' },
+      { id : 8, film: 'Film 8', actors: 'Actor 15, Actor 16', genres: 'Genre 15, Genre 16', synopsis: 'This is a synopsis of Film 8.', status: 'Pending' },
+      { id : 9, film: 'Film 9', actors: 'Actor 17, Actor 18', genres: 'Genre 17, Genre 18', synopsis: 'This is a synopsis of Film 9.', status: 'Pending' },
+      { id : 10, film: 'Film 10', actors: 'Actor 19, Actor 20', genres: 'Genre 19, Genre 20', synopsis: 'This is a synopsis of Film 10.', status: 'Pending' },
+      { id : 11, film: 'Film 11', actors: 'Actor 21, Actor 22', genres: 'Genre 21, Genre 22', synopsis: 'This is a synopsis of Film 11.', status: 'Pending' },
+      { id : 12, film: 'Film 12', actors: 'Actor 23, Actor 24', genres: 'Genre 23, Genre 24', synopsis: 'This is a synopsis of Film 12.', status: 'Pending' },
+      { id : 13, film: 'Film 13', actors: 'Actor 25, Actor 26', genres: 'Genre 25, Genre 26', synopsis: 'This is a synopsis of Film 13.', status: 'Pending' },
+      { id : 14, film: 'Film 14', actors: 'Actor 27, Actor 28', genres: 'Genre 27, Genre 28', synopsis: 'This is a synopsis of Film 14.', status: 'Pending' },
+      { id : 15, film: 'Film 15', actors: 'Actor 29, Actor 30', genres: 'Genre 29, Genre 30', synopsis: 'This is a synopsis of Film 15.', status: 'Pending' },
+      { id : 16, film: 'Film 16', actors: 'Actor 31, Actor 32', genres: 'Genre 31, Genre 32', synopsis: 'This is a synopsis of Film 16.', status: 'Pending' },
+      { id : 17, film: 'Film 17', actors: 'Actor 33, Actor 34', genres: 'Genre 33, Genre 34', synopsis: 'This is a synopsis of Film 17.', status: 'Pending' },
+      { id : 18, film: 'Film 18', actors: 'Actor 35, Actor 36', genres: 'Genre 35, Genre 36', synopsis: 'This is a synopsis of Film 18.', status: 'Pending' },
+      { id : 19, film: 'Film 19', actors: 'Actor 37, Actor 38', genres: 'Genre 37, Genre 38', synopsis: 'This is a synopsis of Film 19.', status: 'Pending' },
+      { id : 20, film: 'Film 20', actors: 'Actor 39, Actor 40', genres: 'Genre 39, Genre 40', synopsis: 'This is a synopsis of Film 20.', status: 'Pending' }
+    ];
+    // ---------------------CMS Drama logic-------------------------------------
+    //Logic to save film
+    function saveFilm(button) {
+      const row = button.parentElement.parentElement.parentElement;
+      const filmId = row.getAttribute('data-film-id');
+      const film = row.children[0].textContent;
+      const actors = row.children[1].textContent;
+      const genres = row.children[2].textContent;
+      const synopsis = row.children[3].textContent;
+      const status = row.children[4].textContent;
+      alert(`Film saved: ${film}, Actors: ${actors}, Genres: ${genres}, Synopsis: ${synopsis}, Status: ${status}`);
     }
+    
+    function renderFilms(films) {
+      const tableBody = document.getElementById('films-table-body');
+      tableBody.innerHTML = '';
+      films.forEach(film => {
+        const row = document.createElement('tr');
+        row.setAttribute('data-film-id', film.id);
+        row.innerHTML = `
+          <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium" contenteditable="true">${film.film}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm" contenteditable="true">${film.actors}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm" contenteditable="true">${film.genres}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm" contenteditable="true">${film.synopsis}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-center">
+            <button class="status-button ${film.status.toLowerCase()} py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2" onclick="showPopup('${film.film}', ${film.id})">${film.status}</button>
+          </td>
+          <td class="py-2 px-4 border-b border-gray-300 text-center">
+            <div class="flex justify-center space-x-2">
+              <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="saveFilm(this)">Save</button>
+              <button class="bg-red-400 text-white py-1 px-3 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteFilm(this)">Delete</button>
+            </div>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function applyFilters() {
+    const status = document.getElementById('filter-status').value;
+    const limit = parseInt(document.getElementById('filter-film').value, 10);
+    const searchTerm = document.getElementById('search-film').value.toLowerCase();
+
+    let filteredFilms = films;
+
+    if (status) {
+      filteredFilms = filteredFilms.filter(film => film.status === status);
+    }
+
+    if (searchTerm) {
+      filteredFilms = filteredFilms.filter(film => film.film.toLowerCase().includes(searchTerm) || film.actors.toLowerCase().includes(searchTerm) || film.genres.toLowerCase().includes(searchTerm) || film.synopsis.toLowerCase().includes(searchTerm));
+    }
+
+    renderFilms(filteredFilms.slice(0, limit));
+  }
+
+  document.getElementById('filter-status').addEventListener('change', applyFilters);
+  document.getElementById('filter-film').addEventListener('change', applyFilters);
+  document.getElementById('search-film').addEventListener('input', applyFilters);
+
+  // Initial render
+  renderFilms(films);
+
+
+    // ---------------------Popup logic-------------------------------------
     //preview image
     function previewImage(event) {
       const reader = new FileReader();
@@ -348,7 +375,7 @@
       popupfilmName.textContent = filmName;
       currentFilmId = filmId;
       popup.classList.remove('hidden');
-}
+    }
 
     function hidePopup() {
       const popup = document.getElementById('popup');
@@ -357,43 +384,53 @@
 
     // Logic to approve film
     function approveFilm() {
-      alert('Film approved!');
-      hidePopup();
-      // Change status to Approved
-      const statusButton = document.querySelector(`#films-table-body tr[data-film-id="${currentFilmId}"] td:nth-child(5) button`);
-      statusButton.textContent = 'Approved';
-      statusButton.classList.remove('bg-gray-700', 'hover:bg-gray-600', 'bg-red-500', 'hover:bg-red-700');
-      statusButton.classList.add('bg-green-500', 'hover:bg-green-700');
+    alert('Film approved!');
+    hidePopup();
+    // Change status to Approved
+    const statusButton = document.querySelector(`#films-table-body tr[data-film-id="${currentFilmId}"] td:nth-child(5) button`);
+    statusButton.textContent = 'Approved';
+    statusButton.classList.remove('pending', 'unapproved');
+    statusButton.classList.add('approved');
+    
+    // Update film status in data
+    const film = films.find(film => film.id === currentFilmId);
+    if (film) {
+      film.status = 'Approved';
     }
 
-    // Logic to non-approve film
-    function nonApproveFilm() {
-      alert('Film non-approved!');
-      hidePopup();
-      // Change status to Non-Approved
-      const statusButton = document.querySelector(`#films-table-body tr[data-film-id="${currentFilmId}"] td:nth-child(5) button`);
-      statusButton.textContent = 'Non-Approved';
-      statusButton.classList.remove('bg-gray-700', 'hover:bg-gray-600', 'bg-green-500', 'hover:bg-green-700');
-      statusButton.classList.add('bg-red-500', 'hover:bg-red-700');
-      statusButton.style.fontSize = '12px';
+      // Reapply filters to update the table
+      applyFilters();
     }
+
+    // Logic to unapprove film
+    function unApproveFilm() {
+    alert('Film Unapproved!');
+    hidePopup();
+    // Change status to Unapproved
+    const statusButton = document.querySelector(`#films-table-body tr[data-film-id="${currentFilmId}"] td:nth-child(5) button`);
+    statusButton.textContent = 'Unapproved';
+    statusButton.classList.remove('pending', 'approved');
+    statusButton.classList.add('unapproved');
+    
+    // Update film status in data
+    const film = films.find(film => film.id === currentFilmId);
+    if (film) {
+      film.status = 'Unapproved';
+    }
+
+    // Reapply filters to update the table
+    applyFilters();
+  }
 
     function deleteFilm(button) {
       const row = button.parentElement.parentElement.parentElement;
       row.remove();
     }
 
-    function deleteSelected() {
-      const checkboxes = document.querySelectorAll('#films-table-body input[type="checkbox"]:checked');
-      checkboxes.forEach(checkbox => {
-        const row = checkbox.parentElement.parentElement;
-        row.remove();
-      });
-    }
-
     function exitPopup() {
       hidePopup();
     }
+    // -------------------------------------------Sidebar logic-------------------------------------
     // Minimize sidebar logic  
     toggleButton.addEventListener('click', () => {
     sidebar.classList.toggle('expanded');

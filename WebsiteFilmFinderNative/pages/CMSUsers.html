@@ -241,12 +241,12 @@
       const newRow = document.createElement('tr');
 
       newRow.innerHTML = `
-        <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium">${username}</td>
-        <td class="py-2 px-4 border-b border-custom-gray text-sm">${email}</td>
+        <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium" contenteditable="true">${username}</td>
+        <td class="py-2 px-4 border-b border-custom-gray text-sm" contenteditable="true">${email}</td>
         <td class="py-2 px-4 border-b border-custom-gray text-center">
           <div class="flex justify-center space-x-2">
             <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="sendFirstEmail(this)"> Send First Email </button>
-            <button class="bg-dark-accent text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dark-accent" onclick="editUser(this)"> Edit </button>
+            <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="saveUser(this)">Save</button>
             <button class="bg-red-500 text-dark-text py-1 px-3 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteUser(this)">Delete</button>
           </div>
         </td>
@@ -264,22 +264,19 @@
       alert(`Sending first email to ${email}`);
     }
 
-    function editUser(button) {
+    function saveUser(button) {
       const row = button.parentElement.parentElement.parentElement;
-      const usernameCell = row.children[0];
-      const emailCell = row.children[1];
-      const newUsername = prompt("Enter new username:", usernameCell.textContent);
-      const newEmail = prompt("Enter new email:", emailCell.textContent);
-      if (newUsername) {
-        usernameCell.textContent = newUsername;
-      }
-      if (newEmail) {
-        emailCell.textContent = newEmail;
-      }
+      const username = row.children[0].textContent;
+      const email = row.children[1].textContent;
+      alert(`User saved: ${username}, Email: ${email}`);
     }
 
     function deleteUser(button) {
       const row = button.parentElement.parentElement.parentElement;
+      // confirm dialog
+      if (!confirm('Are you sure you want to delete this user?')) {
+        return;
+      }
       row.remove();
     }
     

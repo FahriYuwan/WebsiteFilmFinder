@@ -228,10 +228,10 @@
       const newRow = document.createElement('tr');
 
       newRow.innerHTML = `
-        <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium">${countryName}</td>
+        <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium" contenteditable="true">${countryName}</td>
         <td class="py-2 px-4 border-b border-gray-300 text-center">
           <div class="flex justify-center space-x-2">
-            <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="renameCountry(this)">Rename</button>
+            <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="saveCountry(this)">Save</button>
             <button class="bg-red-500 text-dark-text py-1 px-3 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteCountry(this)">Delete</button>
           </div>
         </td>
@@ -243,16 +243,18 @@
       document.getElementById('country-form').reset();
     });
 
-    function renameCountry(button) {
-      const row = button.parentElement.parentElement.parentElement;
-      const countryNameCell = row.children[0];
-      const newCountryName = prompt("Enter new country name:", countryNameCell.textContent);
-      if (newCountryName) {
-        countryNameCell.textContent = newCountryName;
-      }
+    function saveCountry(button) {
+        const row = button.parentElement.parentElement.parentElement;
+        const countryName = row.querySelector('td').textContent;
+        alert('Berhasil Menyimpan: ' + countryName);
     }
+
     function deleteCountry(button) {
       const row = button.parentElement.parentElement.parentElement;
+      // Confirm dialog
+      if (!confirm('Are you sure you want to delete this country?')) {
+        return;
+      }
       row.remove();
     }
 

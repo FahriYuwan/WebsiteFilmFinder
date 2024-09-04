@@ -253,12 +253,12 @@
     const newRow = document.createElement('tr');
 
     newRow.innerHTML = `
-      <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium">${country}</td>
-      <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium">${year}</td>
-      <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium">${award}</td>
+      <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium" contenteditable="true">${country}</td>
+      <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium" contenteditable="true">${year}</td>
+      <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium" contenteditable="true">${award}</td>
       <td class="py-2 px-4 border-b border-gray-300 text-center">
         <div class="flex items-center justify-center space-x-2">
-          <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="editAward(this)">Edit</button>
+          <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="saveAward(this)">Save</button>
           <button class="bg-red-500 text-dark-text py-1 px-3 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteAward(this)">Delete</button>
         </div>
       </td>
@@ -270,27 +270,23 @@
       document.getElementById('award-form').reset();
     });
 
-    function editAward(button) {
-      const row = button.parentElement.parentElement.parentElement;
-      const countryCell = row.children[0];
-      const yearCell = row.children[1];
-      const awardCell = row.children[2];
-      const newCountry = prompt("Enter new country:", countryCell.textContent);
-      const newYear = prompt("Enter new year:", yearCell.textContent);
-      const newAward = prompt("Enter new award:", awardCell.textContent);
-      if (newCountry) {
-        countryCell.textContent = newCountry;
-      }
-      if (newYear) {
-        yearCell.textContent = newYear;
-      }
-      if (newAward) {
-        awardCell.textContent = newAward;
-      }
+    function saveAward(button) {
+        //menyimpan data award
+        const awardRow = button.parentElement.parentElement.parentElement;
+        const awardName = awardRow.children[2].textContent;
+        const awardYear = awardRow.children[1].textContent;
+        const awardCountry = awardRow.children[0].textContent;
+        alert('Berhasil Menyimpan: ' + awardName);
+        alert('Berhasil Menyimpan: ' + awardYear);
+        alert('Berhasil Menyimpan: ' + awardCountry);
     }
 
     function deleteAward(button) {
       const row = button.parentElement.parentElement.parentElement;
+      // confirm dialog
+      if (!confirm('Are you sure you want to delete this award?')) {
+        return;
+      }
       row.remove();
     }
         

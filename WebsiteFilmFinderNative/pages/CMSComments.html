@@ -215,43 +215,13 @@
                 </th>
                 <th class="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold">Username</th>
                 <th class="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold">Rate</th>
-                <th class="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold">Drama</th>
+                <th class="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold">Film</th>
                 <th class="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold">Comments</th>
                 <th class="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold">Status</th>
               </tr>
             </thead>
             <tbody id="comments-table-body" class="text-sm">
               <!-- Rows will be added here dynamically -->
-              <tr>
-                <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium text-black">
-                  <input type="checkbox" class="form-checkbox h-4 w-4 text-custom-blue-dark">
-                </td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">user1</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">5</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">Drama A</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">Great drama!</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">Pending</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium text-black">
-                  <input type="checkbox" class="form-checkbox h-4 w-4 text-custom-blue-dark">
-                </td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">user2</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">4</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">Drama B</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">Good drama.</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">Pending</td>
-              </tr>
-              <tr>
-                <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium text-black">
-                  <input type="checkbox" class="form-checkbox h-4 w-4 text-custom-blue-dark">
-                </td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">user3</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">3</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">Drama C</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">Average drama.</td>
-                <td class="py-3 px-4 border-b border-custom-gray text-left text-sm font-semibold">Pending</td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -275,12 +245,26 @@
     const toggleIcon = document.getElementById('toggle-icon');
     const logoutText = document.getElementById('logout-text');
     const submenu = document.querySelectorAll('.submenu');
-
-    // Code di bawah masih error yang mempengaruhi script tampilan sidebar
-    // document.getElementById('select-all').addEventListener('change', function() {
-    //   const checkboxes = document.querySelectorAll('#comments-table-body input[type="checkbox"]');
-    //   checkboxes.forEach(checkbox => checkbox.checked = this.checked);
-    // });
+    // Sample comments data
+    const comments = [
+      { user: 'John Doe', comment: 'Great movie!', rating: 5, film: 'Avatar', status: 'Pending' },
+      { user: 'Jane Smith', comment: 'Not bad.', rating: 3, film: 'Snowdrop', status: 'Pending' },
+      { user: 'Alice Johnson', comment: 'I loved it!', rating: 5, film: 'Transformer', status: 'Approved' },
+      { user: 'Bob Brown', comment: 'Could be better.', rating: 2, film: 'Spiderman', status: 'Pending' },
+      { user: 'Charlie Davis', comment: 'I hated it.', rating: 1, film: 'The Avengers', status: 'Pending' },
+      { user: 'Eve Wilson', comment: 'It was okay.', rating: 3, film: 'The Dark Knight', status: 'Pending' },
+      { user: 'Grace Lee', comment: 'I want my money back.', rating: 1, film: 'The Matrix', status: 'Pending' },
+      { user: 'Henry Clark', comment: 'I fell asleep.', rating: 1, film: 'The Lord of the Rings', status: 'Pending'},
+      { user: 'Ivy Rodriguez', comment: 'I want more!', rating: 4, film: 'The Hobbit', status: 'Pending'},
+      { user: 'Jack White', comment: 'I want to watch it again!', rating: 5, film: 'The Lion King', status: 'Pending'},
+      { user: 'Katie Green', comment: 'I want to watch it again!', rating: 5, film: 'The Lion King', status: 'Pending'},
+      { user: 'Liam Hall', comment: 'I want to watch it again!', rating: 5, film: 'The Lion King', status: 'Pending'},
+      { user : 'Mia Young', comment: 'I want to watch it again!', rating: 5, film: 'The Lion King', status: 'Pending'},
+      { user : 'Noah King', comment: 'I want to watch it again!', rating: 5, film: 'The Lion King', status: 'Pending'},
+      { user : 'Olivia Baker', comment: 'I want to watch it again!', rating: 5, film: 'The Lion King', status: 'Pending'},
+      { user : 'Peter Hill', comment: 'I want to watch it again!', rating: 5, film: 'The Lion King', status: 'Pending'},
+      { user : 'Qu inn Young', comment: 'I want to watch it again!', rating: 5, film: 'The Lion King', status: 'Pending'}
+    ];
 
     document.getElementById('select-all-bottom').addEventListener('change', function() {
       const checkboxes = document.querySelectorAll('#comments-table-body input[type="checkbox"]');
@@ -300,9 +284,54 @@
       const checkboxes = document.querySelectorAll('#comments-table-body input[type="checkbox"]:checked');
       checkboxes.forEach(checkbox => {
         const row = checkbox.parentElement.parentElement;
+        // Confirm deletion
+        if (!confirm(`Are you sure you want to delete the comment by ${row.children[1].textContent}?`)) return;
         row.remove();
       });
     }
+
+    function renderComments(comments) {
+      const tableBody = document.getElementById('comments-table-body');
+      tableBody.innerHTML = '';
+      comments.forEach(comment => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium"><input type="checkbox"></td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium">${comment.user}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium">${comment.rating}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium">${comment.film}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium">${comment.comment}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium">${comment.status}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function applyFilters() {
+      const rating = document.getElementById('filter-rating').value;
+      const limit = parseInt(document.getElementById('filter-comments').value, 10);
+      const searchTerm = document.getElementById('search-comments').value.toLowerCase();
+
+      let filteredComments = comments;
+
+      if (rating) {
+        filteredComments = filteredComments.filter(comment => comment.rating == rating);
+      }
+
+      if (searchTerm) {
+        filteredComments = filteredComments.filter(comment => comment.comment.toLowerCase().includes(searchTerm));
+      }
+
+      renderComments(filteredComments.slice(0, limit));
+    }
+
+    document.getElementById('filter-rating').addEventListener('change', applyFilters);
+    document.getElementById('filter-comments').addEventListener('change', applyFilters);
+    document.getElementById('search-comments').addEventListener('input', applyFilters);
+
+    // Initial render
+    renderComments(comments);
+    
     // Minimize sidebar logic  
     toggleButton.addEventListener('click', () => {
     sidebar.classList.toggle('expanded');

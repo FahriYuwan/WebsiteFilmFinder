@@ -267,13 +267,13 @@
       reader.onload = function(e) {
         const imageUrl = e.target.result;
         newRow.innerHTML = `
-          <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium">${country}</td>
-          <td class="py-2 px-4 border-b border-gray-300 text-sm">${actorName}</td>
-          <td class="py-2 px-4 border-b border-gray-300 text-sm">${birthDate}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm font-medium" contenteditable="true">${country}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm" contenteditable="true">${actorName}</td>
+          <td class="py-2 px-4 border-b border-gray-300 text-sm" contenteditable="true">${birthDate}</td>
           <td class="py-2 px-4 border-b border-gray-300 text-sm"><img src="${imageUrl}" alt="${actorName}" class="h-32 w-32 object-cover rounded-full"></td>
           <td class="py-2 px-4 border-b border-gray-300 text-center">
             <div class="flex justify-center space-x-2">
-              <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="editActor(this)">Edit</button>
+              <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="saveActor(this)">Save</button>
               <button class="bg-red-500 text-dark-text py-1 px-3 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteActor(this)">Delete</button>
             </div>
           </td>
@@ -286,27 +286,20 @@
       document.getElementById('actor-form').reset();
     });
 
-    function editActor(button) {
-      const row = button.parentElement.parentElement.parentElement;
-      const countryCell = row.children[0];
-      const actorNameCell = row.children[1];
-      const birthDateCell = row.children[2];
-      const newCountry = prompt("Enter new country:", countryCell.textContent);
-      const newActorName = prompt("Enter new actor name:", actorNameCell.textContent);
-      const newBirthDate = prompt("Enter new birth date:", birthDateCell.textContent);
-      if (newCountry) {
-        countryCell.textContent = newCountry;
-      }
-      if (newActorName) {
-        actorNameCell.textContent = newActorName;
-      }
-      if (newBirthDate) {
-        birthDateCell.textContent = newBirthDate;
-      }
+    function saveActor(button) {
+        const row = button.parentElement.parentElement.parentElement;
+        const actorName = row.querySelector('td').textContent;
+        const country = row.querySelector('td:nth-child(2)').textContent;
+        const birthDate = row.querySelector('td:nth-child(3)').textContent;
+        alert('Berhasil Menyimpan: ' + actorName);
+        alert('Berhasil Menyimpan: ' + country);
+        alert('Berhasil Menyimpan: ' + birthDate);
     }
 
     function deleteActor(button) {
       const row = button.parentElement.parentElement.parentElement;
+      // Confirm dialog
+      if (!confirm('Are you sure you want to delete this actor?')) return;
       row.remove();
     }
     // Minimize sidebar logic  

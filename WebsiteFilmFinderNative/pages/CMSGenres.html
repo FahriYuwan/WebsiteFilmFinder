@@ -201,7 +201,7 @@
         <thead>
           <tr>
             <th class="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold">Genre Name</th>
-            <th class="py-3 px-4 border-b border-custom-gray text-center text-sm font-bold">Actions</th>
+            <th class="py-3 px-4 border-b border-custom-gray text-center text-sm font-bold" style="width: 200px;">Actions</th>
           </tr>
         </thead>
         <tbody id="genres-table-body" class="text-sm">
@@ -226,10 +226,10 @@
     const newRow = document.createElement('tr');
 
     newRow.innerHTML = `
-      <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium text-dark-text">${genreName}</td>
+      <td class="py-2 px-4 border-b border-custom-gray text-sm font-medium text-dark-text" contenteditable="true">${genreName}</td>
       <td class="py-2 px-4 border-b border-custom-gray text-center">
         <div class="flex justify-center space-x-2">
-          <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark"" onclick="renameGenre(this)">Rename</button>
+          <button class="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onclick="saveGenre(this)">Save</button>
           <button class="bg-red-500 text-dark-text py-1 px-3 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onclick="deleteGenre(this)">Delete</button>
         </div>
       </td>
@@ -241,17 +241,17 @@
     document.getElementById('genre-form').reset();
   });
 
-  function renameGenre(button) {
-    const row = button.parentElement.parentElement.parentElement;
-    const genreCell = row.children[0];
-    const newGenreName = prompt("Enter new genre name:", genreCell.textContent);
-    if (newGenreName) {
-      genreCell.textContent = newGenreName;
+  function saveGenre(button) {
+        const row = button.parentElement.parentElement.parentElement;
+        const genreName = row.querySelector('td').textContent;
+        alert('Berhasil Menyimpan: ' + genreName);
     }
-  }
 
   function deleteGenre(button) {
     const row = button.parentElement.parentElement.parentElement;
+    if (!confirm('Are you sure you want to delete this Genre?')) {
+        return;
+      }
     row.remove();
   }
     // Minimize sidebar logic  
