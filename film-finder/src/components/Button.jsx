@@ -2,22 +2,23 @@ import PropTypes from 'prop-types';
 
 function Button(props) {
 return (
-    <button
-        type={props.type}
-        className="w-64 bg-custom-blue-dark text-white py-2 px-4 rounded-md hover:bg-custom-orange focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-    >
-        {props.text}
-    </button>
+        <button 
+          onClick={props.onClick} 
+          className={`rounded ${props.className}`}>
+          {props.text}
+      </button>
 );
 }
 
 Button.propTypes = {
-  type: PropTypes.string,
+  onClick: PropTypes.string,
   text: PropTypes.string.isRequired,
+  className: PropTypes.string
 };
 
 Button.defaultProps = {
-  type: 'button',
+  onClick: "",
+  className: ""
 };
 
 export default Button;

@@ -1,0 +1,10 @@
+[
+    { "imgSrc": "../src/assets/images/wednesday.jpg", "title": "Wednesday", "description": "Netflix Movie" },
+    { "imgSrc": "../src/assets/images/blackmirror.avif", "title": "Black Mirror", "description": "Netflix" },
+    { "imgSrc": "../src/assets/images/queengambit.jpg", "title": "The Queen Gambit", "description": "Netflix" },
+    { "imgSrc": "../src/assets/images/dark.jpg", "title": "Dark", "description": "Netflix" },
+    { "imgSrc": "../src/assets/images/wednesday.jpg", "title": "Wednesday 2", "description": "Netflix Movie" },
+    { "imgSrc": "../src/assets/images/blackmirror.avif", "title": "Black Mirror 2", "description": "Netflix" },
+    { "imgSrc": "../src/assets/images/queengambit.jpg", "title": "The Queen Gambit 2", "description": "Netflix" },
+    { "imgSrc": "../src/assets/images/dark.jpg", "title": "Dark 2", "description": "Netflix" }
+  ]

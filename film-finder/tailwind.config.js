@@ -7,14 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        'custom-blue-dark': '#3D5A80',
-        'custom-blue-light': '#98C1D9',
-        'custom-orange': '#EE6C4D',
-        'custom-white': '#FFFFFF',
-        'custom-blue': '#293241',
-      },
-    },
+        'dark-bg': '#1F2937',
+        'dark-hover': '#334155',
+        'dark-text': '#F9FAFB',
+        'dark-accent': '#EE6C4D',
+        'dark-border': '#374151',
+        'dark-card-bg': '#2D3748',
+        'dark-card-border': '#4A5568',
+      }
+    }
   },
   plugins: [],
 }
-
