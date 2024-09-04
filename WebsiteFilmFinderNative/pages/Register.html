@@ -1,5 +1,5 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +9,13 @@
       theme: {
         extend: {
           colors: {
-            'custom-blue-dark': '#3D5A80',
-            'custom-blue-light': '#98C1D9',
-            'custom-orange': '#EE6C4D',
-            'custom-white': '#FFFFFF',
-            'custom-blue': '#293241',
+            'dark-bg': '#1F2937',  /* Dark gray-blue */
+            'dark-hover': '#334155', /* Slightly lighter gray-blue */
+            'dark-text': '#F9FAFB', /* Very light gray */
+            'dark-accent': '#EE6C4D', /* Custom orange for accents */
+            'dark-border': '#374151', /* Darker gray for borders */
+            'dark-card-bg': '#2D3748', /* Darker gray-blue for cards */
+            'dark-card-border': '#4A5568', /* Slightly lighter gray for card borders */
           }
         }
       }
@@ -22,15 +24,17 @@
   <link rel="stylesheet" href="styles.css">
   <title>Register Page</title>
 </head>
-<body class="bg-gray-100">
-  <div class="flex flex-col items-center justify-center min-h-screen">
-    <div class="max-w-md w-full p-8 space-y-6 bg-white rounded-lg shadow-md">
+<body class="bg-gray-100 w-full" style="background-image: url('../src/img/Background.png'); background-size: cover; background-position: center;">
+  <!-- Overlay untuk efek gelap -->
+  <div class="absolute inset-0 bg-black opacity-50"></div>
+  <div class="flex flex-col items-center justify-center min-h-screen relative z-10">
+    <div class="max-w-md w-full p-6 space-y-4 bg-gray-800 rounded-lg shadow-md">
       <div class="text-center">
         <img class="mx-auto h-[150px] w-auto" src="../images/full-logo.png" alt="Logo">
-        <h2 class="text-3xl ml-8 font-extrabold text-gray-900">
+        <h2 class="text-3xl ml-8 font-extrabold text-white">
           Create an Account 🎉
         </h2>
-        <p class="mt-2 text-sm text-gray-600">
+        <p class="mt-2 text-sm text-gray-400">
           Please fill in the details to create your account
         </p>
       </div>
@@ -64,7 +68,7 @@
 
         <div>
           <button type="submit"
-            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-custom-blue-dark hover:bg-custom-orange focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-dark-accent hover:bg-dark-border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Register
           </button>
         </div>
@@ -76,14 +80,14 @@
             <div class="w-full border-t border-gray-300"></div>
           </div>
           <div class="relative flex justify-center text-sm">
-            <span class="px-2 bg-white text-gray-500">Or continue with</span>
+            <span class="px-2 bg-white text-dark-500">Or continue with</span>
           </div>
         </div>
 
         <div class="mt-6 grid grid-cols-1 gap-1">
           <div>
             <a href="#"
-              class="w-full inline-flex justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+              class="w-full inline-flex justify-center py-3 px-4 border border-dark-border rounded-md shadow-sm bg-dark-border text-sm font-medium text-gray-500 hover:bg-white">
               <span class="sr-only">Sign up with Google</span>
               <img src="./../images/google-login.png" alt="Google Logo" class="h-6 w-6">
             </a>
@@ -91,7 +95,7 @@
         </div>
       </div>
 
-      <div class="mt-6 text-center text-sm text-gray-600">
+      <div class="mt-6 text-center text-sm text-gray-300">
         Already have an account? <a href="login.html" class="font-medium text-indigo-600 hover:text-indigo-500">Login</a>
       </div>
     </div>

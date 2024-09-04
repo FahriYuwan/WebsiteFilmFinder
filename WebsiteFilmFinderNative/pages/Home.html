@@ -1,5 +1,5 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +9,13 @@
       theme: {
         extend: {
           colors: {
-            'custom-blue-dark': '#3D5A80',
-            'custom-blue-light': '#98C1D9',
-            'custom-orange': '#EE6C4D',
-            'custom-white': '#FFFFFF',
-            'custom-blue': '#293241',
+            'dark-bg': '#1F2937',  /* Dark gray-blue */
+            'dark-hover': '#334155', /* Slightly lighter gray-blue */
+            'dark-text': '#F9FAFB', /* Very light gray */
+            'dark-accent': '#EE6C4D', /* Custom orange for accents */
+            'dark-border': '#374151', /* Darker gray for borders */
+            'dark-card-bg': '#2D3748', /* Darker gray-blue for cards */
+            'dark-card-border': '#4A5568', /* Slightly lighter gray for card borders */
           }
         }
       }
@@ -22,23 +24,27 @@
   <link rel="stylesheet" href="styles.css">
   <title>Film Finder🎬</title>
 </head>
+
 <body class="bg-gray-900 text-white">
   <!-- Navbar -->
   <nav class="flex items-center justify-between p-4 bg-gray-800">
     <img src="..\src\img\just-text.png" id="sidebar-logo" class="w-60 overflow-hidden transition-all" alt="Logo" />
     <!-- Search bar with button -->
-    <div class="flex items-center space-x-2">
+    <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
       <input 
+        id="searchInput"
         type="text" 
         placeholder="Search movies, logos..." 
-        class="w-96 px-4 py-2 text-gray-700 bg-white rounded-l focus:outline-none"
+        class="w-full sm:w-96 px-4 py-2 text-gray-700 bg-white rounded sm:rounded-l focus:outline-none"
       />
-      <button class="px-4 py-2 bg-red-600 text-white font-semibold rounded-r">
+      <button class=" w-full sm:w-auto px-5 py-2 font-semibold bg-custom-blue-light text-dark-text rounded sm:rounded-r">
         Search
       </button>
     </div>
-    <div>
-      <button class="px-4 py-2 bg-red-600 rounded">Sign In</button>
+    <div class="mt-2 sm:mt-0">
+      <a href="Login.html" class="text-white font-semibold">
+        <button class="w-full sm:w-auto bg-dark-hover px-5 py-3 font-semibold text-dark-text rounded">Sign In</button>
+      </a>
     </div>
   </nav>
   <!-- Grid Container -->
@@ -135,3 +141,25 @@
   </div>
 </body>
 </html>
+
+<script>
+  //mencari film berdasarkan judul film menggunakan event listener
+  document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('searchInput');
+  const cards = document.querySelectorAll('.max-w-sm');
+
+  searchInput.addEventListener('input', function() {
+    const searchTerm = searchInput.value.toLowerCase();
+
+    cards.forEach(card => {
+      const title = card.querySelector('.text-black.text-xl').textContent.toLowerCase();
+      if (title.includes(searchTerm)) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+
+</script>
