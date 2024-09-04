@@ -14,6 +14,19 @@ body {
   align-items: center;
 }
 
+.status-button.pending {
+  background-color: gray;
+  color: white;
+}
+.status-button.approved {
+  background-color: green;
+  color: white;
+}
+.status-button.unapproved {
+  background-color: red;
+  color: white;
+}
+
 .bg-gray-100 {
   position: fixed;
   top: 0;
