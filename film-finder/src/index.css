@@ -186,3 +186,23 @@ stroke: #EE6C4D; /* Warna ikon untuk item aktif */
   }
 }
 
+.sidebar {
+  width: 250px;
+  transition: width 0.3s;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.logout-text.hidden {
+  display: none;
+}
+
+.submenu.expanded {
+  display: block;
+}
+
+.submenu {
+  display: none;
+}
