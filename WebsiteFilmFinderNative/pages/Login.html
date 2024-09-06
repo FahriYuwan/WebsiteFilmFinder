@@ -108,3 +108,19 @@
 
 </body>
 </html>
+
+<script>
+  //logic login with example username and password
+  const form = document.querySelector('form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    if (username === 'admin' && password === 'admin') {
+      alert('Login Success');
+      window.location.href = 'Home.html';
+    } else {
+      alert('Login Failed');
+    }
+  });
+</script>
