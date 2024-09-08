@@ -169,4 +169,16 @@ stroke: #EE6C4D; /* Warna ikon untuk item aktif */
     }
 }
 
+#popup {
+  transition: opacity 0.3s ease-in-out;
+}
 
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#popup.show {
+  opacity: 1;
+  visibility: visible;
+}
