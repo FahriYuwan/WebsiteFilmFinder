@@ -22,17 +22,20 @@ const CMSCountries = () => {
       id: countries.length + 1,
       name: countryName,
     };
-    setCountries([...countries, newCountry]);
+    setCountries([...countries, newCountry]); // Add new country to the list
     setCountryName(''); // Clear input after submission
   };
 
   const handleDelete = (id) => {
+    if (!window.confirm('Are you sure you want to delete this country?')) {
+      return;
+    }
     setCountries(countries.filter((country) => country.id !== id));
   };
 
-  const handleSave = (id) => {
-    const newName = document.querySelector(`[contenteditable][data-id="${id}"]`).textContent;
-    setCountries(countries.map((country) => (country.id === id ? { ...country, name: newName } : country)));
+  const handleSave = () => {
+    //alert the user that the data has been saved
+    alert('Data has been saved!');
   };
 
   const columns = [
@@ -42,7 +45,13 @@ const CMSCountries = () => {
   return (
     //Sidebar
     <>
-    <Sidebar/>
+      {/* active_country: PropTypes.bool,
+      active_awards: PropTypes.bool,
+      active_genres: PropTypes.bool,
+      active_actors: PropTypes.bool,
+      active_comments: PropTypes.bool,
+      active_users: PropTypes.bool, */}
+    <Sidebar active_country ={true}/>
     <div className="flex-1 flex flex-col items-center p-10 bg-gray-800 text-dark-text">
       {/* Form Section */}
       <div className="bg-dark-card-bg text-dark-text p-8 rounded-lg shadow-md w-full max-w-xl mb-8">
@@ -72,6 +81,6 @@ const CMSCountries = () => {
     </div>
     </>
   );
-};
+}
 
 export default CMSCountries;

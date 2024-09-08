@@ -3,29 +3,13 @@
 @tailwind utilities;
 
 html, body, #root {
-  height: 100%;
+  height: 100% auto;
   width: 100%;
   margin: 0;
   padding: 0;
-}
-
-body {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.status-button.pending {
-  background-color: gray;
-  color: white;
-}
-.status-button.approved {
-  background-color: green;
-  color: white;
-}
-.status-button.unapproved {
-  background-color: red;
-  color: white;
+  font-family: Arial, sans-serif;
+  justify-content: flex-start; /* Ubah dari center ke flex-start */
 }
 
 table {
@@ -44,6 +28,19 @@ button {
   padding: 4px 8px;
   margin: 2px;
   font-size: 0.875rem; /* Ukuran font tombol */
+}
+
+.status-button.pending {
+  background-color: gray;
+  color: white;
+}
+.status-button.approved {
+  background-color: green;
+  color: white;
+}
+.status-button.unapproved {
+  background-color: red;
+  color: white;
 }
 
 .custom-blue-dark {
@@ -186,3 +183,16 @@ stroke: #EE6C4D; /* Warna ikon untuk item aktif */
   }
 }
 
+#popup {
+transition: opacity 0.3s ease-in-out;
+}
+
+.hidden {
+opacity: 0;
+visibility: hidden;
+}
+
+#popup.show {
+opacity: 1;
+visibility: visible;
+}

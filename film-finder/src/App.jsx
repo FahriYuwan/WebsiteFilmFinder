@@ -4,6 +4,7 @@ import Login from './pages/Login/LoginPage'
 import Home from './pages/Home/Home';
 import Register from './pages/Registrasi/RegisterPage';
 import CMSCountries from './pages/CMS/CMSCountries/CMSCountries';
+import CMSAwards from './pages/CMS/CMSAwards/CMSAwards';
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           {/* Route untuk halaman CMS Countries */}
           <Route path="/CMSCountries" element={<CMSCountries />}/>
+          {/* Route untuk halaman CMS Awards */}
+          <Route path="/CMSAwards" element={<CMSAwards />}/>
         </Routes>
       </Router>
     </>
