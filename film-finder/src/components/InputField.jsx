@@ -13,6 +13,7 @@ function InputField(props){
         onChange={props.onChange}
         className="w-full text-black px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
         required 
+        accept={props.accept}
       />
     </div>
   );
@@ -25,6 +26,7 @@ InputField.propTypes = {
   placeholder: PropType.string.isRequired,
   value: PropType.string.isRequired,
   onChange: PropType.func.isRequired,
+  accept: PropType.string
 };
 
 export default InputField;

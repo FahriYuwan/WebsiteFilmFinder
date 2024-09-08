@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 const CMSTable = (props) => {
   return (
     <div className="overflow-x-auto">
@@ -26,7 +27,11 @@ const CMSTable = (props) => {
                   className="py-2 px-4 border-b border-gray-300 text-sm font-medium"
                   contentEditable={column.editable}
                 >
-                  {row[column.accessor]}
+                  {column.accessor === 'picture' ? (
+                    <img src={row[column.accessor]} alt="Actor" className="h-10 w-10 object-cover rounded-full" />
+                  ) : (
+                    row[column.accessor]
+                  )}
                 </td>
               ))}
               <td className="py-2 px-4 border-b border-gray-300 text-center">
@@ -52,6 +57,7 @@ const CMSTable = (props) => {
     </div>
   );
 };
+
 CMSTable.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({
     Header: PropTypes.string,
@@ -63,4 +69,5 @@ CMSTable.propTypes = {
   handleSave: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
 };
+
 export default CMSTable;

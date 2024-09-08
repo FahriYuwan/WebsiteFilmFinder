@@ -45,12 +45,6 @@ const CMSCountries = () => {
   return (
     //Sidebar
     <>
-      {/* active_country: PropTypes.bool,
-      active_awards: PropTypes.bool,
-      active_genres: PropTypes.bool,
-      active_actors: PropTypes.bool,
-      active_comments: PropTypes.bool,
-      active_users: PropTypes.bool, */}
     <Sidebar active_country ={true}/>
     <div className="flex-1 flex flex-col items-center p-10 bg-gray-800 text-dark-text">
       {/* Form Section */}
