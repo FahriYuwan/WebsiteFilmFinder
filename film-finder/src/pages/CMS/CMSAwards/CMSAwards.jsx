@@ -18,9 +18,14 @@ function CMSAwards() {
 
     // Array of awards
     const handleInputChange = (e) => {
-        setCountry(e.target.value);
-        setAward(e.target.value);
-        setYear(e.target.value);
+        const { name, value } = e.target;
+        if (name === 'country') {
+            setCountry(value);
+        } else if (name === 'award') {
+            setAward(value);
+        } else if (name === 'year') {
+            setYear(value);
+        }
     };
     
     // Add new award to the list
@@ -77,7 +82,8 @@ function CMSAwards() {
                 <label htmlFor="award-name" className="block text-sm font-medium text-dark-text">Year</label>
                 <InputField type="text" id="year" name="year" placeholder="Enter year" value={year} onChange={handleInputChange}/>
             </div>
-            <Button type="submit" className="w-full bg-dark-accent text-dark-text py-3 px-4 hover:bg-dark-hover focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-dark-accent text-sm font-medium"/>
+            <Button type="submit" className="w-full bg-dark-accent text-dark-text py-3 px-4 hover:bg-dark-hover focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-dark-accent text-sm font-medium"
+            text='Submit'/>
             </form>
         </div>
         {/* Table Section */}
