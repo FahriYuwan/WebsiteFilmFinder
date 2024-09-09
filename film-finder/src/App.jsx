@@ -9,7 +9,7 @@ import DetailPage from './pages/Detail/DetailPage';
 import CMSGenres from './pages/CMS/CMSGenres/CMSGenres';
 import CMSActors from './pages/CMS/CMSActors/CMSActors';
 import CMSComments from './pages/CMS/CMSComments/CMSComments';
-
+import CMSUsers from './pages/CMS/CMSUsers/CMSUsers';
 function App() {
   return (
     <>
@@ -33,6 +33,8 @@ function App() {
           <Route path="/CMSActors" element={<CMSActors />}/>
           {/* Route untuk halaman CMS Comments */}
           <Route path="/CMSComments" element={<CMSComments />}/>
+          {/* Route untuk halaman CMS Users */}
+          <Route path="/CMSUsers" element={<CMSUsers />}/>
         </Routes>
       </Router>
     </>
