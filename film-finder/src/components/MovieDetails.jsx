@@ -1,5 +1,5 @@
 import React from "react";
-
+import wednesdayImg from "../assets/images/wednesday.jpg";
 const MovieDetails = () => {
   return (
     <>
@@ -8,7 +8,7 @@ const MovieDetails = () => {
       <div className="max-w-xs mx-auto rounded overflow-hidden shadow-lg bg-gray-100">
         <img
           className="w-full"
-          src={require("../assets/img/wednesday.jpg")}
+          src={wednesdayImg}
           alt="Random Image"
         />
       </div>

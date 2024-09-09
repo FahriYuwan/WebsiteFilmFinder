@@ -1,4 +1,5 @@
 import React from "react";
+import imgJennaOrtega from "../assets/images/Jenna_Ortega.jpg";
 
 const Comments = () => {
   return (
@@ -9,7 +10,7 @@ const Comments = () => {
           <div key={index} className="flex flex-col items-center">
             <div className="w-40 h-40 bg-gray-200 rounded overflow-hidden">
               <img
-                src={require("../assets/img/Jenna_Ortega.jpg")}
+                src={imgJennaOrtega}
                 alt="Jenna Ortega"
                 className="w-full h-full object-cover"
               />
