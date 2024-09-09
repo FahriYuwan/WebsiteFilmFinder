@@ -8,6 +8,7 @@ import CMSAwards from './pages/CMS/CMSAwards/CMSAwards';
 import DetailPage from './pages/Detail/DetailPage';
 import CMSGenres from './pages/CMS/CMSGenres/CMSGenres';
 import CMSActors from './pages/CMS/CMSActors/CMSActors';
+import CMSComments from './pages/CMS/CMSComments/CMSComments';
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
           <Route path="/CMSGenres" element={<CMSGenres />}/>
           {/* Route untuk halaman CMS Actors */}
           <Route path="/CMSActors" element={<CMSActors />}/>
+          {/* Route untuk halaman CMS Comments */}
+          <Route path="/CMSComments" element={<CMSComments />}/>
         </Routes>
       </Router>
     </>

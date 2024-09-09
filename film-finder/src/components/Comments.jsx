@@ -1,4 +1,3 @@
-import React from "react";
 import imgJennaOrtega from "../assets/images/Jenna_Ortega.jpg";
 
 const Comments = () => {

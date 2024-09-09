@@ -1,4 +1,3 @@
-import React from "react";
 import wednesdayImg from "../assets/images/wednesday.jpg";
 const MovieDetails = () => {
   return (
