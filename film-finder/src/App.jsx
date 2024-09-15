@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/LoginPage'
 import Home from './pages/Home/Home';
 import Register from './pages/Registrasi/RegisterPage';
+import SearchResultsPages from './pages/Result/SearchResultPage.jsx';
 import CMSCountries from './pages/CMS/CMSCountries/CMSCountries';
 import CMSAwards from './pages/CMS/CMSAwards/CMSAwards';
 import DetailPage from './pages/Detail/DetailPage';
@@ -25,6 +26,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           {/* Route untuk halaman DetailPage */}
           <Route path="/DetailPage" element={<DetailPage />} />
+          {/* Route untuk halaman SearchResultPages */}
+          <Route path="/SearchResultPages" element={<SearchResultsPages />} />
           {/* Route untuk halaman CMS Countries */}
           <Route path="/CMSCountries" element={<CMSCountries />}/>
           {/* Route untuk halaman CMS Awards */}
