@@ -10,6 +10,8 @@ import CMSGenres from './pages/CMS/CMSGenres/CMSGenres';
 import CMSActors from './pages/CMS/CMSActors/CMSActors';
 import CMSComments from './pages/CMS/CMSComments/CMSComments';
 import CMSUsers from './pages/CMS/CMSUsers/CMSUsers';
+import CMSDrama from './pages/CMS/CMSDrama/CMSDrama';
+import CMSDramaInput from './pages/CMS/CMSDramaInput/CMSDramaInput';
 function App() {
   return (
     <>
@@ -35,6 +37,10 @@ function App() {
           <Route path="/CMSComments" element={<CMSComments />}/>
           {/* Route untuk halaman CMS Users */}
           <Route path="/CMSUsers" element={<CMSUsers />}/>
+          {/* Route untuk halaman CMS Drama */}
+          <Route path="/CMSDrama" element={<CMSDrama />}/>
+          {/* Route untuk halaman CMS Drama Input */}
+          <Route path="/CMSDramaInput" element={<CMSDramaInput />}/>
         </Routes>
       </Router>
     </>

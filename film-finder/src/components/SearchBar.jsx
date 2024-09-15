@@ -1,14 +1,25 @@
-
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import PropTypes from 'prop-types';
 
 function SearchBar(props) {
   const navigate = useNavigate();
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleSignInClick = () => {
     navigate('/login');
   };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  useEffect(() => {
+    if (isFocused) {
+      navigate('/SearchResultPage');
+    }
+  }, [isFocused, navigate]);
 
   return (
     <>
@@ -17,6 +28,7 @@ function SearchBar(props) {
           type="text" 
           value={props.searchTerm}
           onChange={props.handleInputChange}
+          onFocus={handleFocus}
           placeholder="Search movies, logos..." 
           className="w-full sm:w-96 px-4 py-2 text-gray-700 bg-white rounded sm:rounded-l focus:outline-none"
         />
@@ -32,10 +44,10 @@ function SearchBar(props) {
     </>
   );
 }
+
 SearchBar.propTypes = {
   searchTerm: PropTypes.string.isRequired,
   handleInputChange: PropTypes.func.isRequired
 };
-
 
 export default SearchBar;
