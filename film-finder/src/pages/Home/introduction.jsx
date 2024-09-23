@@ -1,11 +1,10 @@
-import React from 'react';
-import './index.css'; // Path ke file CSS kamu
+import logo from '../../assets/images/full-logo.png';
 
-const App = () => {
+const Introduction = () => {
   return (
-    <div className="bg-gray-900 text-dark-text flex justify-center items-center min-h-screen">
+    <div className="bg-gray-900 text-dark-text flex justify-center items-center min-h-screen max-w-screen-lg mx-auto">
       <div className="text-center max-w-lg mx-auto">
-        <img className="mx-auto h-[150px] w-auto" src={require('./assets/images/full-logo.png')} alt="Logo" />
+        <img className="mx-auto h-[150px] w-auto" src={logo} alt="Logo" />
         <h1 className="text-4xl font-extrabold text-white">
           Temukan Film, Drama, Series, Anime dan banyak lagi di Film Finder🎬
         </h1>
@@ -19,9 +18,12 @@ const App = () => {
             Login
           </a>
         </div>
+        <p className="mt-2 text-sm text-gray-400">
+          atau langsung mau pergi ke <a href="/home" className="text-indigo-500 hover:underline">home</a> saja?
+        </p>
       </div>
     </div>
   );
 }
 
-export default App;
+export default Introduction;

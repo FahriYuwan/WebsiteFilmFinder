@@ -13,11 +13,14 @@ import CMSComments from './pages/CMS/CMSComments/CMSComments';
 import CMSUsers from './pages/CMS/CMSUsers/CMSUsers';
 import CMSDrama from './pages/CMS/CMSDrama/CMSDrama';
 import CMSDramaInput from './pages/CMS/CMSDramaInput/CMSDramaInput';
+import Introduction from './pages/Home/introduction';
 function App() {
   return (
     <>
       <Router>
         <Routes>
+          {/* Route untuk halaman Utama */}
+          <Route path="/" element={<Introduction/>} />
           {/* Route untuk halaman Login */}
           <Route path="/login" element={<Login />} />
           {/* Route untuk halaman CMSCountries */}
