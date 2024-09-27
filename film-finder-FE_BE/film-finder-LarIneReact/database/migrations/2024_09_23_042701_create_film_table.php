@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('duration');
             $table->string('url_banner', 255)->nullable();
             $table->string('url_trailer', 255)->nullable();
-            $table->decimal('rating_film', 3, 1);
+            $table->decimal('rating_film', 3, 1)->default(0);
             $table->text('synopsis')->nullable();
             $table->string('status', 20)->default('pending');
             $table->foreignId('countries_id')->constrained('countries', 'countries_id');

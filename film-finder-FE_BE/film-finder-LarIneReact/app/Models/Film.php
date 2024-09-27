@@ -11,6 +11,16 @@ class Film extends Model
     protected $table = 'film'; // Nama tabel yang benar
     protected $primaryKey = 'film_id';
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'film_id', 'film_id');
+    }
+
+    public function averageRating()
+    {
+        return $this->reviews()->avg('rating_user');
+    }
+
     // public function country()
     // {
     //     return $this->belongsTo(Country::class, 'countries_id', 'countries_id');
