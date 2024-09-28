@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Introduction = () => {
   return (
     <div className="text-dark-text flex justify-center items-center min-h-screen max-w-screen-lg mx-auto">
@@ -10,11 +12,18 @@ const Introduction = () => {
           Please login to your account
         </p>
         <div className="flex justify-center mt-4">
-          <a href="/Login"
+          <a href="/login"
             className="w-40 flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-dark-accent hover:bg-dark-border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Login
           </a>
         </div>
+        <p className="mt-2 text-sm text-gray-400">
+          Don't have an account? 
+          <a href="/register"
+            className="text-indigo-500 hover:underline ml-1">
+            Register
+          </a>
+        </p>
         <p className="mt-2 text-sm text-gray-400">
           <button 
               className="text-indigo-500 hover:underline bg-transparent border-none cursor-pointer"
@@ -22,7 +31,7 @@ const Introduction = () => {
           >
               Home
           </button>
-      </p>
+        </p>
       </div>
     </div>
   );

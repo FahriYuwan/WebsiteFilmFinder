@@ -10,7 +10,7 @@ class DetailPageController extends Controller
 {
     public function show($film_id)
     {
-        $film = Film::with('genres')->findOrFail($film_id);
+        $film = Film::with(['genres', 'availabilities', 'actors', 'awards', 'reviews.user'])->findOrFail($film_id);
         return Inertia::render('DetailPage/DetailPage', [
             'film' => $film
         ]);

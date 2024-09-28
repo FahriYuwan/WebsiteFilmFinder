@@ -8,8 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Film extends Model
 {
     use HasFactory;
+
     protected $table = 'films'; // Nama tabel yang benar
     protected $primaryKey = 'film_id';
+
+    protected $fillable = [
+        'title',
+        'alternative_title',
+        'year_release',
+        'duration',
+        'url_banner',
+        'url_trailer',
+        'rating_film',
+        'synopsis',
+        'status'
+    ];
 
     public function reviews()
     {
@@ -21,10 +34,26 @@ class Film extends Model
         return $this->reviews()->avg('rating_user');
     }
 
+    public function actors()
+    {
+        return $this->belongsToMany(Actor::class, 'film_actor', 'film_id', 'actor_id');
+    }
+
+    public function awards()
+    {
+        return $this->belongsToMany(Award::class, 'film_award', 'film_id', 'award_id');
+    }
+    
     public function genres()
     {
-        return $this->belongsToMany(Genre::class, 'film_genre', 'film_id', relatedPivotKey: 'genre_id');
+        return $this->belongsToMany(Genre::class, 'film_genre', 'film_id', 'genre_id');
     }
+
+    public function availabilities()
+    {
+        return $this->belongsToMany(Availability::class, 'film_availability', 'film_id', 'availability_id');
+    }
+}
     // public function country()
     // {
     //     return $this->belongsTo(Country::class, 'countries_id', 'countries_id');
@@ -49,4 +78,3 @@ class Film extends Model
     // {
     //     return $this->hasMany(Review::class, 'film_id', 'film_id');
     // }
-}

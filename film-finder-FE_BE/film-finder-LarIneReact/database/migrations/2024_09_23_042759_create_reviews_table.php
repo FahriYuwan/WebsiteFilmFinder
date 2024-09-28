@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id('review_id');
-            $table->decimal('rating_user', 3, 1);
+            $table->unsignedTinyInteger('rating_user')->check('rating_user >= 1 and rating_user <= 5');
             $table->text('review_text')->nullable();
             $table->timestamp('review_date');
             $table->string('status', 20)->default('pending');

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import Button from './Button';
-import PropTypes from 'prop-types';
 
 function SearchBar(props) {
   // const navigate = useNavigate();
@@ -33,19 +32,9 @@ function SearchBar(props) {
         />
         <Button text="Search" className="w-full sm:w-auto px-5 py-2 font-semibold bg-custom-blue-light text-dark-text rounded sm:rounded-r"/>
       </div>
-      <div className="mt-2 sm:mt-0">
-        <Button 
-          text="Sign in" 
-          className="w-full sm:w-auto bg-dark-hover px-5 py-3 font-semibold text-dark-text rounded"
-        />
-      </div>
     </>
   );
 }
 
-SearchBar.propTypes = {
-  searchTerm: PropTypes.string.isRequired,
-  handleInputChange: PropTypes.func.isRequired
-};
 
 export default SearchBar;

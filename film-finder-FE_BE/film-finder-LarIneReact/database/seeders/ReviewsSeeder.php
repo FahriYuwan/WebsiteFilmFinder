@@ -11,7 +11,7 @@ class ReviewsSeeder extends Seeder
     {
         DB::table('reviews')->insert([
             [
-                'rating_user' => 9.0,
+                'rating_user' => 3,
                 'review_text' => 'Incredible movie!',
                 'review_date' => now(),
                 'status' => 'approved',

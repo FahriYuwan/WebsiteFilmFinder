@@ -15,11 +15,6 @@ function Home() {
     return <div>Loading...</div>;
   }
 
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value.toLowerCase());
-    setCurrentPage(1); // Reset to first page on search
-  };
-
   const filteredMovies = films.data.filter(movie =>
     movie.title.toLowerCase().includes(searchTerm)
   );
@@ -34,16 +29,17 @@ function Home() {
 
   return (
     <div className="bg-gray-900 text-white min-h-screen">
-      <NavBar searchTerm={searchTerm} handleInputChange={handleInputChange} />
+      <NavBar/>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-10">
         {currentMovies.map((movie, index) => {
           console.log("movie:", movie); // Tambahkan logging untuk memeriksa data movie
           return (
             <MovieCard
               key={index}
-              // imgSrc={movie.url_banner} // Sesuaikan dengan kolom di tabel
+              imgSrc={movie.url_banner} // Sesuaikan dengan kolom di tabel
               title={movie.title}
               description={movie.synopsis} // Sesuaikan dengan kolom di tabel
+              id={movie.film_id}
             />
           );
         })}

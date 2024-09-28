@@ -1,24 +1,19 @@
 import PropTypes from 'prop-types';
 
-function Button(props) {
-return (
-        <button 
-          onClick={props.onClick} 
-          className={`rounded ${props.className}`}>
-          {props.text}
-      </button>
-);
+function Button({ onClick = () => {}, text, className = "" }) {
+  return (
+    <button 
+      onClick={onClick} 
+      className={`rounded ${className}`}>
+      {text}
+    </button>
+  );
 }
 
 Button.propTypes = {
-  onClick: PropTypes.string,
+  onClick: PropTypes.func,
   text: PropTypes.string.isRequired,
   className: PropTypes.string
-};
-
-Button.defaultProps = {
-  onClick: "",
-  className: ""
 };
 
 export default Button;
