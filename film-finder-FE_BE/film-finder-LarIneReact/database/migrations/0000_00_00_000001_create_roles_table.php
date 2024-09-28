@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('actor', function (Blueprint $table) {
-            $table->id('actor_id');
-            $table->string('actor_name', 255);
-            $table->string('url_actor', 255);
-            $table->date('birthdate');
-            $table->foreignId('countries_id')->constrained('countries', 'countries_id');
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id('role_id');
+            $table->string('role_name', 100);
             $table->timestamps();
         });
+        
     }
 
     /**
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('actor');
+        Schema::dropIfExists('role');
     }
 };

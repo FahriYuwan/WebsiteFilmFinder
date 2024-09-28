@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('film', function (Blueprint $table) {
+        Schema::create('films', function (Blueprint $table) {
             $table->id('film_id');
             $table->string('title', 255);
             $table->string('alternative_title', 255)->nullable();
@@ -23,8 +23,6 @@ return new class extends Migration
             $table->text('synopsis')->nullable();
             $table->string('status', 20)->default('pending');
             $table->foreignId('countries_id')->constrained('countries', 'countries_id');
-            $table->foreignId('availability_id')->constrained('availability', 'availability_id');
-            $table->foreignId('award_id')->constrained('awards', 'award_id')->nullable();
             $table->timestamps();
         });
         

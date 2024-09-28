@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Film extends Model
 {
     use HasFactory;
-    protected $table = 'film'; // Nama tabel yang benar
+    protected $table = 'films'; // Nama tabel yang benar
     protected $primaryKey = 'film_id';
 
     public function reviews()
@@ -21,6 +21,10 @@ class Film extends Model
         return $this->reviews()->avg('rating_user');
     }
 
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'film_genre', 'film_id', relatedPivotKey: 'genre_id');
+    }
     // public function country()
     // {
     //     return $this->belongsTo(Country::class, 'countries_id', 'countries_id');

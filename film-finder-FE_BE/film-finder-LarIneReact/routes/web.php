@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DetailPageController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,12 @@ Route::get('/', function () {
 Route::get('/didu', function(){
     return Inertia::render('Home/introduction');
 });
+
+// Route::get('/detailpage', function(){
+//     return Inertia::render('DetailPage/DetailPage');
+// });
+
+Route::get('/detailpage/{film_id}', [DetailPageController::class, 'show'])->name('movie.show');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

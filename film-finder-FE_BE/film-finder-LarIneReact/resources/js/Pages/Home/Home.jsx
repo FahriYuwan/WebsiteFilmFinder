@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import MovieCard from "../Components/MovieCard";
-import NavBar from "../Components/NavBar";
-import Pagination from "../Components/Pagination";
+import MovieCard from "../../Components/MovieCard";
+import NavBar from "../../Components/NavBar";
+import Pagination from "../../Components/Pagination";
 import { usePage, router} from '@inertiajs/react';
 
 function Home() {

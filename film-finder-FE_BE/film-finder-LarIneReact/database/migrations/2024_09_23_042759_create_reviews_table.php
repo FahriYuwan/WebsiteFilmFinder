@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('review_text')->nullable();
             $table->timestamp('review_date');
             $table->string('status', 20)->default('pending');
-            $table->foreignId('film_id')->constrained('film', 'film_id');
+            $table->foreignId('film_id')->constrained('films', 'film_id');
             $table->foreignId('user_id')->constrained('users', 'user_id');
             $table->timestamps();
         });

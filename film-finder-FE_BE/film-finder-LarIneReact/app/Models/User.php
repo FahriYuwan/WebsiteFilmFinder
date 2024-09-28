@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'users';
     /**
      * The primary key associated with the table.
      *
@@ -41,6 +42,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
     ];
 
     /**
@@ -65,4 +67,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
 }

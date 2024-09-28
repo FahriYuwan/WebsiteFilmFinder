@@ -11,7 +11,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $films = Film::paginate(8); // Mengambil 8 film per halaman
-        return Inertia::render('Home', [
+        return Inertia::render('Home/Home', [
             'films' => $films,
         ]);
     }
