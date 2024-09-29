@@ -7,6 +7,14 @@ class Review extends Model
 {
     protected $table = 'reviews';
     protected $primaryKey = 'review_id';
+    protected $fillable = [
+        'film_id',
+        'user_id',
+        'rating_user',
+        'review_text',
+        'review_date',
+        'status'
+    ];
 
     public function film()
     {

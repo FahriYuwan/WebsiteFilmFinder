@@ -32,7 +32,13 @@ Route::get('/', function () {
     ]);
 });
 
+Route::post('/reviews', [DetailPageController::class, 'store'])->name('reviews.store');
+
 Route::get('/detailpage/{film_id}', [DetailPageController::class, 'show'])->name('movie.show');
+
+Route::get('/cmsusers', function () {
+    return Inertia::render('CMS/CMSUsers/CMSUsers');
+})->name('cmsuser');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Route::get('/home', [HomeController::class, 'index'] )->middleware(['auth', 'verified'])->name('home');

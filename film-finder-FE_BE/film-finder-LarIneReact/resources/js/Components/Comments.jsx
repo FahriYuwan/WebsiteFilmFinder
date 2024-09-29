@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
-import { usePage } from '@inertiajs/react';
+import { usePage, useForm } from '@inertiajs/react';
 
 const Comments = ({ film }) => {
   const { auth } = usePage().props;
   const user = auth.user;
   const [filter, setFilter] = useState(0);
 
+  const { data, setData, post, processing, errors, reset} = useForm({
+    film_id: film.film_id,
+    rating_user: '',
+    review_text: '',
+  });
+
   const handleFilterChange = (event) => {
     setFilter(parseInt(event.target.value));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    post(route('reviews.store'), {
+      onSuccess: () => reset('rating_user', 'review_text') // Reset fields after successful submission
+    });
   };
 
   const filteredReviews = filter === 0 ? film.reviews : film.reviews.filter(review => review.rating_user === filter);
@@ -76,12 +89,19 @@ const Comments = ({ film }) => {
       </div>
       <div className="p-4 border rounded">
         <h4 className="text-lg font-semibold mb-4">Add yours!</h4>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="rate" className="block text-sm font-medium mb-2">
               Rate
             </label>
-            <select id="rate" className="w-full px-3 py-2 border rounded bg-gray-700" disabled={!user}>
+            <select
+              id="rate"
+              className="w-full px-3 py-2 border rounded bg-gray-700"
+              disabled={!user}
+              value={data.rating_user}
+              onChange={(e) => setData('rating_user', e.target.value)}
+            >
+              <option value="">Select rating</option>
               <option value="0">☆☆☆☆☆</option>
               <option value="1">★☆☆☆☆</option>
               <option value="2">★★☆☆☆</option>
@@ -89,23 +109,27 @@ const Comments = ({ film }) => {
               <option value="4">★★★★☆</option>
               <option value="5">⭐⭐⭐⭐⭐</option>
             </select>
+            {errors.rating_user && <div className="text-red-500 text-sm">{errors.rating_user}</div>}
           </div>
           <div className="mb-4">
-            <label htmlFor="thoughts" className="block text-sm font-medium mb-2 ">
+            <label htmlFor="thoughts" className="block text-sm font-medium mb-2">
               Your thoughts
             </label>
             <textarea
               id="thoughts"
               className="w-full px-3 py-2 border rounded bg-gray-700"
               disabled={!user}
+              value={data.review_text}
+              onChange={(e) => setData('review_text', e.target.value)}
             ></textarea>
+            {errors.review_text && <div className="text-red-500 text-sm">{errors.review_text}</div>}
           </div>
           {!user && (
             <div className="mb-4 text-red-500 text-sm">
               You must be logged in to submit a comment.
             </div>
           )}
-          <button type="submit" className="px-4 py-2 bg-custom-blue-light text-dark-text rounded" disabled={!user}>
+          <button type="submit" className="px-4 py-2 bg-custom-blue-light text-dark-text rounded" disabled={!user || processing}>
             Submit
           </button>
         </form>
