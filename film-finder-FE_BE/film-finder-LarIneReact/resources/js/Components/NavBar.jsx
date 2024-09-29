@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
-import SearchBar from "./SearchBar";
 import { usePage, Link } from '@inertiajs/react';
 import logoImg from "./../assets/images/just-text.png";
-import Button from './Button'; // Pastikan Button diimport
+import Button from './Button'; 
+import SearchBar from './SearchBar';
 
-function NavBar(props) {
+function NavBar({ onSearch }) {
   const { auth } = usePage().props;
   const user = auth.user;
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearch = () => {
+    if (window.location.pathname !== '/searchresultpage') {
+      navigate('/searchresultpage');
+    }
+    onSearch(searchTerm);
+  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -17,11 +29,15 @@ function NavBar(props) {
     <nav className="flex justify-between items-center p-4 bg-gray-800 text-white">
       {/* Logo */}
       <Link href="/home">
-      <img src={logoImg} id="sidebar-logo" className="w-60 overflow-hidden transition-all" alt="Logo" />
+        <img src={logoImg} id="sidebar-logo" className="w-60 overflow-hidden transition-all" alt="Logo" />
       </Link>
       
       {/* SearchBar */}
-      <SearchBar />
+      <SearchBar 
+        searchTerm={searchTerm} 
+        handleInputChange={handleInputChange} 
+        handleSearch={handleSearch} 
+      />
 
       {/* User Info or Sign In Button */}
       <div className="relative">

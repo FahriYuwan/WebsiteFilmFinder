@@ -36,6 +36,10 @@ Route::post('/reviews', [DetailPageController::class, 'store'])->name('reviews.s
 
 Route::get('/detailpage/{film_id}', [DetailPageController::class, 'show'])->name('movie.show');
 
+Route::get('/searchresultpage', function () {
+    return Inertia::render('SearchResultPage/SearchResultPage');
+})->name('searchresultpage');
+
 Route::get('/cmsusers', function () {
     return Inertia::render('CMS/CMSUsers/CMSUsers');
 })->name('cmsuser');

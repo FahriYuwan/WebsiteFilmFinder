@@ -17,7 +17,7 @@ function SearchBar(props) {
 
   useEffect(() => {
     if (isFocused) {
-      navigate('/SearchResultPage');
+      navigate('/SearchResultPages');
     }
   }, [isFocused, navigate]);
 

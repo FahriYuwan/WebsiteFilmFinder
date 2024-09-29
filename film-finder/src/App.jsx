@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login/LoginPage'
 import Home from './pages/Home/Home';
 import Register from './pages/Registrasi/RegisterPage';
-import SearchResultsPages from './pages/Result/SearchResultPage.jsx';
+import SearchResultsPages from './pages/SearchResultPage/SearchResultPage.jsx';
 import CMSCountries from './pages/CMS/CMSCountries/CMSCountries';
 import CMSAwards from './pages/CMS/CMSAwards/CMSAwards';
 import DetailPage from './pages/Detail/DetailPage';
