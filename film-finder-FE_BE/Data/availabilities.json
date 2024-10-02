@@ -1,0 +1,42 @@
+[
+    {
+        "availability_id": 1,
+        "availability_name": "Netflix"
+    },
+    {
+        "availability_id": 2,
+        "availability_name": "Amazon Prime"
+    },
+    {
+        "availability_id": 3,
+        "availability_name": "Hulu"
+    },
+    {
+        "availability_id": 4,
+        "availability_name": "Disney+"
+    },
+    {
+        "availability_id": 5,
+        "availability_name": "HBO Max"
+    },
+    {
+        "availability_id": 6,
+        "availability_name": "Apple TV+"
+    },
+    {
+        "availability_id": 7,
+        "availability_name": "Peacock"
+    },
+    {
+        "availability_id": 8,
+        "availability_name": "Paramount+"
+    },
+    {
+        "availability_id": 9,
+        "availability_name": "YouTube"
+    },
+    {
+        "availability_id": 10,
+        "availability_name": "Vudu"
+    }
+]

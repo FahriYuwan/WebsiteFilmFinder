@@ -3,14 +3,20 @@ import NavBar from '../../components/NavBar';
 import FilterSelect from '../../components/FilterSelect'; 
 import SearchResults from '../../components/SearchResults'; 
 
-const SearchResultPage = () => {
+
+const SearchResultPage = ({film}) => {
+  if (!film) {
+    return <div>Loading...</div>;
+  }
   const [year, setYear] = useState('');
   const [genre, setGenre] = useState('');
   const [status, setStatus] = useState('');
   const [availability, setAvailability] = useState('');
   const [award, setAward] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-
+  const [searchCategory, setSearchCategory] = useState('title');
+  const filmArray = Array.isArray(film) ? film : [];
+  console.log('search Category di search ResultPage', searchCategory);
   const options = {
     year: [
       { value: '', label: 'All' },
@@ -47,13 +53,14 @@ const SearchResultPage = () => {
 
   const filters = { year, genre, status, availability, award };
 
-  const handleSearch = (term) => {
+  const handleSearch = (term,category) => {
     setSearchTerm(term);
+    setSearchCategory(category);
   };
 
   return (
     <div className="bg-gray-900 text-white min-h-screen w-full">
-      <NavBar onSearch={handleSearch} />
+      <NavBar/>
       <div className="w-full p-4">
         <div className="flex justify-center space-x-4 mt-4">
           <FilterSelect
@@ -87,7 +94,7 @@ const SearchResultPage = () => {
             onChange={(e) => setAward(e.target.value)}
           />
         </div>
-        <SearchResults filters={filters} searchTerm={searchTerm} />
+        <SearchResults filters={filters} searchTerm={searchTerm} searchCategory= {searchCategory}film={filmArray} handleSearch={handleSearch}/>
       </div>
     </div>
   );

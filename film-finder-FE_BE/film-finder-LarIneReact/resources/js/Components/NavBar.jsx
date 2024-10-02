@@ -8,18 +8,6 @@ function NavBar({ onSearch }) {
   const { auth } = usePage().props;
   const user = auth.user;
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleSearch = () => {
-    if (window.location.pathname !== '/searchresultpage') {
-      navigate('/searchresultpage');
-    }
-    onSearch(searchTerm);
-  };
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -33,11 +21,9 @@ function NavBar({ onSearch }) {
       </Link>
       
       {/* SearchBar */}
-      <SearchBar 
-        searchTerm={searchTerm} 
-        handleInputChange={handleInputChange} 
-        handleSearch={handleSearch} 
-      />
+      <div className="flex items-center">
+        <SearchBar/>
+      </div>
 
       {/* User Info or Sign In Button */}
       <div className="relative">

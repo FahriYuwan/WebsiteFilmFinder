@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DetailPageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -34,11 +35,14 @@ Route::get('/', function () {
 
 Route::post('/reviews', [DetailPageController::class, 'store'])->name('reviews.store');
 
+Route::get('/api/search',[SearchController::class, 'search']);
 Route::get('/detailpage/{film_id}', [DetailPageController::class, 'show'])->name('movie.show');
 
-Route::get('/searchresultpage', function () {
-    return Inertia::render('SearchResultPage/SearchResultPage');
-})->name('searchresultpage');
+// Route::get('/searchresultpage', function () {
+//     return Inertia::render('SearchResultPage/SearchResultPage');
+// })->name('searchresultpage');
+
+Route::get('/searchresultpage', [SearchController::class, 'search'])->name('searchresultpage.show');
 
 Route::get('/cmsusers', function () {
     return Inertia::render('CMS/CMSUsers/CMSUsers');
