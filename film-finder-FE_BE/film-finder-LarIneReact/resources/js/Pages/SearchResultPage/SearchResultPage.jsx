@@ -13,10 +13,8 @@ const SearchResultPage = ({film}) => {
   const [status, setStatus] = useState('');
   const [availability, setAvailability] = useState('');
   const [award, setAward] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchCategory, setSearchCategory] = useState('title');
+  
   const filmArray = Array.isArray(film) ? film : [];
-  console.log('search Category di search ResultPage', searchCategory);
   const options = {
     year: [
       { value: '', label: 'All' },
@@ -52,11 +50,6 @@ const SearchResultPage = ({film}) => {
   };
 
   const filters = { year, genre, status, availability, award };
-
-  const handleSearch = (term,category) => {
-    setSearchTerm(term);
-    setSearchCategory(category);
-  };
 
   return (
     <div className="bg-gray-900 text-white min-h-screen w-full">
@@ -94,7 +87,7 @@ const SearchResultPage = ({film}) => {
             onChange={(e) => setAward(e.target.value)}
           />
         </div>
-        <SearchResults filters={filters} searchTerm={searchTerm} searchCategory= {searchCategory}film={filmArray} handleSearch={handleSearch}/>
+        <SearchResults filters={filters} film={filmArray} />
       </div>
     </div>
   );

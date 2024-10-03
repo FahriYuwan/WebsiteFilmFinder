@@ -38,7 +38,7 @@ function Home() {
               key={index}
               imgSrc={movie.url_banner} // Sesuaikan dengan kolom di tabel
               title={movie.title}
-              description={movie.synopsis} // Sesuaikan dengan kolom di tabel
+              availability={movie.availability} // Sesuaikan dengan kolom di tabel
               id={movie.film_id}
             />
           );

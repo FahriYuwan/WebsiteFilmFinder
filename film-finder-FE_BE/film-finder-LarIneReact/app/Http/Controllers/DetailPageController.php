@@ -7,12 +7,20 @@ use Inertia\Inertia;
 use App\Models\Film;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class DetailPageController extends Controller
 {
     public function show($film_id)
     {
-        $film = Film::with(['genres', 'availabilities', 'actors', 'awards', 'reviews.user'])->findOrFail($film_id);
+        // Tentukan kunci cache yang unik berdasarkan film_id
+        $cacheKey = 'film_detail_' . $film_id;
+
+        // Gunakan Cache::remember untuk menyimpan hasil query dalam cache
+        $film = Cache::remember($cacheKey, 60, function () use ($film_id) {
+            return Film::with(['genres', 'actors', 'awards', 'reviews.user'])->findOrFail($film_id);
+        });
+
         return Inertia::render('DetailPage/DetailPage', [
             'film' => $film
         ]);
@@ -37,6 +45,10 @@ class DetailPageController extends Controller
             'user_id' => Auth::id(),
             'status' => 'pending'
         ]);
+
+        // Hapus cache detail film setelah review baru ditambahkan
+        Cache::forget('film_detail_' . $request->film_id);
+
         return back()->with('success', 'Review submitted successfully!');
     }
 }

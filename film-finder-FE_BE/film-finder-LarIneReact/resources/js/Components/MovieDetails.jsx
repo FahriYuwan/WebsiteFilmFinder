@@ -31,7 +31,7 @@ const MovieDetails = ({ film }) => {
             Genre : {film.genres ? film.genres.map(genre => genre.genre_name).join(', ') : 'N/A'}
           </div>
           <div className="text-sm text-white-500 mb-1">
-            Availability : {film.availabilities ? film.availabilities.map(availability => availability.availability_name).join(', ') : 'N/A'}
+            Availability : {film.availability || "N/A"}
           </div>
           <div className="text-sm text-white-500 mb-1">Rating: {film.rating_film || "N/A"}</div>
         </div>

@@ -21,6 +21,7 @@ class FilmSeeder extends Seeder
                 'synopsis' => 'A skilled thief is given a chance at redemption.',
                 'status' => 'released',
                 'countries_id' => 1,
+                'availability' => 'Netflix',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

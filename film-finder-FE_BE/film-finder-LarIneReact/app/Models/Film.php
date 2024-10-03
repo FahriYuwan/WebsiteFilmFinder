@@ -21,7 +21,8 @@ class Film extends Model
         'url_trailer',
         'rating_film',
         'synopsis',
-        'status'
+        'status',
+        'availability'
     ];
 
     public function reviews()
@@ -49,10 +50,6 @@ class Film extends Model
         return $this->belongsToMany(Genre::class, 'film_genre', 'film_id', 'genre_id');
     }
 
-    public function availabilities()
-    {
-        return $this->belongsToMany(Availability::class, 'film_availability', 'film_id', 'availability_id');
-    }
 }
     // public function country()
     // {

@@ -12,7 +12,7 @@ import Checkbox from '@/Components/Checkbox';
 import PropTypes from 'prop-types';
 
 const LoginForm = (props) => {
-  return (
+  return (  
     <form className="mt-8 space-y-4" onSubmit={props.handleSubmit}>
       <div className="space-y-4">
         <InputLabel htmlFor="email" value="Email" className='text-white' />

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('film_award', function (Blueprint $table) {
             $table->foreignId('film_id')->constrained('films', 'film_id');
             $table->foreignId('award_id')->constrained('awards', 'award_id');
+            $table->timestamps();
         });
     }
 

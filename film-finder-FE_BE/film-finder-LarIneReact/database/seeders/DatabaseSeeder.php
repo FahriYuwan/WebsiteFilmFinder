@@ -35,10 +35,6 @@ class DatabaseSeeder extends Seeder
      if(DB::table('countries')->count() === 0){
         $this->call(CountriesSeeder::class);
      }
-
-     if (DB::table('availabilities')->count() === 0) {
-        $this->call(AvailabilitySeeder::class);
-     }
      if (DB::table('actors')->count() === 0) {
         $this->call(ActorSeeder::class);
      }
@@ -53,9 +49,6 @@ class DatabaseSeeder extends Seeder
      }
      if (DB::table(table: 'film_actor')->count() === 0) {
         $this->call(FilmActorSeeder::class);
-     }
-     if (DB::table('film_availability')->count() === 0) {
-        $this->call(FilmAvailability::class);
      }
      if (DB::table('film_award')->count() === 0) {
         $this->call(FilmAward::class);
