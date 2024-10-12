@@ -19,7 +19,7 @@ function NavBar({ onSearch }) {
       <Link href="/home">
         <img src={logoImg} id="sidebar-logo" className="w-60 overflow-hidden transition-all" alt="Logo" />
       </Link>
-      
+
       {/* SearchBar */}
       <div className="flex items-center">
         <SearchBar/>
@@ -35,6 +35,12 @@ function NavBar({ onSearch }) {
             </button>
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+                <Link href="/cmsusers" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                  CMS
+                </Link>
+                <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                  Profile
+                </Link>
                 <Link href="/logout" method="post" as="button" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
                   Logout
                 </Link>

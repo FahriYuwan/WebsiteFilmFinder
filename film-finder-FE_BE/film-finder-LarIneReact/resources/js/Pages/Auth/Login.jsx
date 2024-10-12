@@ -48,6 +48,9 @@ const LoginPage = () => {
         <div className="mt-6 text-center text-sm text-gray-300">
           Don't have an account? <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">Register</Link>
         </div>
+        <div className="mt-6 text-center text-sm text-gray-300">
+          <Link href={route('password.request')} className="font-medium text-indigo-600 hover:text-indigo-500">Forgot your password?</Link>
+        </div>
       </div>
     </div>
   );
