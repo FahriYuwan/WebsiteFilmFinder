@@ -1,10 +1,10 @@
 import React from 'react';
-
+import Logo from '../../assets/images/full-logo.png';
 const Introduction = () => {
   return (
     <div className="text-dark-text flex justify-center items-center min-h-screen max-w-screen-lg mx-auto">
       <div className="text-center max-w-lg mx-auto">
-        {/* <img className="mx-auto h-[150px] w-auto" src={''} alt="Logo" /> */}
+        <img className="mx-auto h-[150px] w-auto" src={Logo} alt="Logo" />
         <h1 className="text-4xl font-extrabold text-white">
           Temukan Film, Drama, Series, Anime dan banyak lagi di Film Finder🎬
         </h1>

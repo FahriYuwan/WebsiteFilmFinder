@@ -15,7 +15,7 @@ class DetailPageController extends Controller
     {
         // Tentukan kunci cache yang unik berdasarkan film_id
         $cacheKey = 'film_detail_' . $film_id;
-
+        
         // Gunakan Cache::remember untuk menyimpan hasil query dalam cache
         $film = Cache::remember($cacheKey, 60, function () use ($film_id) {
             return Film::with(['genres', 'actors', 'awards', 'reviews.user'])->findOrFail($film_id);
@@ -49,6 +49,20 @@ class DetailPageController extends Controller
         // Hapus cache detail film setelah review baru ditambahkan
         Cache::forget('film_detail_' . $request->film_id);
 
+        $this->updateFilmRating($film);
+
         return back()->with('success', 'Review submitted successfully!');
     }
+
+        // Tambahkan method untuk menghitung rata-rata rating film
+        protected function updateFilmRating(Film $film)
+        {
+            // Hitung rata-rata rating dari review yang ada
+            $averageRating = $film->reviews()->avg('rating_user');
+    
+            // Update rating_film dengan rata-rata yang baru
+            $film->update([
+                'rating_film' => round($averageRating, 1)
+            ]);
+        }
 }

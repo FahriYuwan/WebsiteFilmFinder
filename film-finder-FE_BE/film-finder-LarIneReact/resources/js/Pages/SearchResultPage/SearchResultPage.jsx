@@ -32,7 +32,7 @@ const SearchResultPage = ({film}) => {
     ],
     status: [
       { value: '', label: 'All' },
-      { value: 'Released', label: 'Released' },
+      { value: 'accepted', label: 'Accepted' },
       { value: 'Upcoming', label: 'Upcoming' },
     ],
     availability: [

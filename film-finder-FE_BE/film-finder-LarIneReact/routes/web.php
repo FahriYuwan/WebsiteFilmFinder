@@ -128,6 +128,7 @@ Route::get('/auth/google/callback', function () {
             'email' => $user->getEmail(),
             'google_id' => $user->getId(),
             'avatar' => $user->getAvatar(),
+            'role_id' => 2,
             'password' => Hash::make(Str::random(24)), // Password acak
         ]);
         Auth::login($newUser);
