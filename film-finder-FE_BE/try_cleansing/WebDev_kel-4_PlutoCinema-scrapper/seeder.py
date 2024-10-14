@@ -5,7 +5,7 @@ import os
 db = psycopg2.connect(
     host="localhost",
     user="postgres",
-    password="123",
+    password="1234",
     database="movies_db"
 )
 

@@ -64,7 +64,9 @@ const RegisterForm = () => {
         text="Register"
       />
       <Divider />
-      <SocialButton iconUrl={googleLogo} altText="Sign up with Google" />
+      <a href="{{ route('login.google') }}" class="btn btn-primary">
+          <SocialButton iconUrl={googleLogo} altText="Sign in with Google" />
+      </a>
     </form>
   );
 };

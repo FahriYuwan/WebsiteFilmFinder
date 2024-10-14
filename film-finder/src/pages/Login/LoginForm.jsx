@@ -33,7 +33,7 @@ const LoginForm = (props) => {
         />
       </div>
       <Divider />
-      <SocialButton iconUrl={googleLogo} altText="Sign in with Google" />
+        <SocialButton iconUrl={googleLogo} altText="Sign in with Google" />
     </form>
   );
 };

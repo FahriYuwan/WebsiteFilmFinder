@@ -9,6 +9,12 @@ use App\Http\Controllers\HomeController;
 use GuzzleHttp\Middleware;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -99,3 +105,33 @@ Route::get('email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 require __DIR__.'/auth.php';
+
+// Route untuk redirect ke Google SSO
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->scopes(['profile', 'email'])->redirect();
+})->name('login.google');
+
+// Route untuk handle callback dari Google SSO
+Route::get('/auth/google/callback', function () {
+    $user = Socialite::driver('google')->stateless()->user();
+
+    // Logika untuk memeriksa apakah user sudah ada atau belum
+    $existingUser = User::where('email', $user->getEmail())->first();
+
+    if ($existingUser) {
+        // Jika user sudah ada, login langsung
+        Auth::login($existingUser);
+    } else {
+        // Jika user belum ada, buat user baru
+        $newUser = User::create([
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'google_id' => $user->getId(),
+            'avatar' => $user->getAvatar(),
+            'password' => Hash::make(Str::random(24)), // Password acak
+        ]);
+        Auth::login($newUser);
+    }
+
+    return redirect('/home'); // Redirect ke halaman home setelah login
+});
