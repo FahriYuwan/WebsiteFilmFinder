@@ -18,7 +18,7 @@ class DetailPageController extends Controller
         
         // Gunakan Cache::remember untuk menyimpan hasil query dalam cache
         $film = Cache::remember($cacheKey, 60, function () use ($film_id) {
-            return Film::with(['genres', 'actors', 'awards', 'reviews.user'])->findOrFail($film_id);
+            return Film::with(['genres', 'actors', 'awards', 'reviews.user', 'countries', 'bookmarks'])->findOrFail($film_id);
         });
 
         return Inertia::render('DetailPage/DetailPage', [
@@ -64,5 +64,21 @@ class DetailPageController extends Controller
             $film->update([
                 'rating_film' => round($averageRating, 1)
             ]);
+        }
+
+        public function bookmark(Request $request)
+        {
+            $request->validate([
+                'film_id' => 'required|integer|exists:films,film_id'
+            ]);
+    
+            $film = Film::findOrFail($request->film_id);
+    
+            $film->bookmarks()->syncWithoutDetaching(Auth::id());
+    
+            // Hapus cache detail film setelah bookmark baru ditambahkan
+            Cache::forget('film_detail_' . $request->film_id);
+    
+            return back()->with('success', 'Film bookmarked successfully!');
         }
 }

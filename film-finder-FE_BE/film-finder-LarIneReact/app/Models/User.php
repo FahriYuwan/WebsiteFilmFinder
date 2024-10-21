@@ -76,4 +76,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Review::class, 'user_id', 'user_id');
     }
+    public function bookmarks()
+    {
+        return $this->belongsToMany(Film::class, 'bookmarks', 'user_id', 'film_id');
+    }
+
 }

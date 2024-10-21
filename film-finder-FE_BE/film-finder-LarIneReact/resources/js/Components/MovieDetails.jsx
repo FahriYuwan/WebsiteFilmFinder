@@ -20,6 +20,7 @@ const MovieDetails = ({ film }) => {
         <div className="flex flex-col justify-center">
           <h1 className="text-2xl font-bold mb-2">{film.title || "No title"}</h1>
           <div className="text-sm text-white-500 mb-1">{film.year_release || "N/A"}</div>
+          <div className="text-sm text-white-500 mb-1">Country : {film.countries.country_name || "N/A"}</div>
           <div className="text-sm text-white-500 mb-1">Status : {film.status || "N/A"}</div>
           <div className="text-sm text-white-500 mb-1">Award : 
             {film.awards? film.awards.map(award => award.award_name).join(','): '-'}</div>

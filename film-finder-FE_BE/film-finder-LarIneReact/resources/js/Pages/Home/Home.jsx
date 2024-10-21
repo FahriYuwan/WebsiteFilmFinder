@@ -5,7 +5,7 @@ import Pagination from "../../Components/Pagination";
 import { usePage, router} from '@inertiajs/react';
 
 function Home() {
-  const { films } = usePage().props;
+  const { films, userBookmarks } = usePage().props;
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
@@ -32,7 +32,6 @@ function Home() {
       <NavBar/>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-10">
         {currentMovies.map((movie, index) => {
-          console.log("movie:", movie); // Tambahkan logging untuk memeriksa data movie
           return (
             <MovieCard
               key={index}
@@ -40,6 +39,7 @@ function Home() {
               title={movie.title}
               availability={movie.availability} // Sesuaikan dengan kolom di tabel
               id={movie.film_id}
+              isBookmarked={userBookmarks.includes(movie.film_id)} // Kirim status bookmark
             />
           );
         })}

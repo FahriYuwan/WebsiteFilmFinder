@@ -3,7 +3,6 @@ import NavBar from '../../components/NavBar';
 import FilterSelect from '../../components/FilterSelect'; 
 import SearchResults from '../../components/SearchResults'; 
 
-
 const SearchResultPage = ({film}) => {
   if (!film) {
     return <div>Loading...</div>;
@@ -13,43 +12,67 @@ const SearchResultPage = ({film}) => {
   const [status, setStatus] = useState('');
   const [availability, setAvailability] = useState('');
   const [award, setAward] = useState('');
-  
+  const [sortYear, setSortYear] = useState(''); // State untuk filter pengurutan tahun
+  const [sortTitle, setSortTitle] = useState(''); // State untuk filter pengurutan judul
+
   const filmArray = Array.isArray(film) ? film : [];
+
+  const getUniqueValues = (key) => {
+    return [...new Set(filmArray.map(film => film[key]))].filter(value => value);
+  };
+
+  const getUniqueValuesFromCommaSeparatedString = (key) => {
+    const allValues = filmArray.map(film => film[key]).join(',').split(',');
+    return [...new Set(allValues)].filter(value => value);
+  };
+
+  // Sort yearOptions in descending order
+  const yearOptions = getUniqueValues('year_release')
+    .sort((a, b) => b - a)
+    .map(value => ({ value, label: value }));
+
+  // Sort genreOptions, availabilityOptions, and awardOptions in ascending order
+  const genreOptions = getUniqueValues('genres')
+    .flat()
+    .map(genre => genre.genre_name)
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .sort()
+    .map(value => ({ value, label: value }));
+
+  const availabilityOptions = getUniqueValuesFromCommaSeparatedString('availability')
+    .sort()
+    .map(value => ({ value, label: value }));
+
+  const awardOptions = getUniqueValues('awards')
+    .flat()
+    .map(award => award.award_name)
+    .filter((value, index, self) => self.indexOf(value) === index)
+    .sort()
+    .map(value => ({ value, label: value }));
+
   const options = {
-    year: [
-      { value: '', label: 'All' },
-      { value: '2020-2024', label: '2020-2024' },
-      { value: '2010-2019', label: '2010-2019' },
-      { value: '2000-2009', label: '2000-2009' },
-      { value: '1990-1999', label: '1990-1999' },
-    ],
-    genre: [
-      { value: '', label: 'All' },
-      { value: 'Drama', label: 'Drama' },
-      { value: 'Comedy', label: 'Comedy' },
-      { value: 'Action', label: 'Action' },
-      { value: 'Thriller', label: 'Thriller' },
-    ],
+    year: [{ value: '', label: 'All' }, ...yearOptions],
+    genre: [{ value: '', label: 'All' }, ...genreOptions],
     status: [
       { value: '', label: 'All' },
       { value: 'accepted', label: 'Accepted' },
       { value: 'Upcoming', label: 'Upcoming' },
+    ].sort((a, b) => a.label.localeCompare(b.label)),
+    availability: [{ value: '', label: 'All' }, ...availabilityOptions],
+    award: [{ value: '', label: 'All' }, ...awardOptions],
+    sortYear: [
+      { value: '', label: 'None' },
+      { value: 'asc', label: 'Ascending' },
+      { value: 'desc', label: 'Descending' },
     ],
-    availability: [
-      { value: '', label: 'All' },
-      { value: 'Netflix', label: 'Netflix' },
-      { value: 'Amazon Prime', label: 'Amazon Prime' },
-      { value: 'Hulu', label: 'Hulu' },
-      { value: 'Disney+', label: 'Disney+' },
-    ],
-    award: [
-      { value: '', label: 'All' },
-      { value: 'HasAward', label: 'Has Award' },
-      { value: 'NoAward', label: 'No Award' },
+    sortTitle: [
+      { value: '', label: 'None' },
+      { value: 'asc', label: 'A-Z' },
+      { value: 'desc', label: 'Z-A' },
     ],
   };
 
-  const filters = { year, genre, status, availability, award };
+  const filters = { year, genre, status, availability, award, sortYear, sortTitle };
 
   return (
     <div className="bg-gray-900 text-white min-h-screen w-full">
@@ -85,6 +108,18 @@ const SearchResultPage = ({film}) => {
             value={award}
             options={options.award}
             onChange={(e) => setAward(e.target.value)}
+          />
+          <FilterSelect
+            label="Sort Year"
+            value={sortYear}
+            options={options.sortYear}
+            onChange={(e) => setSortYear(e.target.value)}
+          />
+          <FilterSelect
+            label="Sort Title"
+            value={sortTitle}
+            options={options.sortTitle}
+            onChange={(e) => setSortTitle(e.target.value)}
           />
         </div>
         <SearchResults filters={filters} film={filmArray} />

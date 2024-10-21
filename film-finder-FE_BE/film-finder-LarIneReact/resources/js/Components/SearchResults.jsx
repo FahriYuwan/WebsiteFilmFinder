@@ -15,22 +15,40 @@ const SearchResults = ({ filters, film }) => {
       console.log('Film is not an array');
       return;
     }
+
     // Filter data berdasarkan kata kunci pencarian dan filter lainnya
     const filteredData = film.filter((item) => {
-      const yearRange = filters.year ? filters.year.split('-') : [];
-      const startYear = yearRange[0] ? parseInt(yearRange[0], 10) : null;
-      const endYear = yearRange[1] ? parseInt(yearRange[1], 10) : null;
+      const yearFilter = filters.year ? parseInt(filters.year, 10) : null;
 
       return (
-        (!filters.year || (item.year_release >= startYear && item.year_release <= endYear)) &&
+        (!yearFilter || item.year_release === yearFilter) &&
         (!filters.genre || item.genres.some(genre => genre.genre_name.includes(filters.genre))) &&
         (!filters.status || item.status === filters.status) &&
-        (!filters.availability || item.availability.includes (filters.availability)) &&
+        (!filters.availability || item.availability.includes(filters.availability)) &&
         (!filters.award || (filters.award === 'HasAward' ? item.awards.length > 0 : item.awards.length === 0))
       );
     });
 
-    setData(filteredData);
+    // Urutkan data berdasarkan filter pengurutan
+    const sortedData = filteredData.sort((a, b) => {
+      if (filters.sortYear) {
+        if (filters.sortYear === 'asc') {
+          return a.year_release - b.year_release;
+        } else if (filters.sortYear === 'desc') {
+          return b.year_release - a.year_release;
+        }
+      }
+      if (filters.sortTitle) {
+        if (filters.sortTitle === 'asc') {
+          return a.title.localeCompare(b.title);
+        } else if (filters.sortTitle === 'desc') {
+          return b.title.localeCompare(a.title);
+        }
+      }
+      return 0;
+    });
+
+    setData(sortedData);
   }, [filters, film]);
 
   // Pagination logic
@@ -58,12 +76,14 @@ const SearchResults = ({ filters, film }) => {
                 </div>
                 <div className="flex-1">
                   <Link href={`/detailpage/${item.film_id}`}>
-                  <h2 className="text-lg font-semibold text-white">{item.title}</h2>
+                    <h2 className="text-lg font-semibold text-white">{item.title}</h2>
                   </Link>
                   <p className="text-sm text-gray-400">{item.year_release}</p>
                   <p className='text-sm text-gray-400'>
                     Availability : {item.availability || "N/A"}
                   </p>
+                  <p className="text-sm text-gray-400">Country : {item.countries.country_name}</p>
+
                   <p className="text-sm text-gray-400">Status : {item.status}</p>
                   <p className="text-sm text-gray-400">
                     {item.awards ? item.awards.map(award => award.award_name).join(', ') : '-'}
@@ -110,9 +130,7 @@ SearchResults.propTypes = {
     genres: PropTypes.arrayOf(PropTypes.shape({
       genre_name: PropTypes.string.isRequired,
     })),
-    availabilities: PropTypes.arrayOf(PropTypes.shape({
-      availability_name: PropTypes.string.isRequired,
-    })),
+    availability: PropTypes.string.isRequired,
     actors: PropTypes.arrayOf(PropTypes.shape({
       actor_name: PropTypes.string.isRequired,
     })),

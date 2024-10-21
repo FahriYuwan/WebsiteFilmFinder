@@ -44,10 +44,19 @@ class Film extends Model
     {
         return $this->belongsToMany(Award::class, 'film_award', 'film_id', 'award_id');
     }
+
+    public function bookmarks()
+    {
+        return $this->belongsToMany(User::class, 'bookmarks', 'film_id', 'user_id');
+    }
     
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'film_genre', 'film_id', 'genre_id');
+    }
+    public function countries()
+    {
+        return $this->belongsTo(Countries::class, 'countries_id', 'countries_id');
     }
 
 }

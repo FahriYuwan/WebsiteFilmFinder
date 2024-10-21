@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Http\Middleware\CheckUserRole;
+use App\Http\Controllers\BookmarkController;
+
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -43,39 +46,49 @@ Route::get('/detailpage/{film_id}', [DetailPageController::class, 'show'])->name
 
 Route::get('/searchresultpage', [SearchController::class, 'search'])->name('searchresultpage.show');
 
-Route::get('/cmsusers', function () {
-    return Inertia::render('CMS/CMSUsers/CMSUsers');
-})->name('cmsuser');
+Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () {
+    Route::get('/cmsusers', function () {
+        return Inertia::render('CMS/CMSUsers/CMSUsers');
+    })->name('cmsuser');
 
-Route::get('/cmscomments', function () {
-    return Inertia::render('CMS/CMSComments/CMSComments');
-})->name('cmscomments');
+    Route::get('/cmscomments', function () {
+        return Inertia::render('CMS/CMSComments/CMSComments');
+    })->name('cmscomments');
 
-Route::get('/cmsactors', function () {
-    return Inertia::render('CMS/CMSActors/CMSActors');
-})->name('cmsactors');
+    Route::get('/cmsactors', function () {
+        return Inertia::render('CMS/CMSActors/CMSActors');
+    })->name('cmsactors');
 
-Route::get('/cmsgenres', function () {
-    return Inertia::render('CMS/CMSGenres/CMSGenres');
-})->name('cmsgenres');
+    Route::get('/cmsgenres', function () {
+        return Inertia::render('CMS/CMSGenres/CMSGenres');
+    })->name('cmsgenres');
 
-Route::get('/cmsawards', function () {
-    return Inertia::render('CMS/CMSAwards/CMSAwards');
-})->name('cmsawards');
+    Route::get('/cmsawards', function () {
+        return Inertia::render('CMS/CMSAwards/CMSAwards');
+    })->name('cmsawards');
 
-Route::get('/cmscountries', function () {
-    return Inertia::render('CMS/CMSCountries/CMSCountries');
-})->name('cmscountries');
+    Route::get('/cmscountries', function () {
+        return Inertia::render('CMS/CMSCountries/CMSCountries');
+    })->name('cmscountries');
 
-Route::get('/cmsdramainput', function () {
-    return Inertia::render('CMS/CMSDramaInput/CMSDramaInput');
-})->name('cmsdramainput');
+    Route::get('/cmsdrama', function () {
+        return Inertia::render('CMS/CMSDrama/CMSDrama');
+    })->name('cmsdrama');
+});
 
-Route::get('/cmsdrama', function () {
-    return Inertia::render('CMS/CMSDrama/CMSDrama');
-})->name('cmsdrama');
+// Rute untuk CMS Drama Input dengan middleware khusus user
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cmsdramainput', function () {
+        return Inertia::render('CMS/CMSDramaInput/CMSDramaInput');
+    })->name('cmsdramainput');
+});
+
+
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
+
+Route::delete('/bookmarks/{film}', [BookmarkController::class, 'destroy'])->name('bookmarks.destroy');
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');

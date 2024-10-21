@@ -33,7 +33,16 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home', absolute: false));
+        // Mendapatkan pengguna yang sedang diautentikasi
+        $user = Auth::user();
+
+        // Periksa role_id pengguna
+        if ($user->role_id == 1) {
+            return redirect()->intended(route('cmsdramainput', absolute: false));
+        }else{
+            return redirect()->intended(route('home', absolute: false));
+        }
+
     }
 
     /**

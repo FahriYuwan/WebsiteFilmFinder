@@ -35,7 +35,7 @@ function NavBar({ onSearch }) {
             </button>
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
-                <Link href="/cmsusers" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                <Link href="/cmsdramainput" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
                   CMS
                 </Link>
                 <Link href="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
