@@ -20,9 +20,13 @@ class DetailPageController extends Controller
         $film = Cache::remember($cacheKey, 60, function () use ($film_id) {
             return Film::with(['genres', 'actors', 'awards', 'reviews.user', 'countries', 'bookmarks'])->findOrFail($film_id);
         });
-
+        $userBookmarks = [];
+        if (Auth::check()) {
+            $userBookmarks = Auth::user()->bookmarks->pluck('film_id')->toArray(); // Ambil ID film yang di-bookmark oleh user
+        }
         return Inertia::render('DetailPage/DetailPage', [
-            'film' => $film
+            'film' => $film,
+            'userBookmarks' => $userBookmarks
         ]);
     }   
 

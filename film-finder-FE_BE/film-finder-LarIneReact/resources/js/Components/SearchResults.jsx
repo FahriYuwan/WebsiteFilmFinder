@@ -25,7 +25,8 @@ const SearchResults = ({ filters, film }) => {
         (!filters.genre || item.genres.some(genre => genre.genre_name.includes(filters.genre))) &&
         (!filters.status || item.status === filters.status) &&
         (!filters.availability || item.availability.includes(filters.availability)) &&
-        (!filters.award || (filters.award === 'HasAward' ? item.awards.length > 0 : item.awards.length === 0))
+        (!filters.award || item.awards.some(award => award.award_name.includes(filters.award))
+        )
       );
     });
 

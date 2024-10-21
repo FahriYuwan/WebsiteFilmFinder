@@ -1,10 +1,10 @@
-// resources/js/Components/MovieCard.jsx
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useForm } from '@inertiajs/react';
+import { Link, useForm, usePage, router } from '@inertiajs/react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa'; // Import ikon bookmark
 
 const MovieCard = (props) => {
+  const { auth} = usePage().props; // Ambil informasi autentikasi dari props
   const [isBookmarked, setIsBookmarked] = useState(props.isBookmarked); // State untuk bookmark
   const { post, delete: destroy } = useForm(); // Inertia.js form handling
 
@@ -26,18 +26,24 @@ const MovieCard = (props) => {
 
   const handleBookmarkClick = (e) => {
     e.preventDefault(); // Prevent default link behavior
+
+    if (!auth.user) {
+      // Jika pengguna tidak login, arahkan ke halaman login
+      return router.get('/login');
+    }
+
     if (isBookmarked) {
       destroy(route('bookmarks.destroy', { film: props.id }), {
         onSuccess: () => setIsBookmarked(false),
         onError: (errors) => console.error(errors), // Log error jika ada
       });
     } else {
-      post(route('bookmarks.store'), {
-        film_id: props.id,
-      }, {
+      post(route('bookmarks.store', {film_id: props.id}), {
         onSuccess: () => setIsBookmarked(true),
         onError: (errors) => console.error(errors), // Log error jika ada
-      });
+      }
+      );
+      console.log('Film ID:', props.id); // Log film ID ke konsol browser
     }
   };
 

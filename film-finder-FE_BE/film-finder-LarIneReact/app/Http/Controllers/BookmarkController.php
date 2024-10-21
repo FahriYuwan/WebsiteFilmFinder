@@ -5,12 +5,15 @@ use App\Models\Bookmark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class BookmarkController extends Controller
 {
     public function store(Request $request)
     {
+        // dd($request->film_id);
+        error_log('Storing a new bookmark');
         $request->validate([
-            'film_id' => 'required|exists:films,id',
+            'film_id' => 'required|exists:films,film_id',
         ]);
 
         Bookmark::create([
