@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('film_award', function (Blueprint $table) {
-            $table->foreignId('film_id')->constrained('films', 'film_id');
-            $table->foreignId('award_id')->constrained('awards', 'award_id');
+            $table->foreignId('film_id')->constrained('films', 'film_id')->nullable();
+            $table->foreignId('award_id')->constrained('awards', 'award_id')->nullable();
             $table->timestamps();
         });
     }

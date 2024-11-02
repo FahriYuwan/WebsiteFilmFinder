@@ -11,6 +11,7 @@ class Bookmark extends Model
     protected $table = 'bookmarks';
     protected $primaryKey = 'bookmarks_id';
     protected $fillable = ['user_id', 'film_id'];
+    public $incrementing = true;
 
     public function films()
     {

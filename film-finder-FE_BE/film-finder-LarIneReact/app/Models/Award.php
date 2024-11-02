@@ -9,6 +9,7 @@ class Award extends Model
 {
     use HasFactory;
     protected $table = 'awards';
+    public $incrementing = true;
     protected $primaryKey = 'award_id';
     protected $fillable = ['award_name', 'year'];
 

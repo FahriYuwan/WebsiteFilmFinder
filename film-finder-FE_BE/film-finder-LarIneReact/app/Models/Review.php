@@ -7,6 +7,7 @@ class Review extends Model
 {
     protected $table = 'reviews';
     protected $primaryKey = 'review_id';
+    public $incrementing = true;
     protected $fillable = [
         'film_id',
         'user_id',

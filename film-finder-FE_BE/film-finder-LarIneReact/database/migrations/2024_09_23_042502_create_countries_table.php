@@ -12,11 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('countries', function (Blueprint $table) {
-            $table->id('countries_id');
-            $table->string('country_name', 100);
+            $table->id('countries_id'); // Menggunakan auto-increment dan primary key
+            $table->string('country_name', 100)->unique(); // Menambahkan constraint unik pada kolom country_name
             $table->timestamps();
         });
-        
     }
 
     /**

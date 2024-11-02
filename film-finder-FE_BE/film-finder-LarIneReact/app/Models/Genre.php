@@ -10,8 +10,8 @@ class Genre extends Model
 
     protected $table = 'genres';
     protected $primaryKey = 'genre_id';
-
-    protected $fillable = ['name'];
+    public $incrementing = true;
+    protected $fillable = ['genre_name'];
 
     // Relasi many-to-many dengan Film
     public function films()

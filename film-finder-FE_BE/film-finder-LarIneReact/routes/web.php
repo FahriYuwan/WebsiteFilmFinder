@@ -17,7 +17,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Middleware\CheckUserRole;
 use App\Http\Controllers\BookmarkController;
-
+use App\Http\Controllers\CMS\CMSCountriesController;
+use App\Http\Controllers\CMS\CMSUsersController;
+use App\Http\Controllers\CMS\CMSGenresController;
+use App\Http\Controllers\CMS\CMSActorsController;
+use App\Http\Controllers\CMS\CMSInputNewFilmController;
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
@@ -47,21 +51,28 @@ Route::get('/detailpage/{film_id}', [DetailPageController::class, 'show'])->name
 Route::get('/searchresultpage', [SearchController::class, 'search'])->name('searchresultpage.show');
 
 Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () {
-    Route::get('/cmsusers', function () {
-        return Inertia::render('CMS/CMSUsers/CMSUsers');
-    })->name('cmsuser');
+    Route::get('/cmsusers', [CMSUsersController::class, 'index'])->name('cms.users.index');
+    Route::put('/cmsusers/{user_id}', [CMSUsersController::class, 'update'])->name('cms.users.update');
+    Route::delete('/cmsusers/{user_id}', [CMSUsersController::class, 'destroy'])->name('cms.users.destroy');
+    Route::post('/cmsusers', [CMSUsersController::class, 'store'])->name('cms.users.store');
 
     Route::get('/cmscomments', function () {
         return Inertia::render('CMS/CMSComments/CMSComments');
     })->name('cmscomments');
 
-    Route::get('/cmsactors', function () {
-        return Inertia::render('CMS/CMSActors/CMSActors');
-    })->name('cmsactors');
+    Route::get('/cmsactors', [CMSActorsController::class, 'index'])->name('cms.actors.index');
+    Route::post('/cmsactors', [CMSActorsController::class, 'store'])->name('cms.actors.store');
+    Route::delete('/cmsactors/{actor_id}', [CMSActorsController::class, 'destroy'])->name('cms.actors.destroy');
+    Route::put('/cmsactors/{actor_id}', [CMSActorsController::class, 'update'])->name('cms.actors.update');
 
     Route::get('/cmsgenres', function () {
         return Inertia::render('CMS/CMSGenres/CMSGenres');
     })->name('cmsgenres');
+
+    Route::get('/cmsgenres', [CMSGenresController::class, 'index'])->name('cms.genres.index');
+    Route::post('/cmsgenres', [CMSGenresController::class, 'store'])->name('cms.genres.store');
+    Route::delete('/cmsgenres/{genre_id}', [CMSGenresController::class, 'destroy'])->name('cms.genres.destroy');
+    Route::put('/cmsgenres/{genre_id}', [CMSGenresController::class, 'update'])->name('cms.genres.update');
 
     Route::get('/cmsawards', function () {
         return Inertia::render('CMS/CMSAwards/CMSAwards');
@@ -71,6 +82,11 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
         return Inertia::render('CMS/CMSCountries/CMSCountries');
     })->name('cmscountries');
 
+    Route::get('/cmscountries', [CMSCountriesController::class, 'index'])->name('cms.countries.index');
+    Route::post('/cmscountries', [CMSCountriesController::class, 'store'])->name('cms.countries.store');
+    Route::delete('/cmscountries/{countries_id}', [CMSCountriesController::class, 'destroy'])->name('cms.countries.destroy');
+    Route::put('/cmscountries/{countries_id}', [CMSCountriesController::class, 'update'])->name('cms.countries.update');
+
     Route::get('/cmsdrama', function () {
         return Inertia::render('CMS/CMSDrama/CMSDrama');
     })->name('cmsdrama');
@@ -78,9 +94,9 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
 
 // Rute untuk CMS Drama Input dengan middleware khusus user
 Route::middleware(['auth'])->group(function () {
-    Route::get('/cmsdramainput', function () {
-        return Inertia::render('CMS/CMSDramaInput/CMSDramaInput');
-    })->name('cmsdramainput');
+    Route::get('/cmsdramainput',[CMSInputNewFilmController::class, 'index'])->name('cms.dramainput.index');
+
+
 });
 
 
@@ -113,7 +129,6 @@ Route::get('email/verify/{id}/{hash}', function () {
 
 Route::get('email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
-
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 

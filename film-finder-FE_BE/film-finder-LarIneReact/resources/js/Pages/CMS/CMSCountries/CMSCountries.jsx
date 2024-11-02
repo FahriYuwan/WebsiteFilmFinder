@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import CMSTable from '../../../components/CMS/CMSTable';
 import Sidebar from '../../../components/Sidebar';
 import Button from '../../../components/Button';
 import InputField from '../../../components/InputField';
+import { usePage, useForm, router } from "@inertiajs/react";
+import Pagination from '../../../components/Pagination';
+
+
 const CMSCountries = () => {
+  const { countries } = usePage().props;
+  console.log(countries);
   const [countryName, setCountryName] = useState('');
-  const [countries, setCountries] = useState([
-    { id: 1, name: 'Indonesia' },
-    { id: 2, name: 'Malaysia' },
-    { id: 3, name: 'Singapore' },
-    { id: 4, name: 'Thailand' },
-  ]);
+  const [countriesList, setCountriesList] = useState(countries.data);
+  const { post, delete: destroy, put} = useForm();
 
   const handleInputChange = (e) => {
     setCountryName(e.target.value);
@@ -18,29 +20,64 @@ const CMSCountries = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newCountry = {
-      id: countries.length + 1,
-      name: countryName,
-    };
-    setCountries([...countries, newCountry]); // Add new country to the list
-    setCountryName(''); // Clear input after submission
-  };
+    post(route('cms.countries.store',{
+        country_name: countryName
+    }), {
+        onSuccess: () => {
+            // Optional: Actions after success, like clearing fields
+            setCountryName('');
+            alert('Country has been added!');
+            router.get(route('cms.countries.index'));
+        },
+        onError: (errors) => {
+            // Handle errors here if needed
+            console.log(errors);
+        }
+    });
+};
 
   const handleDelete = (id) => {
     if (!window.confirm('Are you sure you want to delete this country?')) {
       return;
     }
-    setCountries(countries.filter((country) => country.id !== id));
+    else {
+      destroy(route('cms.countries.destroy', { countries_id: id }), {
+        onSuccess: () => {
+          // Optional: Actions after success
+          alert('Country has been deleted!');
+          router.get(route('cms.countries.index'));
+        },
+        onError: (errors) => {
+          // Handle errors here if needed
+          console.log(errors);
+        }
+      });
+    }
   };
 
-  const handleSave = () => {
-    //alert the user that the data has been saved
-    alert('Data has been saved!');
-  };
+  const handleSave = (id, data) => {
+    alert('Save button clicked for row ID: ' + id);
+    console.log('Data to be saved:', data.country_name);
+    put(route('cms.countries.update', { countries_id: id, country_name: data.country_name}), {
+      onSuccess: () => {
+        // Optional: Actions after success
+        alert('Country has been updated!');
+        router.get(route('cms.countries.index'));
+      },
+      onError: (errors) => {
+        // Handle errors here if needed
+        console.log(errors);
+      }
+    });
+  }
 
   const columns = [
-    { Header: 'Country Name', accessor: 'name', editable: true },
+    { Header: 'Country Name', accessor: 'country_name', editable: true },
   ];
+
+  const handlePageChange = (page) => {
+    router.get(route('cms.countries.index', { page }));
+};
 
   return (
     //Sidebar
@@ -71,8 +108,16 @@ const CMSCountries = () => {
       {/* Countries Table */}
       <div className="bg-dark-card-bg p-8 rounded-lg shadow-md w-full max-w-4xl">
         <h2 className="text-2xl font-extrabold text-center mb-6 text-custom-blue-light">Countries List</h2>
-        <CMSTable columns={columns} data={countries} handleSave={handleSave} handleDelete={handleDelete} />
+        <CMSTable columns={columns} data={countriesList} handleSave={handleSave} handleDelete={handleDelete} idAccessor={'countries_id'}/>
       </div>
+        {/* Pagination */}
+        <div className="bg-dark-card-bg text-dark-text p-4 rounded-lg shadow-md w-full max-w-4xl mt-2">
+        <Pagination
+            currentPage={countries.current_page}
+            lastPage={countries.last_page}
+            onPageChange={handlePageChange}
+        />
+        </div>      
     </div>
   </div>
     </>

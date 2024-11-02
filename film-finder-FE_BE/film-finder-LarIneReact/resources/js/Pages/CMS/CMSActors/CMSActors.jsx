@@ -4,71 +4,101 @@ import Button from "../../../components/Button";
 import InputField from "../../../components/InputField";
 import CMSTable from "../../../components/CMS/CMSTable";
 import imgActor from "../../../assets/images/dwayne-johnson-the-contoh-actor.jpg";
+import { usePage, useForm, router } from "@inertiajs/react";
+import Pagination from '../../../components/Pagination';
+
 
 function CMSActors() {
+    const { countries,actors } = usePage().props;
+    const [ActorList, setActors] = useState(actors.data);
     const [Country, setCountry] = useState('');
     const [Actor, setActor] = useState('');
     const [Birthdate, setBirthdate] = useState('');
-    const [picture, setPicture] = useState('');
-
-    const [actors, setActors] = useState([
-        { id: 1, country: 'Indonesia', actor: 'Iko Uwais', birthdate: '1983-02-12', picture: imgActor },
-        { id: 2, country: 'Malaysia', actor: 'Bront Palarae', birthdate: '1981-09-27', picture: imgActor },
-        { id: 3, country: 'Singapore', actor: 'Chin Han', birthdate: '1969-11-27', picture: imgActor },
-        { id: 4, country: 'Thailand', actor: 'Tony Jaa', birthdate: '1976-02-05', picture: imgActor },
-    ]);
+    const [link_picture, setLinkPicture] = useState('');
+    const { post, delete: destroy, put} = useForm();
 
     const handleInputChange = (e) => {
-        const { name, value, files } = e.target;
-        if (name === 'Country') {
+        const { name, value } = e.target;
+        if (name === 'country_name') {
             setCountry(value);
         } else if (name === 'Actor') {
             setActor(value);
         } else if (name === 'Birthdate') {
             setBirthdate(value);
         } else if (name === 'Picture') {
-            if (files && files[0]) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    setPicture(e.target.result);
-                };
-                reader.readAsDataURL(files[0]);
-            }
+            setLinkPicture(value);
         }
     };
 
     const handleSubmit = (e) => {
+        alert('Values submitted: ' + Country + ' ' + Actor + ' ' + Birthdate + ' ' + link_picture);
         e.preventDefault();
-        const newActor = {
-            id: actors.length + 1,
-            country: Country,
-            actor: Actor,
+        post(route('cms.actors.store',{
+            countries_id: Country,
+            actor_name: Actor,
             birthdate: Birthdate,
-            picture: picture,
-        };
-        setActors([...actors, newActor]);
-        setCountry('');
-        setActor('');
-        setBirthdate('');
-        setPicture('');
+            url_actor: link_picture
+        }), {
+            onSuccess: () => {
+                // Optional: Actions after success, like clearing fields
+                setCountry('');
+                setActor('');
+                setBirthdate('');
+                setLinkPicture('');
+                alert('Actor has been added!');
+                router.get(route('cms.actors.index'));
+            },
+            onError: (errors) => {
+                // Handle errors here if needed
+                console.log(errors);
+            }
+        });
     };
 
     const handleDelete = (id) => {
         if (!window.confirm('Are you sure you want to delete this actor?')) {
             return;
         }
-        setActors(actors.filter((actor) => actor.id !== id));
+        else {
+            destroy(route('cms.actors.destroy', { actor_id: id }), {
+              onSuccess: () => {
+                // Optional: Actions after success
+                alert('Actor has been deleted!');
+                router.get(route('cms.actors.index'));
+              },
+              onError: (errors) => {
+                // Handle errors here if needed
+                console.log(errors);
+              }
+            });
+          }
     };
 
-    const handleSave = () => {
-        alert('Data has been saved!');
+    const handleSave = (id, data) => {
+        alert('Save button clicked for row ID: ' + id);
+        console.log('Data to be saved:', data.actor_name,' ', data.birthdate);
+        put(route('cms.actors.update', { actor_id: id, actor_name : data.actor_name, birthdate: data.birthdate}), {
+          onSuccess: () => {
+            // Optional: Actions after success
+            alert('Actor has been updated!');
+            router.get(route('cms.actors.index'));
+          },
+          onError: (errors) => {
+            // Handle errors here if needed
+            console.log(errors);
+          }
+        });
+      }
+
+    const handlePageChange = (page) => {
+        router.get(route('cms.actors.index', { page }));
     };
 
     const columns = [
-        { Header: 'Country', accessor: 'country', editable: true },
-        { Header: 'Actor', accessor: 'actor', editable: true },
+        { Header: 'Country', accessor: { name: 'countries', child_accessor: 'country_name' } },
+        { Header: 'Actor', accessor: 'actor_name', editable: true },
         { Header: 'Birthdate', accessor: 'birthdate', editable: true },
-        { Header: 'Picture', accessor: 'picture' },
+        { Header: 'Picture', accessor: 'url_actor' },
     ];
 
     return (
@@ -82,12 +112,12 @@ function CMSActors() {
                         <div>
                             <label htmlFor="country" className="block text-sm font-medium text-dark-text">Country</label>
                             <InputField
-                                id="country"
-                                name="Country"
-                                type="text"
+                                id="countries_id"
+                                name="country_name"
+                                type="select"
                                 placeholder="Enter a country"
                                 className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
-                                value={Country}
+                                value={countries}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -116,13 +146,14 @@ function CMSActors() {
                             />
                         </div>
                         <div>
-                            <label htmlFor="picture" className="block text-sm font-medium text-dark-text">Upload Picture</label>
+                            <label htmlFor="link_picture" className="block text-sm font-medium text-dark-text">Upload Picture</label>
                             <InputField
                                 id="picture"
                                 name="Picture"
-                                type="file"
-                                accept="image/*"
-                                className="mt-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
+                                type="text"
+                                placeholder="Enter link for picture"
+                                className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
+                                value={link_picture}
                                 onChange={handleInputChange}
                             />
                         </div>
@@ -137,11 +168,20 @@ function CMSActors() {
                     <h2 className="text-2xl font-extrabold text-center mb-6 text-custom-blue-light">Actors List</h2>
                     <CMSTable
                         columns={columns}
-                        data={actors}
+                        data={ActorList}
                         handleSave={handleSave}
                         handleDelete={handleDelete}
+                        idAccessor={'actor_id'}
                     />
                 </div>
+                {/* Pagination */}
+                <div className="bg-dark-card-bg text-dark-text p-4 rounded-lg shadow-md w-full max-w-4xl mt-2">
+                <Pagination
+                    currentPage={actors.current_page}
+                    lastPage={actors.last_page}
+                    onPageChange={handlePageChange}
+                />
+                </div>  
             </div>
         </div>
         </>

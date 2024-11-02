@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text('synopsis')->nullable();
             $table->string('status', 20)->default('pending');
             $table->string('availability', 255)->default('-');
-            $table->foreignId('countries_id')->constrained('countries', 'countries_id');
+            $table->foreignId('countries_id')->constrained('countries', 'countries_id')->nullable();
             $table->timestamps();
         });
         

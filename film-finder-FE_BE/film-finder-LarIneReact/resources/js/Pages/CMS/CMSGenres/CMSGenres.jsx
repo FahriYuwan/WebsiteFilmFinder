@@ -3,15 +3,15 @@ import Sidebar from "../../../components/Sidebar";
 import Button from "../../../components/Button";
 import InputField from "../../../components/InputField";
 import CMSTable from "../../../components/CMS/CMSTable";
+import Pagination from "../../../components/Pagination"; // Import komponen Pagination
+
+import { usePage, useForm, router } from "@inertiajs/react";
 
 function CMSGenres() {
-    const [genre, setGenre] = useState('');
-    const [genres, setGenres] = useState([
-        { id: 1, name: 'Action' },
-        { id: 2, name: 'Adventure' },
-        { id: 3, name: 'Comedy' },
-        { id: 4, name: 'Drama' },
-    ]);
+    const { genres } = usePage().props; // Ambil data genre dari props
+    const [genre, setGenre] = useState(''); // Inisialisasi state dengan data genre
+    const [genresList, setGenresList] = useState(genres.data); // Inisialisasi state dengan data genre
+    const { post, put, delete: destroy } = useForm(); // Gunakan useForm untuk mendapatkan fungsi post dan put
 
     const handleInputChange = (e) => {
         setGenre(e.target.value);
@@ -23,26 +23,63 @@ function CMSGenres() {
             alert('Genre name cannot be empty');
             return;
         }
-        const newGenre = {
-            id: genres.length + 1,
-            name: genre,
-        };
-        setGenres([...genres, newGenre]);
-        setGenre(''); // Clear the input field after submission
-    }
+        else{
+            post(route('cms.genres.store', {
+                genre_name: genre
+            }), {
+                onSuccess: () => {
+                    // Optional: Actions after success, like clearing fields
+                    setGenre('');
+                    alert('Genre has been added!');
+                    router.get(route('cms.genres.index'));
+                },
+                onError: (errors) => {
+                    // Handle errors here if needed
+                    console.log(errors);
+                }
+            });
+        }
+        
+        }
 
-    const handleSave = () => {
-        alert('Data has been saved!');
-    }
+
+    const handleSave = (id, data) => {
+        alert('Save button clicked for row ID: ' + id);
+        console.log('Data to be saved:', data.genre_name);
+        put(route('cms.genres.update', { genre_id: id, genre_name: data.genre_name}), {
+            onSuccess: () => {
+                // Optional: Actions after success
+                alert('Genre has been updated!');
+                router.get(route('cms.genres.index'));
+            }
+        });
+    } 
+
+
     const handleDelete = (id) => {
         if (!window.confirm('Are you sure you want to delete this genre?')) {
             return;
         }
-        setGenres(genres.filter((genre) => genre.id !== id));
+        else {
+            destroy(route('cms.genres.destroy', { genre_id: id }), {
+                onSuccess: () => {
+                    // Optional: Actions after success
+                    alert('Genre has been deleted!');
+                    router.get(route('cms.genres.index'));
+                },
+                onError: (errors) => {
+                    // Handle errors here if needed
+                    console.log(errors);
+                }
+            });}
+        }
+
+    const handlePageChange = (page) => {
+        router.get(route('cms.genres.index', { page: page }));
     }
 
     const columns = [
-        { Header: 'Genre Name', accessor: 'name', editable: true },
+        { Header: 'Genre Name', accessor: 'genre_name', editable: true },
     ];
 
     return (
@@ -76,8 +113,16 @@ function CMSGenres() {
                 {/* Table Section */}
                 <div className="bg-dark-card-bg text-dark-text p-8 rounded-lg shadow-md w-full max-w-4xl">
                     <h2 className="text-2xl font-extrabold text-center mb-6 text-custom-blue-light">Genres List</h2>
-                    <CMSTable columns={columns} data={genres} setData={setGenres} handleSave={handleSave} handleDelete={handleDelete} />
+                    <CMSTable columns={columns} data={genresList} handleSave={handleSave} handleDelete={handleDelete} idAccessor={'genre_id'}/>
                 </div>
+                {/* Pagination */}
+                <div className="bg-dark-card-bg text-dark-text p-4 rounded-lg shadow-md w-full max-w-4xl mt-2">
+                <Pagination
+                    currentPage={genres.current_page}
+                    lastPage={genres.last_page}
+                    onPageChange={handlePageChange}
+                />
+                </div>                     
             </div>
         </div>
         </>

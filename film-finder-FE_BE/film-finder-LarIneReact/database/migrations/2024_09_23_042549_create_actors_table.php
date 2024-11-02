@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('actor_name', 255);
             $table->string('url_actor', 255);
             $table->date('birthdate');
-            $table->foreignId('countries_id')->constrained('countries', 'countries_id');
+            $table->foreignId('countries_id')->constrained('countries', 'countries_id')->nullable();
             $table->timestamps();
         });
     }
