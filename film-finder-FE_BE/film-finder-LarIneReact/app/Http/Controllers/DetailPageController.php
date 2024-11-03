@@ -13,26 +13,35 @@ class DetailPageController extends Controller
 {
     public function show($film_id)
     {
-        // Tentukan kunci cache yang unik berdasarkan film_id
         $cacheKey = 'film_detail_' . $film_id;
-        
-        // Gunakan Cache::remember untuk menyimpan hasil query dalam cache
+    
         $film = Cache::remember($cacheKey, 60, function () use ($film_id) {
-            return Film::with(['genres', 'actors', 'awards', 'reviews.user', 'countries', 'bookmarks'])->findOrFail($film_id);
+            return Film::with([
+                'genres',
+                'actors',
+                'awards',
+                'countries',
+                'bookmarks',
+                'reviews' => function($query) {
+                    $query->where('status', 'approved')->with('user');
+                },
+            ])->findOrFail($film_id);
         });
+    
         $userBookmarks = [];
         if (Auth::check()) {
-            $userBookmarks = Auth::user()->bookmarks->pluck('film_id')->toArray(); // Ambil ID film yang di-bookmark oleh user
+            $userBookmarks = Auth::user()->bookmarks->pluck('film_id')->toArray();
         }
+    
         return Inertia::render('DetailPage/DetailPage', [
             'film' => $film,
-            'userBookmarks' => $userBookmarks
+            'userBookmarks' => $userBookmarks,
         ]);
-    }   
+    }
 
     public function store(Request $request)
     {
-        Log::info('Request data:', $request->all()); // Tambahkan ini untuk log data
+
 
         $request->validate([
             'film_id' => 'required|integer|exists:films,film_id',

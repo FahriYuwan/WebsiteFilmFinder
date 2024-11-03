@@ -3,12 +3,12 @@ import Sidebar from "../../../components/Sidebar";
 import Button from "../../../components/Button";
 import InputField from "../../../components/InputField";
 import CMSTable from "../../../components/CMS/CMSTable";
-import imgActor from "../../../assets/images/dwayne-johnson-the-contoh-actor.jpg";
 import { usePage, useForm, router } from "@inertiajs/react";
 import Pagination from '../../../components/Pagination';
 
 
 function CMSActors() {
+
     const { countries,actors } = usePage().props;
     const [ActorList, setActors] = useState(actors.data);
     const [Country, setCountry] = useState('');
@@ -20,6 +20,7 @@ function CMSActors() {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'country_name') {
+            alert('Country selected: ' + value);
             setCountry(value);
         } else if (name === 'Actor') {
             setActor(value);
@@ -29,6 +30,8 @@ function CMSActors() {
             setLinkPicture(value);
         }
     };
+    console.log(actors);
+    console.log(ActorList);
 
     const handleSubmit = (e) => {
         alert('Values submitted: ' + Country + ' ' + Actor + ' ' + Birthdate + ' ' + link_picture);

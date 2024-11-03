@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 const CMSTable = (props) => {
   const { data, columns, handleSave, handleDelete, idAccessor } = props;
   const [editedData, setEditedData] = useState({});
-  const [editMode, setEditMode] = useState({}); // State untuk melacak mode edit
+  const [editMode, setEditMode] = useState({});
 
-  const handleInputChange = (e, rowId, accessor) => {
-    const value = e.target.innerText; // Mengambil nilai dari elemen contentEditable
+  const handleInputChange = (e, rowId, accessor, isBoolean) => {
+    const value = isBoolean ? e.target.value === 'Yes' : e.target.value;
     setEditedData((prevData) => {
       const newData = {
         ...prevData,
@@ -16,7 +16,7 @@ const CMSTable = (props) => {
           [accessor]: value,
         },
       };
-      console.log('Edited Data:', newData); // Menampilkan log state editedData
+      console.log('Edited Data:', newData);
       return newData;
     });
   };
@@ -25,14 +25,14 @@ const CMSTable = (props) => {
     const updatedRow = editedData[rowId];
     if (updatedRow) {
       const currentRow = data.find(row => row[idAccessor] === rowId);
-      const mergedRow = { ...currentRow, ...updatedRow }; // Gabungkan nilai saat ini dengan nilai yang diedit
+      const mergedRow = { ...currentRow, ...updatedRow };
       handleSave(rowId, mergedRow);
       setEditedData((prevData) => {
         const newData = { ...prevData };
         delete newData[rowId];
         return newData;
       });
-      setEditMode((prevMode) => ({ ...prevMode, [rowId]: false })); // Menonaktifkan mode edit setelah menyimpan
+      setEditMode((prevMode) => ({ ...prevMode, [rowId]: false }));
     } else {
       alert('No changes detected.');
     }
@@ -40,7 +40,7 @@ const CMSTable = (props) => {
 
   const handleEditClick = (rowId) => {
     alert('Edit mode activated for row ID: ' + rowId);
-    setEditMode((prevMode) => ({ ...prevMode, [rowId]: true })); // Mengaktifkan mode edit
+    setEditMode((prevMode) => ({ ...prevMode, [rowId]: true }));
   };
 
   const isAnyRowInEditMode = Object.values(editMode).some((mode) => mode);
@@ -65,36 +65,60 @@ const CMSTable = (props) => {
         <tbody className="text-sm">
           {data.map((row) => (
             <tr key={row[idAccessor]}>
-            {columns.map((column) => (
-              <td
-                key={typeof column.accessor === 'string' ? column.accessor : column.accessor.name}
-                className="py-2 px-4 border-b border-gray-300 text-sm font-medium"
-                contentEditable={editMode[row[idAccessor]] && column.editable}
-                suppressContentEditableWarning={true}
-                onBlur={(e) => handleInputChange(e, row[idAccessor], typeof column.accessor === 'string' ? column.accessor : column.accessor.name)}
-              >
-                {typeof column.accessor === 'string' ? (
-                  column.accessor === 'url_actor' ? (
-                    <a href={row[column.accessor]} target="_blank" rel="noopener noreferrer">
-                      <img src={row[column.accessor]} alt="Actor" className="h-16 w-16 object-cover rounded-full" />
-                    </a>
-                  ) : (
-                    row[column.accessor]
-                  )
-                ) : (
-                    typeof row[column.accessor.name] === 'object' && !Array.isArray(row[column.accessor.name]) ? (
-                      column.accessor.child_accessor ? (
-                        row[column.accessor.name][column.accessor.child_accessor]
+              {columns.map((column) => {
+                const isBoolean = typeof row[column.accessor] === 'boolean';
+                return (
+                  <td
+                    key={typeof column.accessor === 'string' ? column.accessor : column.accessor.name}
+                    className="py-2 px-4 border-b border-gray-300 text-sm font-medium"
+                  >
+                    {editMode[row[idAccessor]] && column.editable ? (
+                      isBoolean ? (
+                        <select
+                          value={editedData[row[idAccessor]]?.[column.accessor] !== undefined ? (editedData[row[idAccessor]][column.accessor] ? 'Yes' : 'No') : (row[column.accessor] ? 'Yes' : 'No')}
+                          onChange={(e) => handleInputChange(e, row[idAccessor], column.accessor, true)}
+                          className="border rounded px-2 py-1 text-black w-full"
+                        >
+                          <option className='text-black' value="Yes">Yes</option>
+                          <option className='text-black' value="No">No</option>
+                        </select>
                       ) : (
-                        JSON.stringify(row[column.accessor.name]) // Jika tidak ada child_accessor, tampilkan objek sebagai string
+                        <div
+                          contentEditable
+                          suppressContentEditableWarning={true}
+                          onBlur={(e) => handleInputChange(e, row[idAccessor], typeof column.accessor === 'string' ? column.accessor : column.accessor.name, false)}
+                          className="w-full h-full"
+                        >
+                          {editedData[row[idAccessor]]?.[column.accessor] ?? row[column.accessor]}
+                        </div>
                       )
                     ) : (
-                      row[column.accessor.name]
-                    )
-                )}
-              </td>
-            ))}              
-            <td className="py-2 px-4 border-b border-gray-300 text-center">
+                      isBoolean ? (
+                        row[column.accessor] ? 'Yes' : 'No'
+                      ) : typeof column.accessor === 'string' ? (
+                        column.accessor === 'url_actor' ? (
+                          <a href={row[column.accessor]} target="_blank" rel="noopener noreferrer">
+                            <img src={row[column.accessor]} alt="Actor" className="h-16 w-16 object-cover rounded-full" />
+                          </a>
+                        ) : (
+                          row[column.accessor]
+                        )
+                      ) : (
+                        typeof row[column.accessor.name] === 'object' && !Array.isArray(row[column.accessor.name]) ? (
+                          column.accessor.child_accessor ? (
+                            row[column.accessor.name][column.accessor.child_accessor]
+                          ) : (
+                            JSON.stringify(row[column.accessor.name])
+                          )
+                        ) : (
+                          row[column.accessor.name]
+                        )
+                      )
+                    )}
+                  </td>
+                );
+              })}
+              <td className="py-2 px-4 border-b border-gray-300 text-center">
                 <div className="flex justify-center space-x-2">
                   {editMode[row[idAccessor]] ? (
                     <>
@@ -116,14 +140,14 @@ const CMSTable = (props) => {
                       <button
                         className="bg-yellow-500 text-dark-text py-1 px-3 rounded-md hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
                         onClick={() => handleEditClick(row[idAccessor])}
-                        disabled={isAnyRowInEditMode} // Nonaktifkan tombol jika ada baris lain dalam mode edit
+                        disabled={isAnyRowInEditMode}
                       >
                         Edit
                       </button>
                       <button
                         className="bg-red-500 text-dark-text py-1 px-3 rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                         onClick={() => handleDelete(row[idAccessor])}
-                        disabled={isAnyRowInEditMode} // Nonaktifkan tombol jika ada baris lain dalam mode edit
+                        disabled={isAnyRowInEditMode}
                       >
                         Delete
                       </button>
@@ -149,7 +173,7 @@ CMSTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleSave: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,
-  idAccessor: PropTypes.string.isRequired, // Tambahkan propTypes untuk idAccessor
+  idAccessor: PropTypes.string.isRequired,
 };
 
 export default CMSTable;

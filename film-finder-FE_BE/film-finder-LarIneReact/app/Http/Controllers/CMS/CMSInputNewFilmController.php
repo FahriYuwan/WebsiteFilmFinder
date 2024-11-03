@@ -9,6 +9,7 @@ use App\Models\Award;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Actor;
 
 // $query = Film::with(['genres', 'actors', 'awards', 'countries']);
 
@@ -18,13 +19,55 @@ class CMSInputNewFilmController extends Controller{
         $countries = Countries::orderBy('country_name', 'asc')->get();
         $awards = Award::orderBy('award_name', 'asc')->get();
         $genres = Genre::orderBy('genre_name', 'asc')->get();
+        $actors = Actor::orderBy('actor_name', 'asc')->get();
         return Inertia::render('CMS/CMSDramaInput/CMSDramaInput', [
             'countries' => $countries,
             'awards' => $awards,
             'genres' => $genres,
+            'actors' => $actors,
         ]);
     }
 
+    public function store(Request $request){
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'url_banner' => 'required|string|max:255',
+            'alternative_title' => 'required|string|max:255',
+            'year_release' => 'required|integer',
+            'duration' => 'required|integer',
+            'countries_id' => 'required',
+            'awards_id' => 'required|array',
+            'genres_id' => 'required|array',
+            'actors_id' => 'required|array',
+            'url_trailer' => 'required|string|max:255',
+            'availability' => 'required|string|max:255',
+            'synopsis' => 'required|string',
+        ]);
+    
+        $film = Film::create([
+            'title' => $request->title,
+            'url_banner' => $request->url_banner,
+            'alternative_title' => $request->alternative_title,
+            'year_release' => $request->year_release,
+            'duration' => $request->duration,
+            'countries_id' => $request->countries_id,
+            'url_trailer' => $request->url_trailer,
+            'availability' => $request->availability,
+            'synopsis' => $request->synopsis,
+        ]);
+    
+        // Extract only the IDs from the awards, genres, and actors arrays
+        $awardIds = array_column($request->awards_id, 'award_id');
+        $genreIds = $request->genres_id;
+        $actorIds = array_column($request->actors_id, 'actor_id');
+    
+        // Attach awards, genres, and actors to the film
+        $film->awards()->attach($awardIds);
+        $film->genres()->attach($genreIds);
+        $film->actors()->attach($actorIds);
+    
+        return redirect()->route('cms.dramainput.index')->with('success', 'Film created successfully!');
+    }
 }
 
 

@@ -22,7 +22,8 @@ class Film extends Model
         'rating_film',
         'synopsis',
         'status',
-        'availability'
+        'availability',
+        'countries_id'
     ];
 
     public function reviews()

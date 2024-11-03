@@ -1,50 +1,60 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-const CMSTableDrama = ({ columns, data, handleSave, handleDelete, showPopup }) => (
-  <div className="overflow-x-auto">
-    <table className="min-w-full bg-dark-card-bg text-dark-text">
-      <thead>
-        <tr>
-          {columns.map(column => (
-            <th key={column.accessor} className="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold">{column.Header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className="text-sm">
-        {data.map(drama => (
-          <tr key={drama.id} data-film-id={drama.id}>
-            <td className="py-2 px-4 border-b border-gray-300 text-sm font-medium" contentEditable="true">{drama.title}</td>
-            <td className="py-2 px-4 border-b border-gray-300 text-sm" contentEditable="true">{drama.genre}</td>
-            <td className="py-2 px-4 border-b border-gray-300 text-sm" contentEditable="true">{drama.synopsis}</td>
-            <td className="py-2 px-4 border-b border-gray-300 text-center">
-              <button className={`status-button ${drama.status.toLowerCase()} py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2`} onClick={() => showPopup(drama.title, drama.id)}>{drama.status}</button>
-            </td>
-            <td className="py-2 px-4 border-b border-gray-300 text-center">
-              <div className="flex justify-center space-x-2">
-                <button className="bg-custom-blue-light text-dark-text py-1 px-3 rounded-md hover:bg-dark-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-custom-blue-dark" onClick={() => handleSave(drama.id)}>Save</button>
-                <button className="bg-red-400 text-white py-1 px-3 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" onClick={() => handleDelete(drama.id)}>Delete</button>
-              </div>
-            </td>
+
+const CMSTableDrama = ({ columns, data, handleDelete, showPopup }) => {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-left text-dark-text bg-gray-800">
+        <thead>
+          <tr>
+            {columns.map((column) => (
+              <th
+                key={column.Header}
+                style={{ width: column.width }}
+                className="px-4 py-2 bg-gray-900 text-white"
+              >
+                {column.Header}
+              </th>
+            ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
-CMSTableDrama.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    Header: PropTypes.string.isRequired,
-    accessor: PropTypes.string.isRequired,
-  })).isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    synopsis: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
-  })).isRequired,
-  handleSave: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
-  showPopup: PropTypes.func.isRequired,
+        </thead>
+        <tbody>
+          {data.map((drama, index) => (
+            <tr
+              key={drama.film_id}
+              className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}
+            >
+              <td className="border px-4 py-2 text-white">{drama.title}</td>
+              <td className="border px-4 py-2 text-white">
+                {drama.genres.map((genre) => genre.genre_name).join(', ')}
+              </td>
+              <td className="border px-4 py-2 text-white">
+                {drama.synopsis.length > 100
+                  ? drama.synopsis.substring(0, 100) + '...'
+                  : drama.synopsis}
+              </td>
+              <td className="border px-4 py-2 text-white capitalize">
+                {drama.status}
+              </td>
+              <td className="border px-4 py-2">
+                <button
+                  onClick={() => showPopup(drama.title, drama.film_id)}
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
+                >
+                  Detail
+                </button>
+                <button
+                  onClick={() => handleDelete(drama.film_id)}
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 };
+
 export default CMSTableDrama;

@@ -49,12 +49,13 @@ class CMSUsersController extends Controller
         $user = User::findOrFail($user_id);
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user_id . ',user_id'
+            'email' => 'required|email|unique:users,email,' . $user_id . ',user_id',
+            'status' => 'required|boolean',
         ]);
-    
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
+            'status' => $request->status,
         ]);
         
         return redirect()->route('cms.users.index')->with('success', 'User updated successfully!');

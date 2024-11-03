@@ -23,6 +23,9 @@ use App\Http\Controllers\CMS\CMSGenresController;
 use App\Http\Controllers\CMS\CMSActorsController;
 use App\Http\Controllers\CMS\CMSInputNewFilmController;
 use App\Http\Controllers\CMS\CMSAwardsController;
+use App\Http\Controllers\CMS\CMSDramaValidasiController;
+use App\Http\Controllers\CMS\CMSReviewsController;
+
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
 //         'canLogin' => Route::has('login'),
@@ -56,9 +59,18 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
     Route::delete('/cmsusers/{user_id}', [CMSUsersController::class, 'destroy'])->name('cms.users.destroy');
     Route::post('/cmsusers', [CMSUsersController::class, 'store'])->name('cms.users.store');
 
-    Route::get('/cmscomments', function () {
-        return Inertia::render('CMS/CMSComments/CMSComments');
-    })->name('cmscomments');
+    Route::prefix('cmsreviews')->name('cms.reviews.')->group(function () {
+        Route::get('/', [CMSReviewsController::class, 'index'])->name('index');
+        Route::put('/update', [CMSReviewsController::class, 'update'])->name('update'); // Update route method to PUT
+        Route::delete('/destroy', [CMSReviewsController::class, 'destroy'])->name('destroy'); // Update route method to DELETE
+    });
+    // Route::prefix('cmsdrama')->name('cms.dramavalidasi.')->group(function () {
+    //     Route::get('/', [CMSDramaValidasiController::class, 'index'])->name('index');
+    //     // Route::put('/{film_id}', [CMSDramaValidasiController::class, 'update'])->name('update');
+    //     Route::post('/accept/{film_id}', [CMSDramaValidasiController::class, 'accept'])->name('accept');
+    //     Route::post('/reject/{film_id}', [CMSDramaValidasiController::class, 'reject'])->name('reject');
+    //     Route::delete('/{film_id}', [CMSDramaValidasiController::class, 'destroy'])->name('destroy');
+    // });
 
     Route::get('/cmsactors', [CMSActorsController::class, 'index'])->name('cms.actors.index');
     Route::post('/cmsactors', [CMSActorsController::class, 'store'])->name('cms.actors.store');
@@ -92,16 +104,19 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
     Route::delete('/cmscountries/{countries_id}', [CMSCountriesController::class, 'destroy'])->name('cms.countries.destroy');
     Route::put('/cmscountries/{countries_id}', [CMSCountriesController::class, 'update'])->name('cms.countries.update');
 
-    Route::get('/cmsdrama', function () {
-        return Inertia::render('CMS/CMSDrama/CMSDrama');
-    })->name('cmsdrama');
+    Route::prefix('cmsdrama')->name('cms.dramavalidasi.')->group(function () {
+        Route::get('/', [CMSDramaValidasiController::class, 'index'])->name('index');
+        // Route::put('/{film_id}', [CMSDramaValidasiController::class, 'update'])->name('update');
+        Route::post('/accept/{film_id}', [CMSDramaValidasiController::class, 'accept'])->name('accept');
+        Route::post('/reject/{film_id}', [CMSDramaValidasiController::class, 'reject'])->name('reject');
+        Route::delete('/{film_id}', [CMSDramaValidasiController::class, 'destroy'])->name('destroy');
+    });
 });
 
 // Rute untuk CMS Drama Input dengan middleware khusus user
 Route::middleware(['auth'])->group(function () {
     Route::get('/cmsdramainput',[CMSInputNewFilmController::class, 'index'])->name('cms.dramainput.index');
-
-
+    Route::post('/cmsdramainput',[CMSInputNewFilmController::class, 'store'])->name('cms.dramainput.store');
 });
 
 

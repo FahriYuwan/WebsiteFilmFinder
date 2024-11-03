@@ -9,7 +9,6 @@ function InputField(props) {
   const handleCheckboxChange = (event) => {
     const { id, checked } = event.target;
     const idStr = id.toString(); // Pastikan id adalah string
-    console.log('Checkbox ID:', idStr); // Debug: Melihat nilai id checkbox
     
     let newValue;
     if (checked) {
@@ -41,18 +40,18 @@ function InputField(props) {
       ) : props.type === 'checkbox' && Array.isArray(props.options) ? (
         <ul className="flex flex-wrap w-full text-sm font-medium text-gray-700 bg-gray-700 border border-gray-700 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
           {props.options.map((option) => (
-            <li key={option.id} className="w-1/5 border-b border-gray-700 sm:border-b-0 sm:border-r dark:border-gray-600">
+            <li key={option[props.id]} className="w-1/5 border-b border-gray-700 sm:border-b-0 sm:border-r dark:border-gray-600">
               <div className="flex items-center ps-3">
                 <input
-                  id={option.id}
-                  name={option.id}
+                  id={option[props.id]}
+                  name={option[props.id]}
                   type="checkbox"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-                  checked={props.value.includes(option.id.toString())}
+                  checked={props.value.includes(option[props.id].toString())}
                   onChange={handleCheckboxChange}
                 />
                 <label htmlFor={option.id} className="w-full py-3 ms-2 text-sm font-medium text-white dark:text-gray-300">
-                  {option.name}
+                  {option[props.name]}
                 </label>
               </div>
             </li>

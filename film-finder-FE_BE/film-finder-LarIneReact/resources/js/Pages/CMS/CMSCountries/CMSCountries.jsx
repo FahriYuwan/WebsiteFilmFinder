@@ -15,7 +15,7 @@ const CMSCountries = () => {
   const { post, delete: destroy, put} = useForm();
 
   const handleInputChange = (e) => {
-    setCountryName(e.target.value);
+    setCountryName(e.target.value);a
   };
 
   const handleSubmit = (e) => {
