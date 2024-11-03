@@ -22,7 +22,7 @@ use App\Http\Controllers\CMS\CMSUsersController;
 use App\Http\Controllers\CMS\CMSGenresController;
 use App\Http\Controllers\CMS\CMSActorsController;
 use App\Http\Controllers\CMS\CMSInputNewFilmController;
-
+use App\Http\Controllers\CMS\CMSAwardsController;
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
 //         'canLogin' => Route::has('login'),
@@ -78,6 +78,11 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
         return Inertia::render('CMS/CMSAwards/CMSAwards');
     })->name('cmsawards');
 
+    Route::get('/cmsawards', [CMSAwardsController::class, 'index'])->name('cms.awards.index');
+    Route::post('/cmsawards', [CMSAwardsController::class, 'store'])->name('cms.awards.store');
+    Route::delete('/cmsawards/{award_id}', [CMSAwardsController::class, 'destroy'])->name('cms.awards.destroy');
+    Route::put('/cmsawards/{award_id}', [CMSAwardsController::class, 'update'])->name('cms.awards.update');
+
     Route::get('/cmscountries', function () {
         return Inertia::render('CMS/CMSCountries/CMSCountries');
     })->name('cmscountries');
@@ -102,10 +107,12 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
-
-Route::delete('/bookmarks/{film}', [BookmarkController::class, 'destroy'])->name('bookmarks.destroy');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/bookmark', [BookmarkController::class, 'index'])->name('bookmark.index');
+    Route::post('/unbookmark', [BookmarkController::class, 'unbookmark'])->name('unbookmark');
+    Route::post('/bookmarks', [BookmarkController::class, 'store'])->name('bookmarks.store');
+    Route::delete('/bookmarks/{film}', [BookmarkController::class, 'destroy'])->name('bookmarks.destroy');
+});
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
@@ -164,3 +171,4 @@ Route::get('/auth/google/callback', function () {
 
     return redirect('/home'); // Redirect ke halaman home setelah login
 });
+

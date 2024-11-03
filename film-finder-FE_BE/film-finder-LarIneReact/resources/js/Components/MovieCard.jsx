@@ -47,6 +47,16 @@ const MovieCard = (props) => {
     }
   };
 
+  const handleUnbookmark = (filmId) => {
+    console.log(`Unbookmarking film with ID: ${filmId}`);
+    router.post('/unbookmark', { film_id: filmId }, {
+      onSuccess: () => {
+        console.log('Unbookmark successful');
+        setIsBookmarked(false);
+      }
+    });
+  };
+
   return (
     <div className="relative max-w-sm rounded overflow-hidden shadow-lg bg-white block">
       <Link href={`/detailpage/${props.id}`}>
@@ -66,6 +76,9 @@ const MovieCard = (props) => {
         <div className="text-black text-xl mb-2">{props.title}</div>
         <p className="text-gray-700 text-base">{truncateText(props.availability)}</p>
       </div>
+      {isBookmarked && (
+        <button onClick={() => handleUnbookmark(props.id)}>Unbookmark</button>
+      )}
     </div>
   );
 };
