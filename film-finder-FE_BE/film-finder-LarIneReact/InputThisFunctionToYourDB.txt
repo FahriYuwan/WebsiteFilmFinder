@@ -1,3 +1,5 @@
+BACKUP YANG BAWAH INI :
+
 CREATE OR REPLACE FUNCTION update_film_rating()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -13,3 +15,9 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_update_film_rating
+AFTER INSERT OR UPDATE OF status ON reviews
+FOR EACH ROW
+WHEN (NEW.status = 'accepted')
+EXECUTE FUNCTION update_film_rating();

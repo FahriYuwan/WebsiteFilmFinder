@@ -8,6 +8,7 @@ use App\Models\Countries;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+
 // $query = Film::with(['genres', 'actors', 'awards', 'countries']);
 class CMSActorsController extends Controller{
     public function index(){

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
+
 class CMSCountriesController extends Controller{
     public function index(Request $request)
     {

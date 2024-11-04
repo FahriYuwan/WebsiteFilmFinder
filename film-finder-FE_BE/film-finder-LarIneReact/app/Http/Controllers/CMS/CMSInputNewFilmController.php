@@ -10,6 +10,7 @@ use App\Models\Genre;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Actor;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 // $query = Film::with(['genres', 'actors', 'awards', 'countries']);
 
@@ -29,9 +30,10 @@ class CMSInputNewFilmController extends Controller{
     }
 
     public function store(Request $request){
+        dd($request->all());
         $request->validate([
             'title' => 'required|string|max:255',
-            'url_banner' => 'required|string|max:255',
+            'bannerFile' => 'required',
             'alternative_title' => 'required|string|max:255',
             'year_release' => 'required|integer',
             'duration' => 'required|integer',
@@ -43,10 +45,16 @@ class CMSInputNewFilmController extends Controller{
             'availability' => 'required|string|max:255',
             'synopsis' => 'required|string',
         ]);
-    
+
+        $cloudinaryImage = $request->file('bannerFile')->storeOnCloudinary('bannerFilm');
+        
+        $url = $cloudinaryImage->getSecurePath();
+        $public_id = $cloudinaryImage->getPublicId();
+
+
         $film = Film::create([
             'title' => $request->title,
-            'url_banner' => $request->url_banner,
+            'url_banner' => $request->bannerFile,
             'alternative_title' => $request->alternative_title,
             'year_release' => $request->year_release,
             'duration' => $request->duration,

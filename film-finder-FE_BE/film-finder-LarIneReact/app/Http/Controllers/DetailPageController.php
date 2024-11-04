@@ -7,42 +7,35 @@ use Inertia\Inertia;
 use App\Models\Film;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Cache;
 
 class DetailPageController extends Controller
 {
     public function show($film_id)
     {
-        $cacheKey = 'film_detail_' . $film_id;
-    
-        $film = Cache::remember($cacheKey, 60, function () use ($film_id) {
-            return Film::with([
-                'genres',
-                'actors',
-                'awards',
-                'countries',
-                'bookmarks',
-                'reviews' => function($query) {
-                    $query->where('status', 'approved')->with('user');
-                },
-            ])->findOrFail($film_id);
-        });
-    
+        // Ambil data film langsung dari database tanpa cache
+        $film = Film::with([
+            'genres', 
+            'actors', 
+            'awards', 
+            'reviews' => function ($query) {
+                $query->where('status', 'accepted')->with('user');
+            }, 
+            'countries', 
+            'bookmarks'
+        ])->findOrFail($film_id);
+
         $userBookmarks = [];
         if (Auth::check()) {
-            $userBookmarks = Auth::user()->bookmarks->pluck('film_id')->toArray();
+            $userBookmarks = Auth::user()->bookmarks->pluck('film_id')->toArray(); // Ambil ID film yang di-bookmark oleh user
         }
-    
         return Inertia::render('DetailPage/DetailPage', [
             'film' => $film,
-            'userBookmarks' => $userBookmarks,
+            'userBookmarks' => $userBookmarks
         ]);
     }
 
     public function store(Request $request)
     {
-
-
         $request->validate([
             'film_id' => 'required|integer|exists:films,film_id',
             'rating_user' => 'required|numeric|min:1|max:5',
@@ -51,7 +44,7 @@ class DetailPageController extends Controller
 
         $film = Film::findOrFail($request->film_id);
 
-        $film->reviews()->create([
+        $review = $film->reviews()->create([
             'rating_user' => $request->rating_user,
             'review_text' => $request->review_text,
             'review_date' => now(),
@@ -59,39 +52,36 @@ class DetailPageController extends Controller
             'status' => 'pending'
         ]);
 
-        // Hapus cache detail film setelah review baru ditambahkan
-        Cache::forget('film_detail_' . $request->film_id);
-
-        $this->updateFilmRating($film);
+        // Update film rating only if the review status is 'accepted'
+        if ($review->status === 'accepted') {
+            $this->updateFilmRating($film);
+        }
 
         return back()->with('success', 'Review submitted successfully!');
     }
 
-        // Tambahkan method untuk menghitung rata-rata rating film
-        protected function updateFilmRating(Film $film)
-        {
-            // Hitung rata-rata rating dari review yang ada
-            $averageRating = $film->reviews()->avg('rating_user');
-    
-            // Update rating_film dengan rata-rata yang baru
-            $film->update([
-                'rating_film' => round($averageRating, 1)
-            ]);
-        }
+    // Tambahkan method untuk menghitung rata-rata rating film
+    protected function updateFilmRating(Film $film)
+    {
+        // Hitung rata-rata rating dari review yang ada
+        $averageRating = $film->reviews()->avg('rating_user');
 
-        public function bookmark(Request $request)
-        {
-            $request->validate([
-                'film_id' => 'required|integer|exists:films,film_id'
-            ]);
-    
-            $film = Film::findOrFail($request->film_id);
-    
-            $film->bookmarks()->syncWithoutDetaching(Auth::id());
-    
-            // Hapus cache detail film setelah bookmark baru ditambahkan
-            Cache::forget('film_detail_' . $request->film_id);
-    
-            return back()->with('success', 'Film bookmarked successfully!');
-        }
+        // Update rating_film dengan rata-rata yang baru
+        $film->update([
+            'rating_film' => round($averageRating, 1)
+        ]);
+    }
+
+    public function bookmark(Request $request)
+    {
+        $request->validate([
+            'film_id' => 'required|integer|exists:films,film_id'
+        ]);
+
+        $film = Film::findOrFail($request->film_id);
+
+        $film->bookmarks()->syncWithoutDetaching(Auth::id());
+
+        return back()->with('success', 'Film bookmarked successfully!');
+    }
 }

@@ -116,7 +116,7 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
 // Rute untuk CMS Drama Input dengan middleware khusus user
 Route::middleware(['auth'])->group(function () {
     Route::get('/cmsdramainput',[CMSInputNewFilmController::class, 'index'])->name('cms.dramainput.index');
-    Route::post('/cmsdramainput',[CMSInputNewFilmController::class, 'store'])->name('cms.dramainput.store');
+    Route::put('/cmsdramainput',[CMSInputNewFilmController::class, 'store'])->name('cms.dramainput.store');
 });
 
 
@@ -170,6 +170,9 @@ Route::get('/auth/google/callback', function () {
 
     if ($existingUser) {
         // Jika user sudah ada, login langsung
+        if ($existingUser->status !== true) {
+            return Inertia::render('Auth/NotificationBanned');
+        }
         Auth::login($existingUser);
     } else {
         // Jika user belum ada, buat user baru

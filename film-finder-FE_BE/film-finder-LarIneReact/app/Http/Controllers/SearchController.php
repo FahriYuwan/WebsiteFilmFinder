@@ -16,7 +16,8 @@ class SearchController extends Controller
             'category' => 'required|string|in:title,actor',
         ]);
 
-        $query = Film::with(['genres', 'actors', 'awards', 'countries']);
+        $query = Film::with(['genres', 'actors', 'awards', 'countries'])
+            ->where('status', 'accepted'); // Tambahkan kondisi ini
 
         $searchTerm = strtolower($request->input('term')); // Convert to lowercase
         $category = $request->input('category');

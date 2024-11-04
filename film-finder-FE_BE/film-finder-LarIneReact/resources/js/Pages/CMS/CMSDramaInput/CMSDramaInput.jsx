@@ -46,8 +46,8 @@ const StyledAutocomplete = styled(Autocomplete)({
 function CMSDramaInput() {
   const { countries: initialCountries, actors: initialActors, awards: initialAwards, genres: initialGenres } = usePage().props;
   const [countriesList, setCountriesList] = useState('');
-  const [bannerLink, setBannerLink] = useState('');
-  const [bannerPreview, setBannerPreview] = useState('');
+  const [bannerFile, setBannerFile] = useState(null);
+  const [bannerPreview, setBannerPreview] = useState(null);  
   const [actors, setActors] = useState([]);
   const [genres, setGenres] = useState([]);
   const [genreOptions, setGenreOptions] = useState(initialGenres);
@@ -61,7 +61,21 @@ function CMSDramaInput() {
   const [trailerLink, setTrailerLink] = useState('');
   const [synopsis, setSynopsis] = useState('');
   const [duration, setDuration] = useState('');
-  const { post } = useForm();
+  const { put } = useForm();
+
+  const handleBannerUploadChange = (e) => {
+    const file = e.target.files[0];
+    setBannerFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBannerPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setBannerPreview(null);
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -92,15 +106,6 @@ function CMSDramaInput() {
     }
   };
 
-  const handleBannerLinkChange = (e) => {
-    setBannerLink(e.target.value);
-    // alert('Banner Link: ' + e.target.value);
-  };
-
-  const handlePreviewImage = () => {
-    setBannerPreview(bannerLink);
-  };
-
   // const removeActor = (id) => {
   //   setActors(actors.filter(actor => actor.id !== id));
   // };
@@ -121,44 +126,70 @@ function CMSDramaInput() {
     console.log(value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    post(route('cms.dramainput.store', {
-      url_banner: bannerLink,
-      title: title,
-      alternative_title: alternativeTitle,
-      year_release: year,
-      countries_id: countriesList,
-      availability: availability,
-      url_trailer: trailerLink,
-      awards_id: Awards,
-      duration: duration,
-      genres_id: genres,
-      actors_id: actors,
-      synopsis: synopsis
-    }), {
-      onSuccess: () => {
-        setBannerLink('');
-        setBannerPreview('');
-        setTitle('');
-        setAlternativeTitle('');
-        setYear('');
-        setCountriesList('');
-        setAvailability('');
-        setTrailerLink('');
-        setAwards([]);
-        setDuration('');
-        setSynopsis('');
-        setGenres([]);
-        setActors([]);
-        alert('Film has been added!');
-        router.get(route('cms.dramainput.index'));
-      },
-      onError: (errors) => {
-        console.log(errors);
-      }
-    });
-  };
+    // Siapkan FormData untuk Cloudinary
+    const formData = new FormData();
+    formData.append("file", bannerFile);  // Pastikan bannerFile berisi file yang akan di-upload
+    formData.append("upload_preset", "ml_default"); // Isi dengan Upload Preset Anda
+    formData.append("cloud_name", "dp4sbd8c9"); // Isi dengan Cloud Name Anda
+
+    try {
+        // Upload gambar ke Cloudinary
+        // const res = await fetch(`https://api.cloudinary.com/v1_1/dp4sbd8c9/image/upload`, {
+        //     method: "POST",
+        //     body: formData
+        // });
+        // const data = await res.json();
+
+        // // Dapatkan URL gambar dari Cloudinary
+        // const imageUrl = data.secure_url;
+        // console.log(imageUrl);
+
+        // Kirim data lainnya ke server Laravel
+        put(route('cms.dramainput.store', {
+            bannerFile: bannerFile, 
+            title: title,
+            alternative_title: alternativeTitle,
+            year_release: year,
+            countries_id: countriesList,
+            availability: availability,
+            url_trailer: trailerLink,
+            awards_id: Awards,
+            duration: duration,
+            genres_id: genres,
+            actors_id: actors,
+            synopsis: synopsis
+        }, {headers: {
+          'Content-Type': 'multipart/form-data',  // Set appropriate headers
+          }}), {
+            onSuccess: () => {
+                // Reset semua state setelah sukses
+                setBannerFile(null);
+                setBannerLink('');
+                setBannerPreview('');
+                setTitle('');
+                setAlternativeTitle('');
+                setYear('');
+                setCountriesList('');
+                setAvailability('');
+                setTrailerLink('');
+                setAwards([]);
+                setDuration('');
+                setSynopsis('');
+                setGenres([]);
+                setActors([]);
+                alert('Film has been added!');
+                router.get(route('cms.dramainput.index'));
+            },
+            onError: (errors) => {
+                console.log(errors);
+            }
+        });
+    } catch (error) {
+        console.error("Error uploading image to Cloudinary:", error);
+    }
+};
 
   return (
     <>
@@ -167,27 +198,19 @@ function CMSDramaInput() {
         <div className="flex-1 flex flex-col items-center p-10 bg-gray-800 text-white">
           <div className="w-full max-w-6xl bg-dark-card-bg rounded-lg shadow-lg p-8">
             <h1 className="text-3xl font-bold text-center mb-8">Input New Film</h1>
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="space-y-2 w-full md:w-1/3">
-                  <label htmlFor="banner" className="block text-sm font-medium">Banner Image Link</label>
-                  <InputField
-                    id="banner"
-                    name="Banner"
-                    type="text"
-                    placeholder="Enter banner image link"
-                    value={bannerLink}
-                    onChange={handleBannerLinkChange}
-                  />
-                  <button
-                    type="button"
-                    className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-                    onClick={handlePreviewImage}
-                  >
-                    Preview Image
-                  </button>
-                  {bannerPreview && <img id="banner-preview" className="mt-4 w-full rounded-md" src={bannerPreview} alt="Banner Preview" />}
-                </div>
+                <label htmlFor="bannerFile" className="block text-sm font-medium">Banner Image</label>
+                <InputField
+                  id="bannerFile"
+                  name="bannerFile"
+                  type="file"
+                  accept="image/*"
+                  required
+                  onChange={handleBannerUploadChange}
+                />
+                {bannerPreview && <img id="banner-preview" className="mt-4 w-full rounded-md" src={bannerPreview} alt="Banner Preview" />}                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full md:w-2/3">
                   <div className="space-y-2">
                     <label htmlFor="title" className="block text-sm font-medium">Title</label>

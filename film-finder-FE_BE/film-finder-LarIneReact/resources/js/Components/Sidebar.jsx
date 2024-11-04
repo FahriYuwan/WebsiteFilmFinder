@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Logo from '../assets/images/just-text.png';
 import PropTypes from 'prop-types';
-import { Link } from '@inertiajs/react';
+import { usePage, Link, router } from '@inertiajs/react';
+
 
 function Sidebar(props) {
   const [isCollapsed, setIsCollapsed] = useState(false);
-
+  const { auth } = usePage().props;
+  const user = auth.user;
   useEffect(() => {
     const toggleButton = document.getElementById('toggle-button');
     const sidebarItems = document.querySelectorAll('.sidebar-item');
@@ -84,11 +86,11 @@ function Sidebar(props) {
   
       {/* <!-- User Info --> */}
       <div className="flex items-center p-4">
-        <img src="https://ui-avatars.com/api/?background=3D5A80&color=F9FAFB&bold=true&name=John+Doe" alt="User Avatar" className="w-10 h-10 rounded-md" />
+        <img   src={`https://ui-avatars.com/api/?background=3D5A80&color=F9FAFB&bold=true&name=${user ? user.name.split(' ').join('+') : 'Guest'}`} alt="User Avatar" className="w-10 h-10 rounded-md" />
         {!isCollapsed && (
           <div className="ml-3 sidebar-item-text">
-            <h4 className="font-semibold text-dark-text">John Doe</h4>
-            <span className="text-xs text-gray-400">johndoe@gmail.com</span>
+            <h4 className="font-semibold text-dark-text">{user.name}</h4>
+            <span className="text-xs text-gray-400">{user.email}</span>
           </div>
         )}
       </div>
@@ -223,14 +225,12 @@ function Sidebar(props) {
   
       {/* <!-- Footer/Logout --> */}
       <div className="border-t border-dark-border flex items-center p-3 mt-auto">
-          <Link href="/home" className="flex items-center text-dark-text hover:text-dark-accent transition duration-300">
-          <button id="logout-btn" className="flex items-center">
+          <button id="logout-btn" className="flex items-center text-dark-text hover:text-dark-accent transition duration-300" onClick={() => router.post('/logout')}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H5a3 3 0 01-3-3V5a3 3 0 013-3h5a3 3 0 013 3v1" />
             </svg>
             <span id="logout-text" className="ml-2">Logout</span>
           </button>
-        </Link>
       </div>
     </aside>
 );

@@ -14,12 +14,14 @@ class HomeController extends Controller
     {
         // Tentukan kunci cache yang unik
         $cacheKey = 'films_page_' . $request->get('page', 1);
-
+    
         // Gunakan Cache::remember untuk menyimpan hasil query dalam cache
         $films = Cache::remember($cacheKey, 60, function () {
-            return Film::with('bookmarks')->paginate(8); // Mengambil 8 film per halaman dengna relasi bookmarks
+            return Film::with('bookmarks')
+                ->where('status', 'accepted') // Tambahkan kondisi ini
+                ->paginate(8); // Mengambil 8 film per halaman dengan relasi bookmarks
         });
-
+    
         $userBookmarks = [];
         if (Auth::check()) {
             $userBookmarks = Auth::user()->bookmarks->pluck('film_id')->toArray(); // Ambil ID film yang di-bookmark oleh user

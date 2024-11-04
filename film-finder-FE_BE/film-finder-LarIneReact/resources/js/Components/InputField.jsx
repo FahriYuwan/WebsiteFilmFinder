@@ -57,6 +57,16 @@ function InputField(props) {
             </li>
           ))}
         </ul>
+      ) : props.type === 'file' ? (
+        <input
+          id={props.id}
+          name={props.name}
+          type="file"
+          accept="image/*"
+          className="w-full px-4 py-3 border bg-gray-700 border-gray-600 focus:ring focus:ring-blue-500 text-white rounded-md"
+          required={props.required}
+          onChange={props.onChange}
+        />
       ) : (
         <input
           id={props.id}
