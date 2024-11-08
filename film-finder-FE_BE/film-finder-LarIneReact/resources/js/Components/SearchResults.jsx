@@ -3,6 +3,16 @@ import PropTypes from 'prop-types';
 import Pagination from './Pagination';
 import { Link } from '@inertiajs/react';
 
+function getBannerUrl(urlBanner) {
+  // Cek apakah urlBanner adalah URL lengkap (misalnya dimulai dengan http atau https)
+  if (urlBanner.startsWith('http://') || urlBanner.startsWith('https://')) {
+    return urlBanner; // Kembali kan URL asli
+  } else {
+    // Jika bukan URL lengkap, anggap sebagai path lokal
+    return `/storage/${urlBanner}`; // Tambahkan path storage
+  }
+}
+
 const SearchResults = ({ filters, film }) => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,7 +83,7 @@ const SearchResults = ({ filters, film }) => {
             currentItems.map((item, index) => (
               <div key={index} className="flex items-start space-x-4 mb-6 bg-gray-800 rounded p-4">
                 <div className="w-24 h-24 bg-gray-300 rounded-lg flex-shrink-0">
-                  <img src={item.url_banner} alt={item.title} className="w-full h-full object-cover rounded-lg" />
+                  <img src={getBannerUrl(item.url_banner)} alt={item.title} className="w-full h-full object-cover rounded-lg" />
                 </div>
                 <div className="flex-1">
                   <Link href={`/detailpage/${item.film_id}`}>

@@ -3,6 +3,19 @@ import PropTypes from 'prop-types';
 import { useForm, usePage, router } from '@inertiajs/react';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa'; // Import ikon bookmark
 
+function getBannerUrl(urlBanner) {
+  if (!urlBanner) {
+    // Kembalikan path default atau placeholder jika urlBanner tidak tersedia
+    return '/path/to/default/image.jpg';
+  }
+
+  if (urlBanner.startsWith('http://') || urlBanner.startsWith('https://')) {
+    return urlBanner;
+  } else {
+    return `/storage/${urlBanner}`;
+  }
+}
+
 const MovieDetails = ({ film, isBookmarked: initialIsBookmarked}) => {
   const { auth } = usePage().props;
   const [isBookmarked, setIsBookmarked] = useState(initialIsBookmarked); // State untuk bookmark
@@ -41,7 +54,7 @@ const MovieDetails = ({ film, isBookmarked: initialIsBookmarked}) => {
         <div className="relative max-w-xs mx-auto rounded overflow-hidden shadow-lg bg-gray-100">
           <img
             className="w-full"
-            src={film.url_banner || "No image"}
+            src={getBannerUrl(film.url_banner) || "No image"}
             alt={film.title || "No title"}
           />
           <div className="absolute top-0 right-0 p-2">

@@ -30,10 +30,9 @@ class CMSInputNewFilmController extends Controller{
     }
 
     public function store(Request $request){
-        dd($request->all());
         $request->validate([
             'title' => 'required|string|max:255',
-            'bannerFile' => 'required',
+            'fileImage' => 'required|image',
             'alternative_title' => 'required|string|max:255',
             'year_release' => 'required|integer',
             'duration' => 'required|integer',
@@ -45,16 +44,14 @@ class CMSInputNewFilmController extends Controller{
             'availability' => 'required|string|max:255',
             'synopsis' => 'required|string',
         ]);
-
-        $cloudinaryImage = $request->file('bannerFile')->storeOnCloudinary('bannerFilm');
-        
-        $url = $cloudinaryImage->getSecurePath();
-        $public_id = $cloudinaryImage->getPublicId();
-
-
+    
+        // Simpan file ke folder public/images
+        $path = $request->file('fileImage')->store('images', 'public');
+    
+        // Buat record film baru dengan menyimpan path url_banner
         $film = Film::create([
             'title' => $request->title,
-            'url_banner' => $request->bannerFile,
+            'url_banner' => $path, // Simpan path direktori di sini
             'alternative_title' => $request->alternative_title,
             'year_release' => $request->year_release,
             'duration' => $request->duration,
@@ -69,7 +66,7 @@ class CMSInputNewFilmController extends Controller{
         $genreIds = $request->genres_id;
         $actorIds = array_column($request->actors_id, 'actor_id');
     
-        // Attach awards, genres, and actors to the film
+        // Lampirkan awards, genres, dan actors ke film
         $film->awards()->attach($awardIds);
         $film->genres()->attach($genreIds);
         $film->actors()->attach($actorIds);

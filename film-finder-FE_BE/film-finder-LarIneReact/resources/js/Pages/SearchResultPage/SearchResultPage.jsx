@@ -3,6 +3,7 @@ import NavBar from '../../components/NavBar';
 import FilterSelect from '../../components/FilterSelect'; 
 import SearchResults from '../../components/SearchResults'; 
 
+
 const SearchResultPage = ({film}) => {
   if (!film) {
     return <div>Loading...</div>;

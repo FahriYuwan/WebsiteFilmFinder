@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+function getBannerUrl(urlBanner) {
+  // Cek apakah urlBanner adalah URL lengkap (misalnya dimulai dengan http atau https)
+  if (urlBanner.startsWith('http://') || urlBanner.startsWith('https://')) {
+    return urlBanner; // Kembali kan URL asli
+  } else {
+    // Jika bukan URL lengkap, anggap sebagai path lokal
+    return `/storage/${urlBanner}`; // Tambahkan path storage
+  }
+}
+
 const Popup = ({ film = {}, onClose, onAccept, onReject }) => (
   <div
     id="popup"
@@ -81,7 +91,7 @@ const Popup = ({ film = {}, onClose, onAccept, onReject }) => (
             </h3>
             <img
               className="w-full rounded-lg object-cover"
-              src={film.url_banner}
+              src={getBannerUrl(film.url_banner)}
               alt="Banner"
             />
           </div>

@@ -4,6 +4,16 @@ import NavBar from "../../Components/NavBar";
 import Pagination from "../../Components/Pagination";
 import { usePage, router} from '@inertiajs/react';
 
+function getBannerUrl(urlBanner) {
+  // Cek apakah urlBanner adalah URL lengkap (misalnya dimulai dengan http atau https)
+  if (urlBanner.startsWith('http://') || urlBanner.startsWith('https://')) {
+    return urlBanner; // Kembali kan URL asli
+  } else {
+    // Jika bukan URL lengkap, anggap sebagai path lokal
+    return `/storage/${urlBanner}`; // Tambahkan path storage
+  }
+}
+
 function Home() {
   const { films, userBookmarks } = usePage().props;
   const [searchTerm, setSearchTerm] = useState('');
@@ -35,7 +45,7 @@ function Home() {
           return (
             <MovieCard
               key={index}
-              imgSrc={movie.url_banner} // Sesuaikan dengan kolom di tabel
+              imgSrc={getBannerUrl(movie.url_banner)} // Sesuaikan dengan kolom di tabel
               title={movie.title}
               availability={movie.availability} // Sesuaikan dengan kolom di tabel
               id={movie.film_id}

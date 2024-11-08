@@ -116,7 +116,7 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
 // Rute untuk CMS Drama Input dengan middleware khusus user
 Route::middleware(['auth'])->group(function () {
     Route::get('/cmsdramainput',[CMSInputNewFilmController::class, 'index'])->name('cms.dramainput.index');
-    Route::put('/cmsdramainput',[CMSInputNewFilmController::class, 'store'])->name('cms.dramainput.store');
+    Route::post('/cmsdramainput/store',[CMSInputNewFilmController::class, 'store'])->name('cms.dramainput.store');
 });
 
 

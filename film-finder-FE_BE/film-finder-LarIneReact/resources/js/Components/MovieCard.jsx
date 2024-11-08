@@ -60,12 +60,12 @@ const MovieCard = (props) => {
   return (
     <div className="relative max-w-sm rounded overflow-hidden shadow-lg bg-white block">
       <Link href={`/detailpage/${props.id}`}>
-        <img
-          className="w-full"
-          src={props.imgSrc}
-          alt={`${props.title} Image`}
-          onError={handleImageError} // Tambahkan onError handler
-        />
+      <img
+        className="w-full h-4/5 object-cover"
+        src={props.imgSrc}
+        alt={`${props.title} Image`}
+        onError={handleImageError}
+      />
       </Link>
       <div className="absolute top-0 right-0 p-2">
         <button onClick={handleBookmarkClick} className="focus:outline-none">

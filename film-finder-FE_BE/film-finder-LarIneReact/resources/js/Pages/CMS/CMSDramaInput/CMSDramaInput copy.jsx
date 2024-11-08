@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { usePage, useForm, router } from "@inertiajs/react";
 import Sidebar from '../../../components/Sidebar';
+import { useDropzone } from 'react-dropzone';
 import InputField from '../../../components/InputField';
 import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -46,8 +47,8 @@ const StyledAutocomplete = styled(Autocomplete)({
 function CMSDramaInput() {
   const { countries: initialCountries, actors: initialActors, awards: initialAwards, genres: initialGenres } = usePage().props;
   const [countriesList, setCountriesList] = useState('');
-  const [bannerFile, setBannerFile] = useState('');
-  const [bannerPreview, setBannerPreview] = useState('');
+  const [bannerFile, setBannerFile] = useState(null);
+  const [bannerPreview, setBannerPreview] = useState(null);  
   const [actors, setActors] = useState([]);
   const [genres, setGenres] = useState([]);
   const [genreOptions, setGenreOptions] = useState(initialGenres);
@@ -63,78 +64,125 @@ function CMSDramaInput() {
   const [duration, setDuration] = useState('');
   const { post } = useForm();
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'country_name') {
-      setCountriesList(value);
-      // alert('Country selected: ' + value);
-    } else if (name === 'Title') {
-      setTitle(value);
-      // alert('Title: ' + value);
-    } else if (name === 'Alternative Title') {
-      setAlternativeTitle(value);
-      // alert('Alternative Title: ' + value);
-    } else if (name === 'Year') {
-      // alert('Year: ' + value);
-      setYear(value);
-    } else if (name === 'Availability') {
-      // alert('Availability: ' + value);
-      setAvailability(value);
-    } else if (name === 'Trailer Link') {
-      // alert('Trailer Link: ' + value);
-      setTrailerLink(value);
-    } else if (name === 'Synopsis') {
-      // alert('Synopsis: ' + value);
-      setSynopsis(value);
-    } else if (name === 'duration') {
-      // alert('Duration: ' + value);
-      setDuration(value);
-    }
-  };
-
-  const handleBannerFileChange = (e) => {
-    const file = e.target.files[0];
+  const onDrop = (acceptedFiles) => {
+    const file = acceptedFiles[0];
     setBannerFile(file);
     const reader = new FileReader();
     reader.onloadend = () => {
       setBannerPreview(reader.result);
     };
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      setBannerPreview('');
-    }
-    console.log(file);
+    reader.readAsDataURL(file);
   };
 
-  // const handlePreviewImage = () => {
-  //   setBannerPreview(bannerLink);
-  // };
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
 
-  // const removeActor = (id) => {
-  //   setActors(actors.filter(actor => actor.id !== id));
-  // };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'country_name') {
+      setCountriesList(value);
+    } else if (name === 'Title') {
+      setTitle(value);
+    } else if (name === 'Alternative Title') {
+      setAlternativeTitle(value);
+    } else if (name === 'Year') {
+      setYear(value);
+    } else if (name === 'Availability') {
+      setAvailability(value);
+    } else if (name === 'Trailer Link') {
+      setTrailerLink(value);
+    } else if (name === 'Synopsis') {
+      setSynopsis(value);
+    } else if (name === 'duration') {
+      setDuration(value);
+    }
+  };
 
   const handleGenreChange = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setGenres(value);
-    console.log(value);
   };
 
   const handleAutocompleteChange = (event, value) => {
     setActors(value);
-    console.log(value);
   };
 
   const handleAwardsChange = (event, value) => {
     setAwards(value);
-    console.log(value);
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   console.log(bannerFile);
+  //   console.log(title);
+  //   console.log(alternativeTitle);
+  //   console.log(year);
+  //   console.log(countriesList);
+  //   console.log(availability);
+  //   console.log(trailerLink);
+  //   console.log(Awards);
+  //   console.log(duration);
+  //   console.log(synopsis);
+  //   console.log(genres);
+  //   console.log(actors);
+  //   try {
+  //     post(route('cms.dramainput.store'), {
+  //       bannerFile: bannerFile,
+  //       title: title,
+  //       alternative_title: alternativeTitle,
+  //       year_release: year,
+  //       countries_id: countriesList,
+  //       availability: availability,
+  //       url_trailer: trailerLink,
+  //       awards_id: Awards,
+  //       duration: duration,
+  //       genres_id: genres,
+  //       actors_id: actors,
+  //       synopsis: synopsis
+  //     }, {
+  //       onSuccess: () => {
+  //         setBannerFile(null);
+  //         setBannerPreview(null);
+  //         setTitle('');
+  //         setAlternativeTitle('');
+  //         setYear('');
+  //         setCountriesList('');
+  //         setAvailability('');
+  //         setTrailerLink('');
+  //         setAwards([]);
+  //         setDuration('');
+  //         setSynopsis('');
+  //         setGenres([]);
+  //         setActors([]);
+  //         alert('Film has been added!');
+  //         router.get(route('cms.dramainput.index'));
+  //       },
+  //       onError: (errors) => {
+  //         console.log(errors);
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error("Error submitting the form:", error);
+  //     alert("Error submitting the form. Please try again.");
+  //   }
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
-      fileImage: bannerFile,
+    console.log(bannerFile);
+    console.log(title);
+    console.log(alternativeTitle);
+    console.log(year);
+    console.log(countriesList);
+    console.log(availability);
+    console.log(trailerLink);
+    console.log(Awards);
+    console.log(duration);
+    console.log(synopsis);
+    console.log(genres);
+    console.log(actors);
+    post(route('cms.dramainput.store', {
+      bannerFile: bannerFile,
       title: title,
       alternative_title: alternativeTitle,
       year_release: year,
@@ -145,13 +193,10 @@ function CMSDramaInput() {
       duration: duration,
       genres_id: genres,
       actors_id: actors,
-      synopsis: synopsis,
-    };
-  
-    router.post('/cmsdramainput/store', data,{
-      forceFormData: true,
+      synopsis: synopsis
+    }), {
       onSuccess: () => {
-        setBannerFile(null);
+        setBannerLink('');
         setBannerPreview('');
         setTitle('');
         setAlternativeTitle('');
@@ -165,38 +210,15 @@ function CMSDramaInput() {
         setGenres([]);
         setActors([]);
         alert('Film has been added!');
-        router.get('/cmsdramainput');
+        router.get(route('cms.dramainput.index'));
       },
       onError: (errors) => {
         console.log(errors);
       },
-    })
+       forceFormData: true,
+    });
   };
-  //   post(route('cms.dramainput.store'), {
-  //     data,
-  //     forceFormData: true,
-  //     onSuccess: () => {       
-  //       setBannerFile(null);
-  //       setBannerPreview('');
-  //       setTitle('');
-  //       setAlternativeTitle('');
-  //       setYear('');
-  //       setCountriesList('');
-  //       setAvailability('');
-  //       setTrailerLink('');
-  //       setAwards([]);
-  //       setDuration('');
-  //       setSynopsis('');
-  //       setGenres([]);
-  //       setActors([]);
-  //       alert('Film has been added!');
-  //       router.get(route('cms.dramainput.index'));
-  //     },
-  //     onError: (errors) => {
-  //       console.log(errors);
-  //     },
-  //   });
-  // };
+
 
   return (
     <>
@@ -208,23 +230,15 @@ function CMSDramaInput() {
             <form className="space-y-6" onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="flex flex-col md:flex-row gap-8">
                 <div className="space-y-2 w-full md:w-1/3">
-                <label htmlFor="banner" className="block text-sm font-medium">Banner Image</label>
-                  <input
-                    id="banner"
-                    name="fileImage"
-                    type="file"
-                    accept="image/*"
-                    onChange={handleBannerFileChange}
-                    className="w-full p-3 rounded-md bg-gray-700 border border-gray-600 focus:ring focus:ring-blue-500 text-white"
-                  />
-                  {bannerPreview && (
-                    <img
-                      id="banner-preview"
-                      className="mt-4 w-full rounded-md"
-                      src={bannerPreview}
-                      alt="Banner Preview"
-                    />
-                  )}
+                  <label htmlFor="bannerFile" className="block text-sm font-medium">Banner Image</label>
+                  <div {...getRootProps({ className: 'dropzone' })} className="border-dashed border-2 border-gray-500 p-4 text-center">
+                    <input {...getInputProps()} />
+                    {bannerPreview ? (
+                      <img id="banner-preview" className="mt-4 w-full rounded-md" src={bannerPreview} alt="Banner Preview" />
+                    ) : (
+                      <p>Drag 'n' drop some files here, or click to select files</p>
+                    )}
+                  </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full md:w-2/3">
                   <div className="space-y-2">

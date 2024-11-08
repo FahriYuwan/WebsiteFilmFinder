@@ -133,7 +133,7 @@ function CMSDramaInput() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = {
+    post(route('cms.dramainput.store', {
       fileImage: bannerFile,
       title: title,
       alternative_title: alternativeTitle,
@@ -145,11 +145,8 @@ function CMSDramaInput() {
       duration: duration,
       genres_id: genres,
       actors_id: actors,
-      synopsis: synopsis,
-    };
-  
-    router.post('/cmsdramainput/store', data,{
-      forceFormData: true,
+      synopsis: synopsis
+    }), {
       onSuccess: () => {
         setBannerFile(null);
         setBannerPreview('');
@@ -165,38 +162,13 @@ function CMSDramaInput() {
         setGenres([]);
         setActors([]);
         alert('Film has been added!');
-        router.get('/cmsdramainput');
+        router.get(route('cms.dramainput.index'));
       },
       onError: (errors) => {
         console.log(errors);
-      },
-    })
+      }
+    });
   };
-  //   post(route('cms.dramainput.store'), {
-  //     data,
-  //     forceFormData: true,
-  //     onSuccess: () => {       
-  //       setBannerFile(null);
-  //       setBannerPreview('');
-  //       setTitle('');
-  //       setAlternativeTitle('');
-  //       setYear('');
-  //       setCountriesList('');
-  //       setAvailability('');
-  //       setTrailerLink('');
-  //       setAwards([]);
-  //       setDuration('');
-  //       setSynopsis('');
-  //       setGenres([]);
-  //       setActors([]);
-  //       alert('Film has been added!');
-  //       router.get(route('cms.dramainput.index'));
-  //     },
-  //     onError: (errors) => {
-  //       console.log(errors);
-  //     },
-  //   });
-  // };
 
   return (
     <>
@@ -211,7 +183,7 @@ function CMSDramaInput() {
                 <label htmlFor="banner" className="block text-sm font-medium">Banner Image</label>
                   <input
                     id="banner"
-                    name="fileImage"
+                    name="Banner"
                     type="file"
                     accept="image/*"
                     onChange={handleBannerFileChange}
