@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Actor;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Storage;
 
 // $query = Film::with(['genres', 'actors', 'awards', 'countries']);
 
@@ -30,6 +31,7 @@ class CMSInputNewFilmController extends Controller{
     }
 
     public function store(Request $request){
+        // dd($request);
         $request->validate([
             'title' => 'required|string|max:255',
             'fileImage' => 'required|image',
@@ -72,6 +74,76 @@ class CMSInputNewFilmController extends Controller{
         $film->actors()->attach($actorIds);
     
         return redirect()->route('cms.dramainput.index')->with('success', 'Film created successfully!');
+    }
+
+    public function edit($film_id){
+        $film = Film::with(['genres', 'actors', 'awards', 'countries'])->findOrFail($film_id);
+        $countries = Countries::orderBy('country_name', 'asc')->get();
+        $awards = Award::orderBy('award_name', 'asc')->get();
+        $genres = Genre::orderBy('genre_name', 'asc')->get();
+        $actors = Actor::orderBy('actor_name', 'asc')->get();
+        return Inertia::render('CMS/CMSDramaEdit/CMSDramaEdit', [
+            'film' => $film,
+            'countries' => $countries,
+            'awards' => $awards,
+            'genres' => $genres,
+            'actors' => $actors,
+        ]);
+    }
+
+    public function update(Request $request){
+        // Remove or comment out the debug statement
+        // dd($request);
+    
+        $request->validate([
+            'film_id' => 'required|integer', 
+            'title' => 'required|string|max:255',
+            'fileImage' => 'nullable|image',
+            'alternative_title' => 'required|string|max:255',
+            'year_release' => 'required|integer',
+            'duration' => 'required|integer',
+            'countries_id' => 'required',
+            'awards_id' => 'required|array',
+            'genres_id' => 'required|array',
+            'actors_id' => 'required|array',
+            'url_trailer' => 'required|string|max:255',
+            'availability' => 'required|string|max:255',
+            'synopsis' => 'required|string',
+        ]);
+    
+        $film = Film::findOrFail($request->film_id);
+    
+        if($request->hasFile('fileImage')){
+            // Delete old image if exists
+            if($film->url_banner){
+                Storage::disk('public')->delete($film->url_banner);
+            }
+            $path = $request->file('fileImage')->store('images', 'public');
+            $film->url_banner = $path;
+        }
+    
+        $film->title = $request->title;
+        $film->alternative_title = $request->alternative_title;
+        $film->year_release = $request->year_release;
+        $film->duration = $request->duration;
+        $film->countries_id = $request->countries_id;
+        $film->url_trailer = $request->url_trailer;
+        $film->availability = $request->availability;
+        $film->synopsis = $request->synopsis;
+        $film->save();
+    
+        // Sync relations
+        // Ekstrak ID dari array asosiatif yang dikirim
+        $awardIds = collect($request->awards_id)->pluck('award_id')->toArray(); // Hanya ambil award_id
+        $genreIds = $request->genres_id;
+        $actorIds = collect($request->actors_id)->pluck('actor_id')->toArray(); // Hanya ambil actor_id
+
+        // Sync relasi dengan hanya ID saja
+        $film->awards()->sync($awardIds);
+        $film->genres()->sync($genreIds);
+        $film->actors()->sync($actorIds);
+    
+        return redirect()->route('cms.dramavalidasi.index')->with('success', 'Film updated successfully!');
     }
 }
 

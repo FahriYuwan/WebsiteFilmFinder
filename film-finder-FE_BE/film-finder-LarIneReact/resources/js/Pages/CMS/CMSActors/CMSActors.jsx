@@ -3,24 +3,30 @@ import Sidebar from "../../../components/Sidebar";
 import Button from "../../../components/Button";
 import InputField from "../../../components/InputField";
 import CMSTable from "../../../components/CMS/CMSTable";
-import { usePage, useForm, router } from "@inertiajs/react";
+import { usePage, useForm } from "@inertiajs/react";
 import Pagination from '../../../components/Pagination';
-
 
 function CMSActors() {
 
-    const { countries,actors } = usePage().props;
-    const [ActorList, setActors] = useState(actors.data);
+    const { countries, actors } = usePage().props;
+    const [ActorList, setActors] = useState(actors);
     const [Country, setCountry] = useState('');
     const [Actor, setActor] = useState('');
     const [Birthdate, setBirthdate] = useState('');
     const [link_picture, setLinkPicture] = useState('');
-    const { post, delete: destroy, put} = useForm();
+    const { post, delete: destroy, put } = useForm();
+
+    const [searchQuery, setSearchQuery] = useState('');
+
+    // Pagination states for client-side
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10; // Number of items per page
+
+    console.log(ActorList,Country);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'country_name') {
-            alert('Country selected: ' + value);
             setCountry(value);
         } else if (name === 'Actor') {
             setActor(value);
@@ -28,31 +34,29 @@ function CMSActors() {
             setBirthdate(value);
         } else if (name === 'Picture') {
             setLinkPicture(value);
+        } else if (name === 'search') {
+            setSearchQuery(value);
+            setCurrentPage(1); // Reset to first page on search
         }
     };
-    console.log(actors);
-    console.log(ActorList);
 
     const handleSubmit = (e) => {
-        alert('Values submitted: ' + Country + ' ' + Actor + ' ' + Birthdate + ' ' + link_picture);
         e.preventDefault();
-        post(route('cms.actors.store',{
+        post(route('cms.actors.store', {
             countries_id: Country,
             actor_name: Actor,
             birthdate: Birthdate,
             url_actor: link_picture
         }), {
             onSuccess: () => {
-                // Optional: Actions after success, like clearing fields
                 setCountry('');
                 setActor('');
                 setBirthdate('');
                 setLinkPicture('');
                 alert('Actor has been added!');
-                router.get(route('cms.actors.index'));
+                window.location.reload(); // Reload to fetch updated data
             },
             onError: (errors) => {
-                // Handle errors here if needed
                 console.log(errors);
             }
         });
@@ -61,40 +65,30 @@ function CMSActors() {
     const handleDelete = (id) => {
         if (!window.confirm('Are you sure you want to delete this actor?')) {
             return;
-        }
-        else {
+        } else {
             destroy(route('cms.actors.destroy', { actor_id: id }), {
-              onSuccess: () => {
-                // Optional: Actions after success
-                alert('Actor has been deleted!');
-                router.get(route('cms.actors.index'));
-              },
-              onError: (errors) => {
-                // Handle errors here if needed
-                console.log(errors);
-              }
+                onSuccess: () => {
+                    alert('Actor has been deleted!');
+                    setActors(prev => prev.filter(actor => actor.actor_id !== id));
+                },
+                onError: (errors) => {
+                    console.log(errors);
+                }
             });
-          }
+        }
     };
 
     const handleSave = (id, data) => {
-        alert('Save button clicked for row ID: ' + id);
-        console.log('Data to be saved:', data.actor_name,' ', data.birthdate);
-        put(route('cms.actors.update', { actor_id: id, actor_name : data.actor_name, birthdate: data.birthdate}), {
-          onSuccess: () => {
-            // Optional: Actions after success
-            alert('Actor has been updated!');
-            router.get(route('cms.actors.index'));
-          },
-          onError: (errors) => {
-            // Handle errors here if needed
-            console.log(errors);
-          }
+        alert( 'ACTOR ID: ' + id + 'actor_name: ' + data.actor_name + 'birthdate: ' + data.birthdate);
+        put(route('cms.actors.update', { actor_id: id, actor_name: data.actor_name, birthdate: data.birthdate }), {
+            onSuccess: () => {
+                alert('Actor has been updated!');
+                setActors(prev => prev.map(actor => actor.actor_id === id ? { ...actor, ...data } : actor));
+            },
+            onError: (errors) => {
+                console.log(errors);
+            }
         });
-      }
-
-    const handlePageChange = (page) => {
-        router.get(route('cms.actors.index', { page }));
     };
 
     const columns = [
@@ -104,89 +98,123 @@ function CMSActors() {
         { Header: 'Picture', accessor: 'url_actor' },
     ];
 
+    // Filter actor list based on search query
+    const filteredActorList = ActorList.filter(actor =>
+        actor.actor_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        actor.birthdate.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        actor.countries.country_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // Calculate indices for current page
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredActorList.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Calculate total pages
+    const totalPages = Math.ceil(filteredActorList.length / itemsPerPage);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
     return (
         <>
-        <div className="flex">
-            <Sidebar active_actors={true} />
-            <div className="flex-1 flex flex-col items-center p-10 bg-gray-800 text-dark-text">
-                <div className="bg-dark-card-bg text-dark-text p-8 rounded-lg shadow-md w-full max-w-xl mb-8">
-                    <h2 className="text-3xl font-extrabold text-center mb-6 text-custom-blue-light">Add Actor</h2>
-                    <form id="actor-form" className="space-y-6" onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="country" className="block text-sm font-medium text-dark-text">Country</label>
-                            <InputField
-                                id="countries_id"
-                                name="country_name"
-                                type="select"
-                                placeholder="Enter a country"
-                                className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
-                                value={countries}
-                                onChange={handleInputChange}
+            <div className="flex">
+                <Sidebar active_actors={true} />
+                <div className="flex-1 flex flex-col items-center p-10 bg-gray-800 text-dark-text">
+                    <div className="bg-dark-card-bg text-dark-text p-8 rounded-lg shadow-md w-full max-w-xl mb-8">
+                        <h2 className="text-3xl font-extrabold text-center mb-6 text-custom-blue-light">Add Actor</h2>
+                        <form id="actor-form" className="space-y-6" onSubmit={handleSubmit}>
+                            <div>
+                                <label htmlFor="country" className="block text-sm font-medium text-dark-text">Country</label>
+                                <InputField
+                                    id="countries_id"
+                                    name="country_name"
+                                    type="select"
+                                    placeholder="Enter a country"
+                                    className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
+                                    value={countries}
+                                    onChange={handleInputChange}
+                                >
+                                    <option value="">Select Country</option>
+                                    {countries.map(country => (
+                                        <option key={country.countries_id} value={country.countries_id}>{country.country_name}</option>
+                                    ))}
+                                </InputField>
+                            </div>
+                            <div>
+                                <label htmlFor="actor" className="block text-sm font-medium text-dark-text">Actor</label>
+                                <InputField
+                                    id="actor"
+                                    name="Actor"
+                                    type="text"
+                                    placeholder="Enter an actor"
+                                    className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
+                                    value={Actor}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="birthdate" className="block text-sm font-medium text-dark-text">Birthdate</label>
+                                <InputField
+                                    id="birthdate"
+                                    name="Birthdate"
+                                    type="date"
+                                    placeholder="Enter a birthdate"
+                                    className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
+                                    value={Birthdate}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="link_picture" className="block text-sm font-medium text-dark-text">Upload Picture</label>
+                                <InputField
+                                    id="picture"
+                                    name="Picture"
+                                    type="text"
+                                    placeholder="Enter link for picture"
+                                    className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
+                                    value={link_picture}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <Button
+                                type="submit"
+                                className="w-full bg-dark-accent text-dark-text py-3 px-4 hover:bg-dark-hover focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-dark-accent text-sm font-medium"
+                                text="Submit"
                             />
-                        </div>
-                        <div>
-                            <label htmlFor="actor" className="block text-sm font-medium text-dark-text">Actor</label>
-                            <InputField
-                                id="actor"
-                                name="Actor"
+                        </form>
+                    </div>
+                    <div className="bg-dark-card-bg p-8 rounded-lg shadow-md w-full max-w-4xl">
+                        <h2 className="text-2xl font-extrabold text-center mb-6 text-custom-blue-light">Actors List</h2>
+                        {/* Search Input */}
+                        <div className="mb-4">
+                            <input
                                 type="text"
-                                placeholder="Enter an actor"
-                                className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
-                                value={Actor}
+                                name="search"
+                                value={searchQuery}
                                 onChange={handleInputChange}
+                                placeholder="Search actors..."
+                                className="w-full p-2 border border-gray-300 rounded text-black"
                             />
                         </div>
-                        <div>
-                            <label htmlFor="birthdate" className="block text-sm font-medium text-dark-text">Birthdate</label>
-                            <InputField
-                                id="birthdate"
-                                name="Birthdate"
-                                type="date"
-                                placeholder="Enter a birthdate"
-                                className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
-                                value={Birthdate}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="link_picture" className="block text-sm font-medium text-dark-text">Upload Picture</label>
-                            <InputField
-                                id="picture"
-                                name="Picture"
-                                type="text"
-                                placeholder="Enter link for picture"
-                                className="mt-2 block w-full px-4 py-3 text-black border border-gray-300 shadow-sm focus:outline-none focus:ring-custom-blue-light focus:border-custom-blue-light sm:text-sm"
-                                value={link_picture}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <Button
-                            type="submit"
-                            className="w-full bg-dark-accent text-dark-text py-3 px-4 hover:bg-dark-hover focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-dark-accent text-sm font-medium"
-                            text="Submit"
+                        <CMSTable
+                            columns={columns}
+                            data={currentItems} // Use current page items
+                            handleSave={handleSave}
+                            handleDelete={handleDelete}
+                            idAccessor={'actor_id'}
                         />
-                    </form>
+                    </div>
+                    <div className="bg-dark-card-bg text-dark-text p-4 rounded-lg shadow-md w-full max-w-4xl mt-2">
+                        <Pagination
+                            currentPage={currentPage}
+                            lastPage={totalPages}
+                            onPageChange={handlePageChange}
+                        />
+                    </div>
                 </div>
-                <div className="bg-dark-card-bg p-8 rounded-lg shadow-md w-full max-w-4xl">
-                    <h2 className="text-2xl font-extrabold text-center mb-6 text-custom-blue-light">Actors List</h2>
-                    <CMSTable
-                        columns={columns}
-                        data={ActorList}
-                        handleSave={handleSave}
-                        handleDelete={handleDelete}
-                        idAccessor={'actor_id'}
-                    />
-                </div>
-                {/* Pagination */}
-                <div className="bg-dark-card-bg text-dark-text p-4 rounded-lg shadow-md w-full max-w-4xl mt-2">
-                <Pagination
-                    currentPage={actors.current_page}
-                    lastPage={actors.last_page}
-                    onPageChange={handlePageChange}
-                />
-                </div>  
             </div>
-        </div>
         </>
     );
 }

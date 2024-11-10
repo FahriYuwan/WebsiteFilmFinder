@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class CMSCountriesController extends Controller{
     public function index(Request $request)
     {
-        $countries = Countries::orderBy('countries_id', 'desc')->paginate(10);
+        $countries = Countries::orderBy('countries_id', 'desc')->get();
         return Inertia::render('CMS/CMSCountries/CMSCountries', [
             'countries' => $countries,
         ]);

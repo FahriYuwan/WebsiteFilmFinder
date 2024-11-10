@@ -6,8 +6,7 @@ const CMSTable = (props) => {
   const [editedData, setEditedData] = useState({});
   const [editMode, setEditMode] = useState({});
 
-  const handleInputChange = (e, rowId, accessor, isBoolean) => {
-    const value = isBoolean ? e.target.value === 'Yes' : e.target.value;
+  const handleInputChange = (value, rowId, accessor) => {
     setEditedData((prevData) => {
       const newData = {
         ...prevData,
@@ -24,7 +23,7 @@ const CMSTable = (props) => {
   const handleSaveClick = (rowId) => {
     const updatedRow = editedData[rowId];
     if (updatedRow) {
-      const currentRow = data.find(row => row[idAccessor] === rowId);
+      const currentRow = data.find((row) => row[idAccessor] === rowId);
       const mergedRow = { ...currentRow, ...updatedRow };
       handleSave(rowId, mergedRow);
       setEditedData((prevData) => {
@@ -39,7 +38,6 @@ const CMSTable = (props) => {
   };
 
   const handleEditClick = (rowId) => {
-    alert('Edit mode activated for row ID: ' + rowId);
     setEditMode((prevMode) => ({ ...prevMode, [rowId]: true }));
   };
 
@@ -52,67 +50,101 @@ const CMSTable = (props) => {
           <tr>
             {columns.map((column) => (
               <th
-                key={column.accessor}
+                key={typeof column.accessor === 'string' ? column.accessor : column.accessor.name}
                 className="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold"
                 style={{ width: column.width || 'auto' }}
               >
                 {column.Header}
               </th>
             ))}
-            <th className="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold" style={{ width: '180px' }}>Actions</th>
+            <th
+              className="py-3 px-4 border-b border-custom-gray text-left text-sm font-bold"
+              style={{ width: '180px' }}
+            >
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody className="text-sm">
           {data.map((row) => (
             <tr key={row[idAccessor]}>
               {columns.map((column) => {
-                const isBoolean = typeof row[column.accessor] === 'boolean';
+                const columnKey =
+                  typeof column.accessor === 'string' ? column.accessor : column.accessor.name;
+                const isBoolean = typeof row[columnKey] === 'boolean';
+
+                // Handle nested accessors for complex data structures
+                const getValue = () => {
+                  if (typeof column.accessor === 'string') {
+                    return row[column.accessor];
+                  } else if (column.accessor.name && column.accessor.child_accessor) {
+                    return row[column.accessor.name][column.accessor.child_accessor];
+                  } else if (column.accessor.name) {
+                    return row[column.accessor.name];
+                  }
+                  return '';
+                };
+
+                const displayValue = getValue();
+
                 return (
                   <td
-                    key={typeof column.accessor === 'string' ? column.accessor : column.accessor.name}
+                    key={columnKey}
                     className="py-2 px-4 border-b border-gray-300 text-sm font-medium"
                   >
                     {editMode[row[idAccessor]] && column.editable ? (
                       isBoolean ? (
                         <select
-                          value={editedData[row[idAccessor]]?.[column.accessor] !== undefined ? (editedData[row[idAccessor]][column.accessor] ? 'Yes' : 'No') : (row[column.accessor] ? 'Yes' : 'No')}
-                          onChange={(e) => handleInputChange(e, row[idAccessor], column.accessor, true)}
+                          value={
+                            editedData[row[idAccessor]]?.[columnKey] !== undefined
+                              ? editedData[row[idAccessor]][columnKey]
+                                ? 'Yes'
+                                : 'No'
+                              : displayValue
+                              ? 'Yes'
+                              : 'No'
+                          }
+                          onChange={(e) =>
+                            handleInputChange(e.target.value === 'Yes', row[idAccessor], columnKey)
+                          }
                           className="border rounded px-2 py-1 text-black w-full"
                         >
-                          <option className='text-black' value="Yes">Yes</option>
-                          <option className='text-black' value="No">No</option>
+                          <option className="text-black" value="Yes">
+                            Yes
+                          </option>
+                          <option className="text-black" value="No">
+                            No
+                          </option>
                         </select>
                       ) : (
                         <div
                           contentEditable
                           suppressContentEditableWarning={true}
-                          onBlur={(e) => handleInputChange(e, row[idAccessor], typeof column.accessor === 'string' ? column.accessor : column.accessor.name, false)}
+                          onBlur={(e) =>
+                            handleInputChange(e.target.innerText, row[idAccessor], columnKey)
+                          }
                           className="w-full h-full"
                         >
-                          {editedData[row[idAccessor]]?.[column.accessor] ?? row[column.accessor]}
+                          {editedData[row[idAccessor]]?.[columnKey] ?? displayValue}
                         </div>
                       )
+                    ) : isBoolean ? (
+                      displayValue ? 'Yes' : 'No'
                     ) : (
-                      isBoolean ? (
-                        row[column.accessor] ? 'Yes' : 'No'
-                      ) : typeof column.accessor === 'string' ? (
-                        column.accessor === 'url_actor' ? (
-                          <a href={row[column.accessor]} target="_blank" rel="noopener noreferrer">
-                            <img src={row[column.accessor]} alt="Actor" className="h-16 w-16 object-cover rounded-full" />
-                          </a>
-                        ) : (
-                          row[column.accessor]
-                        )
+                      columnKey === 'url_actor' ? (
+                        <a
+                          href={displayValue}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src={displayValue}
+                            alt="Actor"
+                            className="h-16 w-16 object-cover rounded-full"
+                          />
+                        </a>
                       ) : (
-                        typeof row[column.accessor.name] === 'object' && !Array.isArray(row[column.accessor.name]) ? (
-                          column.accessor.child_accessor ? (
-                            row[column.accessor.name][column.accessor.child_accessor]
-                          ) : (
-                            JSON.stringify(row[column.accessor.name])
-                          )
-                        ) : (
-                          row[column.accessor.name]
-                        )
+                        displayValue
                       )
                     )}
                   </td>
@@ -164,12 +196,14 @@ const CMSTable = (props) => {
 };
 
 CMSTable.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    Header: PropTypes.string,
-    accessor: PropTypes.string,
-    width: PropTypes.string,
-    editable: PropTypes.bool,
-  })).isRequired,
+  columns: PropTypes.arrayOf(
+    PropTypes.shape({
+      Header: PropTypes.string,
+      accessor: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+      width: PropTypes.string,
+      editable: PropTypes.bool,
+    })
+  ).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   handleSave: PropTypes.func.isRequired,
   handleDelete: PropTypes.func.isRequired,

@@ -58,7 +58,7 @@ const MovieCard = (props) => {
   };
 
   return (
-    <div className="relative max-w-sm rounded overflow-hidden shadow-lg bg-white block">
+    <div className="relative max-w-sm rounded overflow-hidden shadow-lg bg-white block ml-7">
       <Link href={`/detailpage/${props.id}`}>
       <img
         className="w-full h-4/5 object-cover"

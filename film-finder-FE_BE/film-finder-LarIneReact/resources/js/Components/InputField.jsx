@@ -28,6 +28,7 @@ function InputField(props) {
           name={props.name}
           className="w-full px-4 py-3 border bg-gray-700 border-gray-600 focus:ring focus:ring-blue-500 text-white rounded-md"
           required
+          value={props.defaultValue}
           onChange={handleSelectChange}
         >
           <option value="">{props.placeholder}</option>
@@ -109,5 +110,6 @@ InputField.propTypes = {
     label: PropTypes.string.isRequired,
   })),
 };
+
 
 export default InputField;

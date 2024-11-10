@@ -126,11 +126,31 @@ function CMSDrama() {
       Header: 'Genre',
       accessor: 'genres',
       width: 'auto',
-      Cell: ({ cell: { value } }) => value.map((genre) => genre.genre_name).join(', '),
+      Cell: ({ row }) => row.genres.map((genre) => genre.genre_name).join(', '),
     },
     { Header: 'Synopsis', accessor: 'synopsis', width: 'auto' },
     { Header: 'Status', accessor: 'status', width: 'auto' },
-    { Header: 'Actions', accessor: 'actions', width: '180px' },
+    { 
+      Header: 'Actions', 
+      accessor: 'actions', 
+      width: '180px',
+      Cell: ({ row }) => (
+        <div className="flex space-x-2">
+          <button 
+            onClick={() => showPopup(row.title, row.film_id)} 
+            className="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
+            Details
+          </button>
+          <button 
+            onClick={() => router.visit(route('cms.dramavalidasi.edit', { film_id: row.film_id }))}
+            className="px-3 py-1 bg-orange-500 text-white rounded-md hover:bg-orange-600"
+          >
+            Edit
+          </button>
+        </div>
+      )
+    },
   ];
 
   const handlePageChange = (page) => {

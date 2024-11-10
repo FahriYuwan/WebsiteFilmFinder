@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 class CMSGenresController extends Controller{
     public function index(Request $request)
     {
-        $genres = Genre::orderBy('genre_id', 'desc')->paginate(10);
+        $genres = Genre::orderBy('genre_id', 'desc')->get();
         return Inertia::render('CMS/CMSGenres/CMSGenres', [
             'genres' => $genres,
         ]);

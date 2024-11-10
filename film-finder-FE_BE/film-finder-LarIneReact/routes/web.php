@@ -106,6 +106,8 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
 
     Route::prefix('cmsdrama')->name('cms.dramavalidasi.')->group(function () {
         Route::get('/', [CMSDramaValidasiController::class, 'index'])->name('index');
+        Route::get('edit/{film_id}', [CMSInputNewFilmController::class, 'edit'])->name('edit');
+        Route::post('update/{film_id}', [CMSInputNewFilmController::class, 'update'])->name('update');
         // Route::put('/{film_id}', [CMSDramaValidasiController::class, 'update'])->name('update');
         Route::post('/accept/{film_id}', [CMSDramaValidasiController::class, 'accept'])->name('accept');
         Route::post('/reject/{film_id}', [CMSDramaValidasiController::class, 'reject'])->name('reject');

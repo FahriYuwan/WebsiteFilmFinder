@@ -17,7 +17,7 @@ class CMSAwardsController extends Controller
     public function index()
     {
         // Mengambil daftar penghargaan
-        $awards = Award::orderBy('award_id', 'desc')->paginate(10);
+        $awards = Award::orderBy('award_id', 'desc')->get();
 
         return Inertia::render('CMS/CMSAwards/CMSAwards', [
             'awards' => $awards, // Sesuaikan dengan props di CMSAwards.jsx

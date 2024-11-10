@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { usePage, useForm, router } from "@inertiajs/react";
 import Sidebar from '../../../components/Sidebar';
 import InputField from '../../../components/InputField';
@@ -44,29 +44,31 @@ const StyledAutocomplete = styled(Autocomplete)({
 });
 
 function CMSDramaInput() {
-  const { countries: initialCountries, actors: initialActors, awards: initialAwards, genres: initialGenres } = usePage().props;
-  const [countriesList, setCountriesList] = useState('');
+  const { countries: initialCountries, actors: initialActors, awards: initialAwards, genres: initialGenres,film } = usePage().props;
+  const [countriesList, setCountriesList] = useState(film.countries_id);
   const [bannerFile, setBannerFile] = useState('');
   const [bannerPreview, setBannerPreview] = useState('');
-  const [actors, setActors] = useState([]);
+  const [actors, setActors] = useState(film.actors);
   const [genres, setGenres] = useState([]);
   const [genreOptions, setGenreOptions] = useState(initialGenres);
   const [actorOptions, setActorOptions] = useState(initialActors);
   const [awardOptions, setAwardOptions] = useState(initialAwards);
-  const [Awards, setAwards] = useState([]);
-  const [title, setTitle] = useState('');
-  const [alternativeTitle, setAlternativeTitle] = useState('');
-  const [year, setYear] = useState('');
-  const [availability, setAvailability] = useState('');
-  const [trailerLink, setTrailerLink] = useState('');
-  const [synopsis, setSynopsis] = useState('');
-  const [duration, setDuration] = useState('');
-  const { post } = useForm();
+  const [defaultActors, setDefaultActors] = useState(film.actors);
+  const [defaultAwards, setDefaultAwards] = useState(film.awards);
+  const [Awards, setAwards] = useState(film.awards);
+  const [title, setTitle] = useState(film.title);
+  const [alternativeTitle, setAlternativeTitle] = useState(film.alternative_title);
+  const [year, setYear] = useState(film.year_release);
+  const [availability, setAvailability] = useState(film.availability);
+  const [trailerLink, setTrailerLink] = useState(film.url_trailer);
+  const [synopsis, setSynopsis] = useState(film.synopsis);
+  const [duration, setDuration] = useState(film.duration);
+  const { put } = useForm();
 
-  console.log (initialCountries);
-  console.log (initialActors);
-  console.log (initialAwards);
-  console.log (initialGenres);
+  useEffect(() => {
+    setGenres(film.genres.map((genre) => genre.genre_id.toString()));
+  }, [film.genres]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === 'country_name') {
@@ -108,7 +110,7 @@ function CMSDramaInput() {
     } else {
       setBannerPreview('');
     }
-    console.log(file);
+    console.log("Ini di banner file change " + file);
   };
 
   // const handlePreviewImage = () => {
@@ -136,8 +138,11 @@ function CMSDramaInput() {
   };
 
   const handleSubmit = (e) => {
+    console.log("ini film id :" + film.film_id);
+
     e.preventDefault();
     const data = {
+      film_id: film.film_id,
       fileImage: bannerFile,
       title: title,
       alternative_title: alternativeTitle,
@@ -151,30 +156,31 @@ function CMSDramaInput() {
       actors_id: actors,
       synopsis: synopsis,
     };
-  
-    router.post('/cmsdramainput/store', data,{
+    console.log(data);
+    
+    router.post(`/cmsdrama/update/${film.film_id}`,data, {
       forceFormData: true,
       onSuccess: () => {
-        setBannerFile(null);
-        setBannerPreview('');
-        setTitle('');
-        setAlternativeTitle('');
-        setYear('');
-        setCountriesList('');
-        setAvailability('');
-        setTrailerLink('');
-        setAwards([]);
-        setDuration('');
-        setSynopsis('');
-        setGenres([]);
-        setActors([]);
-        alert('Film has been added!');
-        router.get('/cmsdramainput');
+      setBannerFile(null);
+      setBannerPreview('');
+      setTitle('');
+      setAlternativeTitle('');
+      setYear('');
+      setCountriesList('');
+      setAvailability('');
+      setTrailerLink('');
+      setAwards([]);
+      setDuration('');
+      setSynopsis('');
+      setGenres([]);
+      setActors([]);
+      alert('Film has been updated!');
+      router.get('/cmsdrama');
       },
       onError: (errors) => {
-        console.log(errors);
+      console.log(errors);
       },
-    })
+    });
   };
   //   post(route('cms.dramainput.store'), {
   //     data,
@@ -272,6 +278,7 @@ function CMSDramaInput() {
                       type="select"
                       placeholder="Select country"
                       value={initialCountries}
+                      defaultValue={countriesList}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -307,6 +314,7 @@ function CMSDramaInput() {
                       options={awardOptions}
                       getOptionLabel={(option) => option.award_name}
                       filterSelectedOptions
+                      defaultValue={defaultAwards}
                       onChange={handleAwardsChange}
                       renderInput={(params) => (
                         <TextField
@@ -353,7 +361,7 @@ function CMSDramaInput() {
                   id="tags-outlined"
                   options={actorOptions}
                   getOptionLabel={(option) => option.actor_name}
-                  defaultValue={[actorOptions[0]]}
+                  defaultValue={defaultActors}
                   filterSelectedOptions
                   onChange={handleAutocompleteChange}
                   renderInput={(params) => (

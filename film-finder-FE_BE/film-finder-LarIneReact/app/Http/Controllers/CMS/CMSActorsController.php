@@ -12,7 +12,7 @@ use Inertia\Inertia;
 // $query = Film::with(['genres', 'actors', 'awards', 'countries']);
 class CMSActorsController extends Controller{
     public function index(){
-        $actors = Actor::with('countries')->orderBy('actor_id', 'desc')->paginate(10);
+        $actors = Actor::with('countries')->orderBy('actor_id', 'desc')->get();
         $countries = Countries::orderBy('country_name', 'asc')->get();
         return Inertia::render('CMS/CMSActors/CMSActors', [
             'actors' => $actors,

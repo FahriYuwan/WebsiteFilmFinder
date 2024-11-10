@@ -23,32 +23,20 @@ const CMSTableDrama = ({ columns, data, handleDelete, showPopup }) => {
               key={drama.film_id}
               className={index % 2 === 0 ? 'bg-gray-700' : 'bg-gray-600'}
             >
-              <td className="border px-4 py-2 text-white">{drama.title}</td>
-              <td className="border px-4 py-2 text-white">
-                {drama.genres.map((genre) => genre.genre_name).join(', ')}
-              </td>
-              <td className="border px-4 py-2 text-white">
-                {drama.synopsis.length > 100
-                  ? drama.synopsis.substring(0, 100) + '...'
-                  : drama.synopsis}
-              </td>
-              <td className="border px-4 py-2 text-white capitalize">
-                {drama.status}
-              </td>
-              <td className="border px-4 py-2">
-                <button
-                  onClick={() => showPopup(drama.title, drama.film_id)}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded mr-2"
-                >
-                  Detail
-                </button>
-                <button
-                  onClick={() => handleDelete(drama.film_id)}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                >
-                  Delete
-                </button>
-              </td>
+              {columns.map((column) => {
+                if (column.Cell) {
+                  return (
+                    <td key={column.Header} className="border px-4 py-2 text-white">
+                      {column.Cell({ row: drama })}
+                    </td>
+                  );
+                }
+                return (
+                  <td key={column.Header} className="border px-4 py-2 text-white">
+                    {drama[column.accessor]}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

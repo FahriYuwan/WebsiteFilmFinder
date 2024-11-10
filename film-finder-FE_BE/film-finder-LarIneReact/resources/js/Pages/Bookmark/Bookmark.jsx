@@ -3,6 +3,16 @@ import MovieCard from "../../Components/MovieCard";
 import NavBar from "../../Components/NavBar";
 import { usePage, router } from '@inertiajs/react';
 
+function getBannerUrl(urlBanner) {
+  // Cek apakah urlBanner adalah URL lengkap (misalnya dimulai dengan http atau https)
+  if (urlBanner.startsWith('http://') || urlBanner.startsWith('https://')) {
+    return urlBanner; // Kembali kan URL asli
+  } else {
+    // Jika bukan URL lengkap, anggap sebagai path lokal
+    return `/storage/${urlBanner}`; // Tambahkan path storage
+  }
+}
+
 function Bookmark() {
   const { userBookmarks, films } = usePage().props;
   const [searchTerm, setSearchTerm] = useState('');
@@ -61,7 +71,7 @@ function Bookmark() {
             filteredMovies.map((movie) => (
               <MovieCard
                 key={movie.film_id}
-                imgSrc={movie.url_banner}
+                imgSrc={getBannerUrl(movie.url_banner) || "No image"}
                 title={movie.title}
                 availability={movie.availability}
                 id={movie.film_id}
