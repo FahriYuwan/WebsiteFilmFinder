@@ -1,9 +1,4 @@
 {
-<<<<<<< HEAD
-    "require": {
-        "laravel/socialite": "^5.16"
-    }
-=======
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
@@ -12,7 +7,7 @@
     "require": {
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^1.0",
-        "laravel/framework": "^11.9",
+        "laravel/framework": "^11.33",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
@@ -73,5 +68,4 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true
->>>>>>> f6ebb3e (bookmark dan add award)
 }

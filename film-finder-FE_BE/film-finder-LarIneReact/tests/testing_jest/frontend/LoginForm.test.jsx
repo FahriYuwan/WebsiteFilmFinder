@@ -121,8 +121,8 @@ afterEach(() => {
 
     render(<LoginPage />);
 
-    expect(screen.getByText(/the email field is required./i)).toBeInTheDocument();
-    expect(screen.getByText(/the password field is required./i)).toBeInTheDocument();
+    expect(screen.getByText(/the email field is required./i)).not.toBeNull();
+    expect(screen.getByText(/the password field is required./i)).not.toBeNull();
   });
 
   // test('handles form submission when processing', () => {
