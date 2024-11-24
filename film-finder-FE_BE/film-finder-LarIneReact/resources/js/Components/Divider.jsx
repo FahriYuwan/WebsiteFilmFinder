@@ -1,3 +1,4 @@
+import React from 'react';
 function Divider() {
   return (
     <div className="mt-6">

@@ -5,10 +5,10 @@ import Divider from '../../components/Divider';
 import SocialButton from '../../components/SocialButton';
 import googleLogo from '../../assets/images/google-login.png';
 import RememberMe from '../../components/RememberMe';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import Checkbox from '@/Components/Checkbox';
+import InputError from '../../Components/InputError';
+import InputLabel from '../../Components/InputLabel';
+import TextInput from '../../Components/TextInput';
+import Checkbox from '../../Components/Checkbox';
 import PropTypes from 'prop-types';
 
 const LoginForm = (props) => {

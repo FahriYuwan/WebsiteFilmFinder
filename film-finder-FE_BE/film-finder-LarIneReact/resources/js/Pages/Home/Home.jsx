@@ -4,6 +4,7 @@ import NavBar from "../../Components/NavBar";
 import Pagination from "../../Components/Pagination";
 import { usePage, router} from '@inertiajs/react';
 
+
 function getBannerUrl(urlBanner) {
   // Cek apakah urlBanner adalah URL lengkap (misalnya dimulai dengan http atau https)
   if (urlBanner.startsWith('http://') || urlBanner.startsWith('https://')) {
@@ -16,6 +17,7 @@ function getBannerUrl(urlBanner) {
 
 function Home() {
   const { films, userBookmarks } = usePage().props;
+  console.log(films);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;

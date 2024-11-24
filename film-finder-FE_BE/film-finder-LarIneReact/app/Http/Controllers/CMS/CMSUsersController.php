@@ -12,7 +12,7 @@ class CMSUsersController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::orderBy('user_id', 'desc')->paginate(10);
+        $users = User::where('role_id', 2)->orderBy('user_id', 'desc')->paginate(10);
         return Inertia::render('CMS/CMSUsers/CMSUsers', [
             'users' => $users,
         ]);

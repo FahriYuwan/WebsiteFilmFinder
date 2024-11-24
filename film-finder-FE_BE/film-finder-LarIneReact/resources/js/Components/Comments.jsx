@@ -44,9 +44,9 @@ const Comments = ({ film }) => {
       </div>
 
       {/* Video Placeholder */}
-      <div className="flex justify-center items-center m-6">
+      <div className="flex justify-center items-center">
         <iframe
-          className="w-full max-w-3xl h-60"
+          className="w-full max-w-3xl h-96"
           src={film.url_trailer}
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -76,7 +76,7 @@ const Comments = ({ film }) => {
             <div>
               <p>
                 <span className="font-semibold">{review.user.name}</span>{" "}
-                <span className="text-gray-500">({new Date(review.user.created_at).toLocaleDateString()})</span>
+                <span className="text-gray-500">({new Date(review.created_at).toLocaleDateString()})</span>
                 <br />
                 {review.review_text}
               </p>
@@ -102,7 +102,6 @@ const Comments = ({ film }) => {
               onChange={(e) => setData('rating_user', e.target.value)}
             >
               <option value="">Select rating</option>
-              <option value="0">☆☆☆☆☆</option>
               <option value="1">★☆☆☆☆</option>
               <option value="2">★★☆☆☆</option>
               <option value="3">★★★☆☆</option>

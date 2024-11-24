@@ -1,5 +1,5 @@
 import logo from '../../assets/images/full-logo.png';
-
+import React from 'react';
 const LoginHeader = () => {
   return (
     <div className="text-center">

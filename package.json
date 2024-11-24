@@ -1,9 +1,4 @@
 {
-<<<<<<< HEAD
-  "dependencies": {
-    "tailwindcss": "^3.4.10"
-  }
-=======
     "private": true,
     "type": "module",
     "scripts": {
@@ -45,5 +40,4 @@
         "react-router-dom": "^6.26.2",
         "react-suggest": "^0.0.1"
     }
->>>>>>> f6ebb3e (bookmark dan add award)
 }

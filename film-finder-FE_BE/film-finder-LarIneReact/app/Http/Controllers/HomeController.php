@@ -18,8 +18,9 @@ class HomeController extends Controller
         // Gunakan Cache::remember untuk menyimpan hasil query dalam cache
         $films = Cache::remember($cacheKey, 60, function () {
             return Film::with('bookmarks')
-                ->where('status', 'accepted') // Tambahkan kondisi ini
-                ->paginate(8); // Mengambil 8 film per halaman dengan relasi bookmarks
+                ->where('status', 'accepted')
+                ->orderBy('film_id', 'asc') // Tambahkan ini
+                ->paginate(8);
         });
     
         $userBookmarks = [];

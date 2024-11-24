@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-
+import React from 'react';
 function Button({ onClick = () => {}, text, className = "" }) {
   return (
     <button 

@@ -68,10 +68,10 @@ function CMSUsers() {
     };
 
     const handleSave = (rowId, updatedRow) => {
-        alert('Save mode activated for row ID: ' + rowId);
-        alert('Updated Name: ' + updatedRow.name);
-        alert('Updated Email: ' + updatedRow.email);
-        alert('Updated Status: ' + updatedRow.status);
+        // alert('Save mode activated for row ID: ' + rowId);
+        // alert('Updated Name: ' + updatedRow.name);
+        // alert('Updated Email: ' + updatedRow.email);
+        // alert('Updated Status: ' + updatedRow.status);
         put(route('cms.users.update', { 
             user_id: rowId, 
             name: updatedRow.name, 

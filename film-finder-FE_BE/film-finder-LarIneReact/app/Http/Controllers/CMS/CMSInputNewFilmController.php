@@ -39,7 +39,7 @@ class CMSInputNewFilmController extends Controller{
             'year_release' => 'required|integer',
             'duration' => 'required|integer',
             'countries_id' => 'required',
-            'awards_id' => 'required|array',
+            // 'awards_id' => 'required|array',
             'genres_id' => 'required|array',
             'actors_id' => 'required|array',
             'url_trailer' => 'required|string|max:255',
@@ -64,12 +64,16 @@ class CMSInputNewFilmController extends Controller{
         ]);
     
         // Extract only the IDs from the awards, genres, and actors arrays
-        $awardIds = array_column($request->awards_id, 'award_id');
+        if (!empty($request->awards_id)) {
+            $awardIds = array_column($request->awards_id, 'award_id');
+            $film->awards()->attach($awardIds);
+        }
+        // $awardIds = array_column($request->awards_id, 'award_id');
         $genreIds = $request->genres_id;
         $actorIds = array_column($request->actors_id, 'actor_id');
     
         // Lampirkan awards, genres, dan actors ke film
-        $film->awards()->attach($awardIds);
+        // $film->awards()->attach($awardIds);
         $film->genres()->attach($genreIds);
         $film->actors()->attach($actorIds);
     
@@ -103,7 +107,7 @@ class CMSInputNewFilmController extends Controller{
             'year_release' => 'required|integer',
             'duration' => 'required|integer',
             'countries_id' => 'required',
-            'awards_id' => 'required|array',
+            // 'awards_id' => 'required|array',
             'genres_id' => 'required|array',
             'actors_id' => 'required|array',
             'url_trailer' => 'required|string|max:255',
@@ -134,12 +138,14 @@ class CMSInputNewFilmController extends Controller{
     
         // Sync relations
         // Ekstrak ID dari array asosiatif yang dikirim
-        $awardIds = collect($request->awards_id)->pluck('award_id')->toArray(); // Hanya ambil award_id
+        if (!empty($request->awards_id)) {
+            $awardIds = collect($request->awards_id)->pluck('award_id')->toArray(); // Hanya ambil award_id
+            $film->awards()->sync($awardIds);
+        }
         $genreIds = $request->genres_id;
         $actorIds = collect($request->actors_id)->pluck('actor_id')->toArray(); // Hanya ambil actor_id
 
         // Sync relasi dengan hanya ID saja
-        $film->awards()->sync($awardIds);
         $film->genres()->sync($genreIds);
         $film->actors()->sync($actorIds);
     
