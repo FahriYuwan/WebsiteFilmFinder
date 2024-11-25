@@ -6,7 +6,7 @@ const Comments = ({ film }) => {
   const user = auth.user;
   const [filter, setFilter] = useState(0);
 
-  const { data, setData, post, processing, errors, reset} = useForm({
+  const { data, setData, post, processing, errors, reset } = useForm({
     film_id: film.film_id,
     rating_user: '',
     review_text: '',
@@ -18,6 +18,7 @@ const Comments = ({ film }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('Submitting:', data); // Debug statement
     post(route('reviews.store'), {
       onSuccess: () => reset('rating_user', 'review_text') // Reset fields after successful submission
     });
@@ -99,7 +100,10 @@ const Comments = ({ film }) => {
               className="w-full px-3 py-2 border rounded bg-gray-700"
               disabled={!user}
               value={data.rating_user}
-              onChange={(e) => setData('rating_user', e.target.value)}
+              onChange={(e) => {
+                console.log('Setting rating_user:', e.target.value); // Debug statement
+                setData('rating_user', e.target.value);
+              }}
             >
               <option value="">Select rating</option>
               <option value="0">☆☆☆☆☆</option>
@@ -120,7 +124,10 @@ const Comments = ({ film }) => {
               className="w-full px-3 py-2 border rounded bg-gray-700"
               disabled={!user}
               value={data.review_text}
-              onChange={(e) => setData('review_text', e.target.value)}
+              onChange={(e) => {
+                console.log('Setting review_text:', e.target.value); // Debug statement
+                setData('review_text', e.target.value);
+              }}
             ></textarea>
             {errors.review_text && <div className="text-red-500 text-sm">{errors.review_text}</div>}
           </div>

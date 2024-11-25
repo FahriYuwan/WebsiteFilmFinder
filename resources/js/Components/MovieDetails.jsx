@@ -45,7 +45,7 @@ const MovieDetails = ({ film, isBookmarked: initialIsBookmarked}) => {
             alt={film.title || "No title"}
           />
           <div className="absolute top-0 right-0 p-2">
-            <button onClick={handleBookmarkClick} className="focus:outline-none">
+            <button onClick={handleBookmarkClick} className="focus:outline-none" aria-label="bookmark">
               {isBookmarked ? <FaBookmark className="text-yellow-500" style={{ fontSize: '24px' }} /> : <FaRegBookmark className="text-gray-500" style={{ fontSize: '24px' }} />}
             </button>
           </div>
