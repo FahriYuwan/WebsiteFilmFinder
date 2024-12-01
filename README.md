@@ -22,9 +22,42 @@ FilmFinder adalah platform berbasis web yang menyediakan informasi terperinci te
 - Rafif Shabi Prasetyo - D4 3B - 221524055
 
 ## Cara install
+<p style="font-size: 18px;">Follow the steps below to set up the application:</p>
 
+<ol style="font-size: 16px; line-height: 1.6;">
+  <li><strong>Clone the repository and install the dependencies:</strong>
+    <pre><code>git clone https://github.com/FahriYuwan/WebsiteFilmFinder/tree/main/film-finder-FE_BE/film-finder-LarIneReact.git</code></pre>
+  </li>
+  <li><strong>Copy the <code>.env.example</code> file inside the <b>server folder</b> and rename it to <code>.env</code>.</strong></li>
+  <li><strong>Fill in the <code>.env</code> file inside <b>server</b> folder with your own configuration.</strong></li>
+  <li><strong>Copy the <code>.env.example</code> file inside the <b>database folder</b> and rename it to <code>.env</code>.</strong></li>
+  <li><strong>Fill in the <code>.env</code> file inside <b>database</b> folder with your own configuration.</strong></li>
+</ol>
 
+<h1 style="text-align: center; color: #2196F3;">Installation (Local)</h1>
 
+<ul style="font-size: 16px; line-height: 1.6;">
+  <li><strong>Composer</strong><br>
+    <pre><code>composer install</code><pre>
+  </li>
+  <li><strong>React</strong><br>
+    <pre><code>npm install</code></pre>
+  </li>
+</ul>
+
+<p style="font-size: 16px;">Set application key</p>
+<pre><code>php artisan key:generate --ansi</code></pre>
+
+<p style="font-size: 16px;">Execute migrations and seed data</p>
+<pre><code>php artisan migrate --seed</code></pre>
+
+<p style="font-size: 16px;">Start Vite server</p>
+<pre><code>npm run dev</code></pre>
+
+<p style="font-size: 16px;">Start Laravel server</p>
+<pre><code>php artisan serve</code></pre>
+
+## Laravel
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -91,3 +124,64 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## ReactJS
+
+<p align="center">
+  <a href="https://react.dev/" target="_blank">
+    <img src="https://raw.githubusercontent.com/facebook/react/main/fixtures/public/logo.svg" width="400" alt="React Logo">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/facebook/react/actions">
+    <img src="https://github.com/facebook/react/actions/workflows/test.yml/badge.svg" alt="Build Status">
+  </a>
+  <a href="https://www.npmjs.com/package/react">
+    <img src="https://img.shields.io/npm/dt/react" alt="Total Downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/react">
+    <img src="https://img.shields.io/npm/v/react" alt="Latest Stable Version">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/npm/l/react" alt="License">
+  </a>
+</p>
+
+## Tentang ReactJS
+
+ReactJS adalah pustaka JavaScript sumber terbuka untuk membangun antarmuka pengguna berbasis komponen. Dikembangkan dan dipelihara oleh Meta (sebelumnya Facebook) dan komunitas pengembang, ReactJS memungkinkan pembuatan aplikasi web dan seluler yang cepat dan interaktif.
+
+## Fitur Utama
+
+- **Komponen**: Bangun antarmuka pengguna dengan komponen yang dapat digunakan kembali.
+- **Virtual DOM**: Pembaruan UI yang efisien dengan Virtual DOM.
+- **Pengelolaan Status**: Kelola status aplikasi dengan mudah menggunakan hooks seperti `useState` dan `useReducer`.
+- **Ekosistem Luas**: Dukungan untuk berbagai pustaka dan alat tambahan.
+
+## Belajar ReactJS
+
+Untuk memulai dengan ReactJS, kunjungi [dokumentasi resmi React](https://react.dev/). Di sana, Anda akan menemukan panduan, tutorial, dan referensi API yang komprehensif.
+
+## Sponsor
+
+Terima kasih kepada sponsor berikut yang telah mendukung pengembangan ReactJS:
+
+- **[Meta](https://about.fb.com/)**
+
+## Berkontribusi
+
+Terima kasih telah mempertimbangkan untuk berkontribusi pada ReactJS! Panduan kontribusi dapat ditemukan di [dokumentasi kontribusi React](https://react.dev/community/contributing).
+
+## Kode Etik
+
+Untuk memastikan komunitas ReactJS yang inklusif, harap tinjau dan patuhi [Kode Etik](https://react.dev/community/contributing#code-of-conduct).
+
+## Kerentan Keamanan
+
+Jika Anda menemukan kerentan keamanan dalam ReactJS, silakan kirim email ke tim keamanan Meta melalui [security@meta.com](mailto:security@meta.com). Semua kerentan keamanan akan segera ditangani.
+
+## Lisensi
+
+ReactJS adalah perangkat lunak sumber terbuka yang dilisensikan di bawah [Lisensi MIT](https://opensource.org/licenses/MIT).
+
