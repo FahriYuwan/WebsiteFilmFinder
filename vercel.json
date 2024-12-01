@@ -39,14 +39,5 @@
         "SESSION_DRIVER": "cookie",
         "NODE_ENV": "production"
     },
-    "outputDirectory": "public",
-    "build": {
-        "env": {
-            "VITE_APP_NAME": "${APP_NAME}"
-        },
-        "commands": [
-            "npm install",
-            "npm run build"
-        ]
-    }
+    "outputDirectory": "public"
 }
