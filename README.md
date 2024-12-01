@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # FilmFinder
 ## Deskripsi Proyek
 FilmFinder adalah platform berbasis web yang menyediakan informasi terperinci tentang film, acara TV, dan konten hiburan lainnya, mirip dengan situs IMDb (Internet Movie Database). Platform ini dirancang untuk memungkinkan pengguna mencari, menilai, dan mengelola informasi tentang film dan acara TV dengan mudah.
@@ -21,7 +20,11 @@ FilmFinder adalah platform berbasis web yang menyediakan informasi terperinci te
 ## Anggota Kelompok 7
 - Muhamad Fahri Yuwan Dwi Putra - D4 3B - 221524047
 - Rafif Shabi Prasetyo - D4 3B - 221524055
-=======
+
+## Cara install
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -88,4 +91,3 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
->>>>>>> f6ebb3e (bookmark dan add award)
