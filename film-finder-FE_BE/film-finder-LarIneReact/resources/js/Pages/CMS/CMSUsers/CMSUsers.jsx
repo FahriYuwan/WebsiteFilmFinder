@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import InputField from "../../../Components/InputField";
-import Button from "../../../components/Button";
-import CMSTable from "../../../components/CMS/CMSTable";
-import Sidebar from "../../../components/Sidebar";
-import Pagination from "../../../components/Pagination";
+// import InputField from "../../../Components/InputField";
+// import Button from "../../../Components/Button";
+import CMSTable from "../../../Components/CMS/CMSTable";
+import Sidebar from "../../../Components/Sidebar";
+import Pagination from "../../../Components/Pagination";
 
 import { usePage, useForm, router } from "@inertiajs/react";
 

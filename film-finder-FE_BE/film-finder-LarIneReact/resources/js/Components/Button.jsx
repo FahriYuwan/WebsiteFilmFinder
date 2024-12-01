@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-function Button({ onClick = () => {}, text, className = "" }) {
+function Button({ onClick = () => {}, text, className = "", disabled = false }) {
   return (
     <button 
       onClick={onClick} 
-      className={`rounded ${className}`}>
+      className={`rounded ${className}`}
+      disabled={disabled}>
       {text}
     </button>
   );

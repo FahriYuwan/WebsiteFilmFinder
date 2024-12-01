@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import NavBar from '../../components/NavBar'; 
-import FilterSelect from '../../components/FilterSelect'; 
-import SearchResults from '../../components/SearchResults'; 
+import NavBar from '../../Components/NavBar'; 
+import FilterSelect from '../../Components/FilterSelect'; 
+import SearchResults from '../../Components/SearchResults'; 
 
 
 const SearchResultPage = ({film}) => {

@@ -125,108 +125,23 @@ afterEach(() => {
     expect(screen.getByText(/the password field is required./i)).not.toBeNull();
   });
 
-  // test('handles form submission when processing', () => {
-  //   useForm.mockReturnValue({
-  //     data: {
-  //       email: 'test@example.com',
-  //       password: 'password123',
-  //       remember: false,
-  //     },
-  //     setData: mockSetData,
-  //     post: mockPost,
-  //     processing: true,
-  //     errors: {},
-  //     reset: mockReset,
-  //   });
+  test('handles form submission when processing', () => {
+    useForm.mockReturnValue({
+      data: {
+        email: 'test@example.com',
+        password: 'password123',
+        remember: false,
+      },
+      setData: mockSetData,
+      post: mockPost,
+      processing: true,
+      errors: {},
+      reset: mockReset,
+    });
 
-  //   render(<LoginPage />);
+    render(<LoginPage />);
 
-  //   const submitButton = screen.getByRole('button', { name: /login/i });
-  //   expect(submitButton).toBeDisabled();
-  // });
+    const submitButton = screen.getByRole('button', { name: /login/i });
+    expect(submitButton).toBeDisabled();
+  });
 });
-
-
-// // test/frontend/LoginForm.test.jsx
-// import React from 'react';
-// import { render, screen, fireEvent } from '@testing-library/react';
-// import LoginForm from '../../../resources/js/Pages/Auth/LoginForm';
-
-// test('updates email input on change', () => {
-//   const mockSetEmail = jest.fn();
-
-//   render(
-//     <LoginForm
-//       email=""
-//       setEmail={mockSetEmail}
-//       password=""
-//       setPassword={() => {}}
-//       remember={false}
-//       setRemember={() => {}}
-//       handleSubmit={() => {}}
-//       errors={{}}
-//       processing={false}
-//     />
-//   );
-
-//   const emailInput = screen.getByPlaceholderText('Email');
-//   fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-//   expect(mockSetEmail).toHaveBeenCalledWith('test@example.com');
-// });
-
-// // test/frontend/LoginForm.test.jsx
-// import React from 'react';
-// import { render, screen, fireEvent } from '@testing-library/react';
-// import LoginForm from '../../../resources/js/Pages/Auth/LoginForm';
-
-// describe('LoginForm', () => {
-//   const mockHandleSubmit = jest.fn();
-//   const mockSetEmail = jest.fn();
-//   const mockSetPassword = jest.fn();
-//   const mockSetRemember = jest.fn();
-
-//   const props = {
-//     email: '',
-//     setEmail: mockSetEmail,
-//     password: '',
-//     setPassword: mockSetPassword,
-//     remember: false,
-//     setRemember: mockSetRemember,
-//     handleSubmit: mockHandleSubmit,
-//     errors: {},
-//     processing: false,
-//   };
-
-//   beforeEach(() => {
-//     render(<LoginForm {...props} />);
-//   });
-
-//   it('renders email and password fields', () => {
-//     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
-//     expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-//   });
-
-//   it('updates email on change', () => {
-//     const emailInput = screen.getByPlaceholderText('Email');
-//     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-//     expect(mockSetEmail).toHaveBeenCalledWith('test@example.com');
-//   });
-
-//   it('updates password on change', () => {
-//     const passwordInput = screen.getByPlaceholderText('Password');
-//     fireEvent.change(passwordInput, { target: { value: 'password123' } });
-//     expect(mockSetPassword).toHaveBeenCalledWith('password123');
-//   });
-
-//   it('calls handleSubmit on form submit', () => {
-//     const form = screen.getByRole('form');
-//     fireEvent.submit(form);
-//     expect(mockHandleSubmit).toHaveBeenCalled();
-//   });
-
-//   it('toggles remember me', () => {
-//     const checkbox = screen.getByRole('checkbox', { name: /remember me/i });
-//     fireEvent.click(checkbox);
-//     expect(mockSetRemember).toHaveBeenCalledWith(true);
-//   });
-// });

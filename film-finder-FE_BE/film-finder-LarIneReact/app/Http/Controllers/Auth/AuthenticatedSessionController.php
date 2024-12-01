@@ -37,11 +37,8 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         // Periksa role_id pengguna
-        if ($user->role_id == 1) {
-            return redirect()->intended(route('cmsdramainput', absolute: false));
-        }else{
-            return redirect()->intended(route('home', absolute: false));
-        }
+        return redirect()->intended(route('home', absolute: false));
+
 
     }
 

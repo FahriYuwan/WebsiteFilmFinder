@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import CMSTable from '../../../components/CMS/CMSTable';
-import Sidebar from '../../../components/Sidebar';
-import Button from '../../../components/Button';
-import InputField from '../../../components/InputField';
+import CMSTable from '../../../Components/CMS/CMSTable';
+import Sidebar from '../../../Components/Sidebar';
+import Button from '../../../Components/Button';
+import InputField from '../../../Components/InputField';
 import { usePage, useForm } from "@inertiajs/react";
-import Pagination from '../../../components/Pagination';
+import Pagination from '../../../Components/Pagination';
 
 const CMSCountries = () => {
   const { countries } = usePage().props;

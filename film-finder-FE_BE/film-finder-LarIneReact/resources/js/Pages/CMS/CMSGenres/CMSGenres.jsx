@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Sidebar from "../../../components/Sidebar";
-import Button from "../../../components/Button";
-import InputField from "../../../components/InputField";
-import CMSTable from "../../../components/CMS/CMSTable";
-import Pagination from "../../../components/Pagination";
+import Sidebar from "../../../Components/Sidebar";
+import Button from "../../../Components/Button";
+import InputField from "../../../Components/InputField";
+import CMSTable from "../../../Components/CMS/CMSTable";
+import Pagination from "../../../Components/Pagination";
 import { usePage, useForm } from "@inertiajs/react";
 
 function CMSGenres() {

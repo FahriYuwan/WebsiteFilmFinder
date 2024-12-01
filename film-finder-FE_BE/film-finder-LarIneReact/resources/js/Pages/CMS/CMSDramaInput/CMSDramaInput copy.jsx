@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { usePage, useForm, router } from "@inertiajs/react";
-import Sidebar from '../../../components/Sidebar';
+import Sidebar from '../../../Components/Sidebar';
 import { useDropzone } from 'react-dropzone';
-import InputField from '../../../components/InputField';
+import InputField from '../../../Components/InputField';
 import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';

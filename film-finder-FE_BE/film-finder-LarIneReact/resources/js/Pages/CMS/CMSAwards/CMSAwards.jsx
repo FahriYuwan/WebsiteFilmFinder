@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useForm, usePage } from '@inertiajs/react';
-import Sidebar from '../../../components/Sidebar';
-import InputField from '../../../components/InputField';
-import Button from '../../../components/Button';
-import CMSTable from '../../../components/CMS/CMSTable';
-import Pagination from '../../../components/Pagination';
+import Sidebar from '../../../Components/Sidebar';
+import InputField from '../../../Components/InputField';
+import Button from '../../../Components/Button';
+import CMSTable from '../../../Components/CMS/CMSTable';
+import Pagination from '../../../Components/Pagination';
 
 function CMSAwards() {
     const { awards } = usePage().props;

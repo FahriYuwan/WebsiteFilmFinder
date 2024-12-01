@@ -1,10 +1,10 @@
 import React, { useState , useEffect} from 'react';
-import Sidebar from '../../../components/Sidebar';
-import FilterSelect from '../../../components/FilterSelect';
-import SearchInput from '../../../components/SearchInput';
-import CMSTableDrama from '../../../components/CMS/CMSTableDrama';
-import Popup from '../../../components/CMS/Popup';
-import Pagination from '../../../components/Pagination';
+import Sidebar from '../../../Components/Sidebar';
+import FilterSelect from '../../../Components/FilterSelect';
+import SearchInput from '../../../Components/SearchInput';
+import CMSTableDrama from '../../../Components/CMS/CMSTableDrama';
+import Popup from '../../../Components/CMS/Popup';
+import Pagination from '../../../Components/Pagination';
 import { usePage, router} from '@inertiajs/react';
 
 function CMSDrama() {

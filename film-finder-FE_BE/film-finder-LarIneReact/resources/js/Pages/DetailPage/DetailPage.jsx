@@ -1,8 +1,8 @@
 import React from 'react';
 import { usePage } from '@inertiajs/react';
-import NavBar from "../../components/NavBar";   
-import MovieDetails from "../../components/MovieDetails";
-import Comments from "../../components/Comments";
+import NavBar from "../../Components/NavBar";   
+import MovieDetails from "../../Components/MovieDetails";
+import Comments from "../../Components/Comments";
 
 const DetailPage = () => {
   const { film, userBookmarks} = usePage().props;

@@ -1,10 +1,10 @@
 import React from 'react';
-import InputField from '../../components/InputField';
-import SubmitButton from '../../components/Button';
-import Divider from '../../components/Divider';
-import SocialButton from '../../components/SocialButton';
+// import InputField from '../../components/InputField';
+import SubmitButton from '../../Components/Button';
+import Divider from '../../Components/Divider';
+import SocialButton from '../../Components/SocialButton';
 import googleLogo from '../../assets/images/google-login.png';
-import RememberMe from '../../components/RememberMe';
+// import RememberMe from '../../components/RememberMe';
 import InputError from '../../Components/InputError';
 import InputLabel from '../../Components/InputLabel';
 import TextInput from '../../Components/TextInput';

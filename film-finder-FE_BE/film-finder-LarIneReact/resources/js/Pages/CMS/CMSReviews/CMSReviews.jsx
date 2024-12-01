@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import Sidebar from '../../../components/Sidebar';
-import FilterSelect from '../../../components/FilterSelect';
+import Sidebar from '../../../Components/Sidebar';
+import FilterSelect from '../../../Components/FilterSelect';
 import CMSTableReviews from '../../../Components/CMS/CMSTableReviews';
-import Button from '../../../components/Button';
-import Pagination from '../../../components/Pagination';
+import Button from '../../../Components/Button';
+import Pagination from '../../../Components/Pagination';
 import { usePage, router } from '@inertiajs/react';
 
 const CMSReviews = () => {

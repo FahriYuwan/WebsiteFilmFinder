@@ -26,33 +26,6 @@ class DatabaseSeeder extends Seeder
      if (DB::table('users')->count() === 0) {
          $this->call(UserSeeder::class);
      }
-     if (DB::table('awards')->count() === 0) {
-         $this->call(AwardsSeeder::class);
-     }
-     if (DB::table('genres')->count() === 0) {
-        $this->call(GenreSeeder::class);
-     }
-     if(DB::table('countries')->count() === 0){
-        $this->call(CountriesSeeder::class);
-     }
-     if (DB::table('actors')->count() === 0) {
-        $this->call(ActorSeeder::class);
-     }
-     if (DB::table('films')->count() === 0) {
-        $this->call(FilmSeeder::class);
-     }
-     if (DB::table('reviews')->count() === 0) {
-        $this->call(ReviewsSeeder::class);
-     }
-     if (DB::table('film_genre')->count() === 0) {
-        $this->call(FilmGenreSeeder::class);
-     }
-     if (DB::table(table: 'film_actor')->count() === 0) {
-        $this->call(FilmActorSeeder::class);
-     }
-     if (DB::table('film_award')->count() === 0) {
-        $this->call(FilmAward::class);
-     }
     }
 }
 
