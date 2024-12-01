@@ -1,4 +1,11 @@
 # FilmFinder
+<div align="center">
+  <img src="https://img.shields.io/github/contributors/FahriYuwan/WebsiteFilmFinder?color=red" alt="Contributors" />
+  <img src="https://img.shields.io/github/commit-activity/m/FahriYuwan/WebsiteFilmFinder?color=blue" alt="Commit Activity" />
+  <img src="https://img.shields.io/github/last-commit/FahriYuwan/WebsiteFilmFinder?color=yellow" alt="Last Commit" />
+  <img src="https://img.shields.io/github/license/FahriYuwan/WebsiteFilmFinder?color=orange" alt="License" />
+</div>
+
 ## Deskripsi Proyek
 FilmFinder adalah platform berbasis web yang menyediakan informasi terperinci tentang film, acara TV, dan konten hiburan lainnya, mirip dengan situs IMDb (Internet Movie Database). Platform ini dirancang untuk memungkinkan pengguna mencari, menilai, dan mengelola informasi tentang film dan acara TV dengan mudah.
 
@@ -14,8 +21,8 @@ FilmFinder adalah platform berbasis web yang menyediakan informasi terperinci te
 
 ## Teknologi
 - **Frontend**: HTML, CSS, JavaScript, Tailwind CSS, ReactJS
-- **Backend**: Node.js atau PHP (belum diterapkan, masih native)
-- **Database**: (Tentukan jenis database jika ada)
+- **Backend**: Laravel 11
+- **Database**: Postgre
 
 ## Anggota Kelompok 7
 - Muhamad Fahri Yuwan Dwi Putra - D4 3B - 221524047
@@ -38,7 +45,7 @@ FilmFinder adalah platform berbasis web yang menyediakan informasi terperinci te
 
 <ul style="font-size: 16px; line-height: 1.6;">
   <li><strong>Composer</strong><br>
-    <pre><code>composer install</code><pre>
+    <pre><code>composer install</code></pre>
   </li>
   <li><strong>React</strong><br>
     <pre><code>npm install</code></pre>
@@ -129,13 +136,13 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 <p align="center">
   <a href="https://react.dev/" target="_blank">
-    <img src="https://raw.githubusercontent.com/facebook/react/main/fixtures/public/logo.svg" width="400" alt="React Logo">
+    <img src="https://raw.githubusercontent.com/agungksidik/public-assets/master/logo/reactjs-logo.png" width="100" alt="React Logo">
   </a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/facebook/react/actions">
-    <img src="https://github.com/facebook/react/actions/workflows/test.yml/badge.svg" alt="Build Status">
+  <a href="https://github.com/facebook/react/actions/workflows/runtime_build_and_test.yml">
+    <img src="https://github.com/facebook/react/actions/workflows/runtime_build_and_test.yml/badge.svg" alt="Build Status">
   </a>
   <a href="https://www.npmjs.com/package/react">
     <img src="https://img.shields.io/npm/dt/react" alt="Total Downloads">
@@ -172,7 +179,7 @@ You can find the React documentation [on the website](https://react.dev/).
 
 Check out the [Getting Started](https://react.dev/learn) page for a quick overview.
 
-Terima kasih telah mempertimbangkan untuk berkontribusi pada ReactJS! Panduan kontribusi dapat ditemukan di [dokumentasi kontribusi React](https://react.dev/community/contributing).
+The documentation is divided into several sections:
 
 * [Quick Start](https://react.dev/learn)
 * [Tutorial](https://react.dev/learn/tutorial-tic-tac-toe)
