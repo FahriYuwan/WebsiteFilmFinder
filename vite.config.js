@@ -11,19 +11,22 @@ export default defineConfig({
         react(),
     ],
     server: {
-        host: '0.0.0.0', // Agar bisa diakses di Railway
+        host: '0.0.0.0',
         port: 5173,
-        strictPort: true, // Gunakan port ini secara ketat
+        strictPort: true,
         hmr: {
-            host: process.env.RAILWAY_URL || 'websitefilmfinder-production.up.railway.app', // Gunakan domain Railway Anda
-            port: 443, // Gunakan HTTPS untuk HMR
-        },
+            host: process.env.VITE_HMR_HOST || 'websitefilmfinder-production.up.railway.app',
+            port: parseInt(process.env.VITE_HMR_PORT) || 443, // Gunakan port HTTPS
+            protocol: 'wss', // WebSocket Secure untuk HTTPS
+        },        
         proxy: {
             '/api': {
-                target: `http://localhost:8000`, // Proxy ke Laravel backend
+                target: `http://localhost:8000`,
                 changeOrigin: true,
                 secure: false,
+                ws: true, // Tambahkan properti ini untuk WebSocket
             },
         },
     },
-});
+    }
+);
