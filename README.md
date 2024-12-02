@@ -1,34 +1,37 @@
 # FilmFinder
-<div align="center">
-  <img src="https://img.shields.io/github/contributors/FahriYuwan/WebsiteFilmFinder?color=red" alt="Contributors" />
-  <img src="https://img.shields.io/github/commit-activity/m/FahriYuwan/WebsiteFilmFinder?color=blue" alt="Commit Activity" />
-  <img src="https://img.shields.io/github/last-commit/FahriYuwan/WebsiteFilmFinder?color=yellow" alt="Last Commit" />
-  <img src="https://img.shields.io/github/license/FahriYuwan/WebsiteFilmFinder?color=orange" alt="License" />
-</div>
+
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+![License](https://img.shields.io/github/license/FahriYuwan/WebsiteFilmFinder?color=orange)
 
 ## Deskripsi Proyek
+
 FilmFinder adalah platform berbasis web yang menyediakan informasi terperinci tentang film, acara TV, dan konten hiburan lainnya, mirip dengan situs IMDb (Internet Movie Database). Platform ini dirancang untuk memungkinkan pengguna mencari, menilai, dan mengelola informasi tentang film dan acara TV dengan mudah.
 
 ## Fitur Utama
-1. Beranda: Menampilkan daftar film dan acara TV yang sedang populer.
-2. Detail Drama/Film/Acara TV: Halaman yang menampilkan informasi lengkap tentang sebuah film atau acara TV, termasuk sinopsis, tanggal rilis, durasi, genre, pemeran, rating, dan ulasan pengguna.
-3. Pencarian dan Filter: Pengguna dapat mencari film atau acara TV berdasarkan judul, aktor, atau genre. Terdapat juga fitur filter untuk mempermudah pencarian berdasarkan tahun rilis, rating, award, dan lainnya.
-4. Manajemen Konten: Fitur untuk administrator untuk menambahkan, mengedit, atau menghapus informasi tentang film dan acara TV yang ada di database aplikasi.
-5. Sistem Pendaftaran dan Login: Pengguna dapat membuat akun dan login untuk mengakses fitur yang dipersonalisasi, seperti menyimpan daftar tontonan dan menambahkan ulasan. Fitur tambahan termasuk konfirmasi email dan fitur lupa/reset password, serta login menggunakan Google atau media sosial lainnya.
-6. Ulasan dan Rating Pengguna: Pengguna terdaftar (Writer) dapat memberikan rating dan menulis ulasan untuk film atau acara TV yang sudah mereka tonton.
-7. Menambahkan Drama/Film/Acara TV: Pengguna terdaftar (Writer) dapat menambahkan data Drama baru.
-8. Validasi Ulasan dan Data Drama Baru: Admin dapat menerima atau menolak ulasan/komentar serta data drama yang dibuat oleh writer.
+
+1. **Beranda**: Menampilkan daftar film dan acara TV yang sedang populer.
+2. **Detail Drama/Film/Acara TV**: Halaman yang menampilkan informasi lengkap tentang sebuah film atau acara TV, termasuk sinopsis, tanggal rilis, durasi, genre, pemeran, rating, dan ulasan pengguna.
+3. **Pencarian dan Filter**: Pengguna dapat mencari film atau acara TV berdasarkan judul, aktor, atau genre. Terdapat juga fitur filter untuk mempermudah pencarian berdasarkan tahun rilis, rating, award, dan lainnya.
+4. **Manajemen Konten**: Fitur untuk administrator untuk menambahkan, mengedit, atau menghapus informasi tentang film dan acara TV yang ada di database aplikasi.
+5. **Sistem Pendaftaran dan Login**: Pengguna dapat membuat akun dan login untuk mengakses fitur yang dipersonalisasi, seperti menyimpan daftar tontonan dan menambahkan ulasan. Fitur tambahan termasuk konfirmasi email dan fitur lupa/reset password, serta login menggunakan Google atau media sosial lainnya.
+6. **Ulasan dan Rating Pengguna**: Pengguna terdaftar (Writer) dapat memberikan rating dan menulis ulasan untuk film atau acara TV yang sudah mereka tonton.
+7. **Menambahkan Drama/Film/Acara TV**: Pengguna terdaftar (Writer) dapat menambahkan data Drama baru.
+8. **Validasi Ulasan dan Data Drama Baru**: Admin dapat menerima atau menolak ulasan/komentar serta data drama yang dibuat oleh writer.
 
 ## Teknologi
+
 - **Frontend**: HTML, CSS, JavaScript, Tailwind CSS, ReactJS
 - **Backend**: Laravel 11
-- **Database**: Postgre
+- **Database**: PostgreSQL
 
 ## Anggota Kelompok 7
+
 - Muhamad Fahri Yuwan Dwi Putra - D4 3B - 221524047
 - Rafif Shabi Prasetyo - D4 3B - 221524055
 
-## Cara install
+## Cara Install
 <p style="font-size: 18px;">Follow the steps below to set up the application:</p>
 
 <ol style="font-size: 16px; line-height: 1.6;">
