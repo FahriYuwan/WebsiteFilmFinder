@@ -136,4 +136,6 @@ Akses https://www.youtube.com/watch?v=UVfBVNWVdSc untuk melihat tutorial video.
 <div align="center"> <h3>FilmFinder ©️ [MIT License](https://opensource.org/license/MIT)</h3> </div>
 
 ## 🏢 Institusi
-<div align="center"> <img src="https://www.polban.ac.id/wp-content/uploads/2021/11/MASTER-LOGO-POLBAN-SMALL-1.png" height="100" alt="Polban Logo" /> </div> 
+<div align="center">
+  <img src="https://www.polban.ac.id/wp-content/uploads/2021/11/MASTER-LOGO-POLBAN-SMALL-1.png" height="100" alt="Polban Logo" />
+</div>
