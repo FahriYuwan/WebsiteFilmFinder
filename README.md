@@ -42,7 +42,7 @@ Platform ini dirancang untuk mempermudah pengguna dalam:
    - Judul  
    - Aktor  
    - Genre  
-   Filter berdasarkan tahun rilis, rating, penghargaan, dan lainnya.  
+   - Filter berdasarkan tahun rilis, rating,  penghargaan, dan lainnya.  
 
 4. **🔧 Manajemen Konten**  
    Admin dapat mengelola data film atau acara TV dengan mudah.  
