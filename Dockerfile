@@ -41,10 +41,12 @@ RUN composer install --no-dev --optimize-autoloader
 # Install Node.js dependencies
 RUN npm install
 
+# Build the Vite frontend for production (without HMR)
+RUN npm run build
+
 # Expose ports
 EXPOSE 8000
 EXPOSE 3000
-EXPOSE 5173
 
-# Command to run the application
-CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=8000 & npm run dev"]
+# Command to run the application in production
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
