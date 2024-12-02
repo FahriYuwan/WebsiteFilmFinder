@@ -4,10 +4,10 @@ import os
 
 # Sesuaikan dengan host masing-masing
 db = psycopg2.connect(
-    host="db", # Jika tidak menggunakan docker (sebelumnya "db"), maka isi dengan localhost
-    user="postgres",
-    password="123",
-    database="movies_db"
+    host=os.getenv("DB_HOST"), # Jika tidak menggunakan docker (sebelumnya "db"), maka isi dengan localhost
+    user=os.getenv("DB_USERNAME"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_DATABASE"),
 )
 
 cursor = db.cursor()
@@ -16,6 +16,7 @@ def load_json_data(file_name):
     file_path = os.path.join(os.getcwd(), file_name)
     with open(file_path, 'r') as file:
         return json.load(file)
+
 
 # Sesuaikan dengan path file masing-masing, gunakan path ini jika ingin menggunakan docker "database/python_seeders/result_cleanse/"
 
