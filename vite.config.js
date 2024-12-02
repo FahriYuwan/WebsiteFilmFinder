@@ -5,8 +5,8 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/js/app.jsx'],
-            refresh: process.env.NODE_ENV !== 'production', // Nonaktifkan refresh di production
+            input: ['resources/js/app.jsx'], // Sesuaikan input file Anda
+            refresh: true,
         }),
         react(),
     ],
@@ -14,18 +14,19 @@ export default defineConfig({
         host: '0.0.0.0',
         port: 5173,
         strictPort: true,
-        hmr: process.env.NODE_ENV === 'production' ? false : { // Nonaktifkan HMR di production
+        hmr: {
             host: process.env.VITE_HMR_HOST || 'websitefilmfinder-production.up.railway.app',
-            port: parseInt(process.env.VITE_HMR_PORT) || 443,
-            protocol: 'wss',
-        },
+            port: parseInt(process.env.VITE_HMR_PORT) || 443, // Gunakan port HTTPS
+            protocol: 'wss', // WebSocket Secure untuk HTTPS
+        },        
         proxy: {
             '/api': {
                 target: `http://localhost:8000`,
                 changeOrigin: true,
                 secure: false,
-                ws: true, // Mengaktifkan WebSocket untuk API jika diperlukan
+                ws: true, // Tambahkan properti ini untuk WebSocket
             },
         },
     },
-});
+    }
+);
