@@ -4,7 +4,7 @@ import os
 
 # Sesuaikan dengan host masing-masing
 db = psycopg2.connect(
-    host="db", # Jika tidak menggunakan docker, maka isi dengan localhost
+    host="db", # Jika tidak menggunakan docker (sebelumnya "db"), maka isi dengan localhost
     user="postgres",
     password="123",
     database="movies_db"
@@ -17,16 +17,16 @@ def load_json_data(file_name):
     with open(file_path, 'r') as file:
         return json.load(file)
 
-# Sesuaikan dengan path file masing-masing, gunakan path ini jika menggunakan docker "database/python_seeders/result_cleanse/"
+# Sesuaikan dengan path file masing-masing, gunakan path ini jika ingin menggunakan docker "database/python_seeders/result_cleanse/"
 
-countries_data = load_json_data('result_cleanse/countries.json')
-award_data = load_json_data('result_cleanse/awards.json')
-genres_data = load_json_data('result_cleanse/genres.json')
-actor_data = load_json_data('result_cleanse/actors.json')
-movie_data = load_json_data('result_cleanse/films.json')
-movie_actor_data = load_json_data('result_cleanse/film_actor.json')
-movie_award_data = load_json_data('result_cleanse/film_award.json')
-movie_genre_data = load_json_data('result_cleanse/film_genre.json')
+countries_data = load_json_data('database/python_seeders/result_cleanse/countries.json')
+award_data = load_json_data('database/python_seeders/result_cleanse/awards.json')
+genres_data = load_json_data('database/python_seeders/result_cleanse/genres.json')
+actor_data = load_json_data('database/python_seeders/result_cleanse/actors.json')
+movie_data = load_json_data('database/python_seeders/result_cleanse/films.json')
+movie_actor_data = load_json_data('database/python_seeders/result_cleanse/film_actor.json')
+movie_award_data = load_json_data('database/python_seeders/result_cleanse/film_award.json')
+movie_genre_data = load_json_data('database/python_seeders/result_cleanse/film_genre.json')
 
 for country in countries_data:
     print(country['country_name'])

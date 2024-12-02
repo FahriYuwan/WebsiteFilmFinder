@@ -1,85 +1,139 @@
-# FilmFinder
+# 🎥 FilmFinder 🎬  
+<div align="center">
+  <img src="https://img.shields.io/github/contributors/FahriYuwan/WebsiteFilmFinder?color=red" alt="Contributors" />
+  <img src="https://img.shields.io/github/commit-activity/m/FahriYuwan/WebsiteFilmFinder?color=blue" alt="Commit Activity" />
+  <img src="https://img.shields.io/github/last-commit/FahriYuwan/WebsiteFilmFinder?color=yellow" alt="Last Commit" />
+  <img src="https://img.shields.io/github/license/FahriYuwan/WebsiteFilmFinder?color=orange" alt="License" />
+</div>
 
-![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
-![License](https://img.shields.io/github/license/FahriYuwan/WebsiteFilmFinder?color=orange)
+**FilmFinder** adalah platform berbasis web untuk mencari, menilai, dan mengelola informasi tentang film, acara TV, dan konten hiburan lainnya. Terinspirasi oleh situs seperti IMDb, FilmFinder memberikan pengalaman navigasi yang mudah dan ramah pengguna.  
 
-## Deskripsi Proyek
+---
 
-FilmFinder adalah platform berbasis web yang menyediakan informasi terperinci tentang film, acara TV, dan konten hiburan lainnya, mirip dengan situs IMDb (Internet Movie Database). Platform ini dirancang untuk memungkinkan pengguna mencari, menilai, dan mengelola informasi tentang film dan acara TV dengan mudah.
+## 📚 **Deskripsi Singkat**  
+FilmFinder menyediakan informasi terperinci tentang:  
+- 🎞️ Film  
+- 📺 Acara TV  
+- 🎭 Konten hiburan lainnya  
 
-## Fitur Utama
+Platform ini dirancang untuk mempermudah pengguna dalam:  
+- 🔍 Menemukan film atau acara TV favorit mereka  
+- ⭐ Memberikan ulasan dan penilaian  
+- 📝 Menambahkan konten baru ke dalam database  
 
-1. **Beranda**: Menampilkan daftar film dan acara TV yang sedang populer.
-2. **Detail Drama/Film/Acara TV**: Halaman yang menampilkan informasi lengkap tentang sebuah film atau acara TV, termasuk sinopsis, tanggal rilis, durasi, genre, pemeran, rating, dan ulasan pengguna.
-3. **Pencarian dan Filter**: Pengguna dapat mencari film atau acara TV berdasarkan judul, aktor, atau genre. Terdapat juga fitur filter untuk mempermudah pencarian berdasarkan tahun rilis, rating, award, dan lainnya.
-4. **Manajemen Konten**: Fitur untuk administrator untuk menambahkan, mengedit, atau menghapus informasi tentang film dan acara TV yang ada di database aplikasi.
-5. **Sistem Pendaftaran dan Login**: Pengguna dapat membuat akun dan login untuk mengakses fitur yang dipersonalisasi, seperti menyimpan daftar tontonan dan menambahkan ulasan. Fitur tambahan termasuk konfirmasi email dan fitur lupa/reset password, serta login menggunakan Google atau media sosial lainnya.
-6. **Ulasan dan Rating Pengguna**: Pengguna terdaftar (Writer) dapat memberikan rating dan menulis ulasan untuk film atau acara TV yang sudah mereka tonton.
-7. **Menambahkan Drama/Film/Acara TV**: Pengguna terdaftar (Writer) dapat menambahkan data Drama baru.
-8. **Validasi Ulasan dan Data Drama Baru**: Admin dapat menerima atau menolak ulasan/komentar serta data drama yang dibuat oleh writer.
+---
 
-## Teknologi
+## ✨ **Fitur Utama**  
 
-- **Frontend**: HTML, CSS, JavaScript, Tailwind CSS, ReactJS
-- **Backend**: Laravel 11
-- **Database**: PostgreSQL
+1. **🏠 Beranda**  
+   Menampilkan daftar film dan acara TV yang sedang populer.  
 
-## Anggota Kelompok 7
+2. **🔍 Detail Film/Acara TV**  
+   Halaman dengan informasi lengkap seperti:  
+   - Sinopsis  
+   - Tanggal rilis  
+   - Durasi  
+   - Genre  
+   - Pemeran utama  
+   - Rating dan ulasan pengguna  
 
-- Muhamad Fahri Yuwan Dwi Putra - D4 3B - 221524047
-- Rafif Shabi Prasetyo - D4 3B - 221524055
+3. **🎛️ Pencarian dan Filter**  
+   Cari berdasarkan:  
+   - Judul  
+   - Aktor  
+   - Genre  
+   Filter berdasarkan tahun rilis, rating, penghargaan, dan lainnya.  
 
-## Cara Install
-<p style="font-size: 18px;">Follow the steps below to set up the application:</p>
+4. **🔧 Manajemen Konten**  
+   Admin dapat mengelola data film atau acara TV dengan mudah.  
 
-<ol style="font-size: 16px; line-height: 1.6;">
-  <li><strong>Clone the repository and install the dependencies:</strong>
-    <pre><code>git clone https://github.com/FahriYuwan/WebsiteFilmFinder/tree/main/film-finder-FE_BE/film-finder-LarIneReact.git</code></pre>
-  </li>
-  <li><strong>Copy the <code>.env.example</code> file inside the <b>server folder</b> and rename it to <code>.env</code>.</strong></li>
-  <li><strong>Fill in the <code>.env</code> file inside <b>server</b> folder with your own configuration.</strong></li>
-  <li><strong>Copy the <code>.env.example</code> file inside the <b>database folder</b> and rename it to <code>.env</code>.</strong></li>
-  <li><strong>Fill in the <code>.env</code> file inside <b>database</b> folder with your own configuration.</strong></li>
-</ol>
+5. **🔐 Sistem Login dan Registrasi**  
+   - Akun pengguna untuk fitur yang dipersonalisasi.  
+   - Login menggunakan Google atau media sosial lainnya.  
+   - Fitur lupa/reset password dan konfirmasi email.  
 
-<h1 style="text-align: center; color: #2196F3;">Installation (Local)</h1>
+6. **✍️ Ulasan dan Rating Pengguna**  
+   Pengguna dapat memberikan rating serta menulis ulasan.  
 
-<ul style="font-size: 16px; line-height: 1.6;">
-  <li><strong>Composer</strong><br>
-    <pre><code>composer install</code></pre>
-  </li>
-  <li><strong>React</strong><br>
-    <pre><code>npm install</code></pre>
-  </li>
-</ul>
+7. **➕ Menambahkan Konten Baru**  
+   Pengguna terdaftar (Writer) dapat menambahkan data film atau acara TV baru.  
 
-<p style="font-size: 16px;">Set application key</p>
-<pre><code>php artisan key:generate --ansi</code></pre>
+8. **✅ Validasi Ulasan dan Data Baru**  
+   Admin dapat menerima atau menolak ulasan dan data yang diajukan.  
 
-<p style="font-size: 16px;">Execute migrations and seed data</p>
-<pre><code>php artisan migrate --seed</code></pre>
+---
 
-<p style="font-size: 16px;">Start Vite server</p>
-<pre><code>npm run dev</code></pre>
+## 🛠️ **Teknologi yang Digunakan**  
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="50" alt="ReactJS" />  
+  <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Laravel.svg" alt="Laravel Icon" height="50" /> 
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="50" alt="PostgreSQL" />  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" height="50" alt="Tailwind CSS" />  
+</div>  
 
-<p style="font-size: 16px;">Start Laravel server</p>
-<pre><code>php artisan serve</code></pre>
+---
 
+## 🖥️ **Cara Install Local (Tanpa Docker)**  
 
-## Contributing
+1. Install **Composer** di perangkat Anda:  
+  ```bash
+  composer install
+  ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. Install dependensi **React**:  
+  ```bash
+  npm install
+  ```
 
-## Code of Conduct
+3. Salin file `.env.example` di folder `server`, ubah namanya menjadi `.env`, lalu isi sesuai konfigurasi Anda.  
+  Jalankan perintah berikut untuk mendapatkan app key:  
+  ```bash
+  php artisan key:generate
+  ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. Migrasikan database dan jalankan seeder (seeder untuk roles dan user):  
+  ```bash
+  php artisan migrate
+  php artisan db:seed
+  ```
 
-## Security Vulnerabilities
+5. Jalankan seeder.py untuk menambahkan data awal: 
+  ```bash
+  python database/python_seeders/seeder.py
+  ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+6. Jalankan server Laravel dan React secara bersamaan:  
+  ```bash
+  php artisan serve
+  npm run dev
+  ```
 
-### License
+7. Buka browser dan akses `http://127.0.0.1:8000/` untuk melihat website FilmFinder.
 
-React is [MIT licensed](./LICENSE).
+## 🐋 **Cara Install dengan Docker**  
+
+1. Pastikan Docker telah terpasang di perangkat Anda.
+2. Sesuaikan konfigurasi variabel DB di .env dan seeder.py.
+3. Jalankan perintah berikut:
+    ```bash 
+    docker-compose up --build
+4. Buka browser dan akses `http://localhost:8000/` untuk melihat website FilmFinder.
+
+## ⚠️ **Catatan Penting**  
+1. Ganti value menjadi "localhost" untuk variabel db_host jika ingin berjalan di lokal. Gunakan "db" untuk db_host jika berjalan di Docker.
+2. Sesuaikan .env untuk fitur verify email dan login Google.
+3. 📺 Tutorial Lengkap:
+Akses https://www.youtube.com/watch?v=UVfBVNWVdSc untuk melihat tutorial video.
+
+## 🤝 Kontributor
+<div align="center"> <a href="https://github.com/FahriYuwan"> <img src="https://avatars.githubusercontent.com/u/130884349?v=4" width="100" alt="Fahri Yuwan" style="border-radius: 50%; border: 2px solid #ffd700;" /></a> <a href="https://github.com/RafifShabi"> <img src="https://avatars.githubusercontent.com/u/72936629?v=4" width="100" alt="Rafif Shabi Prasetyo" style="border-radius: 50%; border: 2px solid #ffd700;" /> </a> </div>
+<div align="center"> <p style="color:#ffd700; font-weight: bold; font-size: 18px;">Fahri Yuwan</p> <p style="color:#ffd700; font-weight: bold; font-size: 18px;">Rafif Shabi Prasetyo</p> </div>
+
+## 🎓 Dosen Pembimbing
+<div align="center"> <a href="https://github.com/sriratnawulan123"> <img src="https://avatars.githubusercontent.com/u/148301780?v=4" width="120" alt="Sri Ratna Wulan" style="border-radius: 50%; border: 3px solid #4caf50;" /> </a> <p style="color:#ffd700; font-weight: bold; font-size: 18px;">Sri Ratna Wulan</p> </div>
+
+## 📜 Lisensi
+<div align="center"> <h3>FilmFinder ©️ [MIT License](https://opensource.org/license/MIT)</h3> </div>
+
+## 🏢 Institusi
+<div align="center"> <img src="https://www.polban.ac.id/wp-content/uploads/2021/11/MASTER-LOGO-POLBAN-SMALL-1.png" height="100" alt="Polban Logo" /> </div> 
