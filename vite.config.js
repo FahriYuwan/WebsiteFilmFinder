@@ -5,25 +5,24 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
     plugins: [
         laravel({
-            input: 'resources/js/app.jsx',
+            input: ['resources/js/app.jsx'], // Sesuaikan input file Anda
             refresh: true,
         }),
         react(),
     ],
     server: {
-        host: '0.0.0.0',
+        host: '0.0.0.0', // Agar bisa diakses di Railway
         port: 5173,
-        strictPort: true,
+        strictPort: true, // Gunakan port ini secara ketat
         hmr: {
-            host: 'localhost',
-            port: 5173,
+            host: process.env.RAILWAY_URL || 'websitefilmfinder-production.up.railway.app', // Gunakan domain Railway Anda
+            port: 443, // Gunakan HTTPS untuk HMR
         },
         proxy: {
-            // Proxy semua permintaan API ke backend Laravel
             '/api': {
-                target: 'http://localhost:8000', // Laravel berjalan di port 8000
+                target: `http://localhost:8000`, // Proxy ke Laravel backend
                 changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api/, '/api'),
+                secure: false,
             },
         },
     },

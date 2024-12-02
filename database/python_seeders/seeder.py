@@ -4,10 +4,11 @@ import os
 
 # Sesuaikan dengan host masing-masing
 db = psycopg2.connect(
-    host=os.getenv("DB_HOST"), # Jika tidak menggunakan docker (sebelumnya "db"), maka isi dengan localhost
-    user=os.getenv("DB_USERNAME"),
-    password=os.getenv("DB_PASSWORD"),
-    database=os.getenv("DB_DATABASE"),
+    host="junction.proxy.rlwy.net", # Jika tidak menggunakan docker (sebelumnya "db"), maka isi dengan localhost
+    user="postgres",
+    password="esRcoXOnlnEuPtPsgKiQVvezYreUFzQk",
+    database="railway",
+    port = 59704
 )
 
 cursor = db.cursor()
