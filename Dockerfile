@@ -46,5 +46,5 @@ EXPOSE 8000
 EXPOSE 3000
 EXPOSE 5173
 
-# Command to run the application in development (with HMR)
+# Command to run the application
 CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=8000 & npm run dev"]
