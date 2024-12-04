@@ -44,7 +44,7 @@ RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
 
 # Copy the built React app to Laravel's public directory
-RUN cp -R ./build/* /var/www/public/
+RUN cp -R ./public/build/* /var/www/public/
 
 # Remove Node.js dependencies after build to reduce image size
 RUN npm prune --production
