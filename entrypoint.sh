@@ -4,12 +4,15 @@
 set -e
 
 # Substitute PORT variable into nginx.conf
-envsubst '$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+envsubst '${PORT}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
 
-# Start PHP-FPM
+# Start PHP-FPM in the background
 php-fpm &
 
-# Start Nginx
+# Wait for PHP-FPM to start
+sleep 3
+
+# Start Nginx in the foreground
 nginx -g 'daemon off;'
 
 # Menjalankan migrasi dan seeding Laravel

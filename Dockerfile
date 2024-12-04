@@ -56,6 +56,9 @@ COPY ./nginx.conf.template /etc/nginx/conf.d/default.conf.template
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Create directory for PHP-FPM socket
+RUN mkdir -p /var/run/php && chown -R www-data:www-data /var/run/php
+
 # Expose port (default to 80 if PORT not set)
 ENV PORT=80
 EXPOSE $PORT
