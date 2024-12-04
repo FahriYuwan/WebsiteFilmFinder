@@ -50,10 +50,15 @@ RUN cp -R ./public/build/* /var/www/public/
 RUN npm prune --production
 
 # Configure Nginx
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf.template /etc/nginx/conf.d/default.conf.template
 
-# Expose port 80
-EXPOSE 80
+# Copy entrypoint script
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Start PHP-FPM and Nginx
-CMD ["sh", "-c", "php-fpm & nginx -g 'daemon off;'"]
+# Expose port (default to 80 if PORT not set)
+ENV PORT=80
+EXPOSE $PORT
+
+# Start the application
+CMD ["/entrypoint.sh"]
