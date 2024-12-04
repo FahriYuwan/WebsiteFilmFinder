@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     python3-psycopg2 \
     postgresql-client \
     nginx && \
+    gettext && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js (version 20.x)
