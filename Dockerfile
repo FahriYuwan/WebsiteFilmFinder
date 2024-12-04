@@ -50,7 +50,7 @@ RUN cp -R ./public/build/* /var/www/public/
 RUN npm prune --production
 
 # Configure Nginx
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf.template
+COPY ./nginx.conf.template /etc/nginx/conf.d/default.conf.template
 
 # Copy entrypoint script
 COPY ./entrypoint.sh /entrypoint.sh
