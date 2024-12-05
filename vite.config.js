@@ -10,10 +10,6 @@ export default defineConfig({
         }),
         react(),
     ],
-    build: {
-        outDir: 'public/build',
-        emptyOutDir: false,
-    },
     server: {
         host: '0.0.0.0',
         port: 5173,
