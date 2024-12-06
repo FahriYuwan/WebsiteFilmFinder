@@ -10,6 +10,13 @@
 
 ---
 
+## **Demo**  
+Untuk link demo website bisa diakses melalui link ini : 
+https://websitefilmfinder-production.up.railway.app/
+
+( Kami membuat repository khusus untuk proyek yang berhasil deploy : 
+https://github.com/FahriYuwan/WebsiteFilmFinderHosting )
+
 ## 📚 **Deskripsi Singkat**  
 FilmFinder menyediakan informasi terperinci tentang:  
 - 🎞️ Film  
